@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/rename_group"
+        android:title="Đổi tên nhóm"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/delete_group"
+        android:title="Xóa nhóm"
+        app:showAsAction="never"/>
+</menu>
