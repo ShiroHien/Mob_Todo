@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ToDoApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.UpdateTasksGroupAcitivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.TasksGroupView"
             android:exported="false" />
         <activity

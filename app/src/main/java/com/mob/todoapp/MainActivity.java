@@ -25,9 +25,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String TASKSGROUP_NAME = "com.mob.todoapp.ui.tasksgroup_name";
+    public static final String TASKSGROUP_TITLE = "com.mob.todoapp.ui.tasksgroup_title";
     public static final String TASKSGROUP_ID = "com.mob.todoapp.ui.tasksgroup_id";
-
+    public static final String TASKSGROUP = "com.mob.todoapp.ui.tasksgroup_";
     private TasksGroupViewModel tasksGroupViewModel;
     FloatingActionButton btnAddTasksgroup;
 
@@ -41,20 +41,13 @@ public class MainActivity extends AppCompatActivity {
             result -> {
                 if (result.getResultCode() == RESULT_OK) {
                     Intent data = result.getData();
-                    String tasksGroupName = data.getStringExtra(TASKSGROUP_NAME);
-                    tasksGroupViewModel.insert(new TasksGroup(tasksGroupName));
+                    String tasksGroupTitle = data.getStringExtra(TASKSGROUP_TITLE);
+                    tasksGroupViewModel.insert(new TasksGroup(tasksGroupTitle));
                 } else {
                     // Xử lý khi hoạt động con bị hủy hoặc gặp lỗi
                 }
             });
-    ActivityResultLauncher<Intent> onChangedFromTasksGroupView = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    adapter.setData(tasksGroupViewModel.getAllTasksGroup().getValue());
-                } else {
-                    // Xử lý khi hoạt động con bị hủy hoặc gặp lỗi
-                }
-            });
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +84,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void movToTaskGroupView(TasksGroup tasksGroup) {
         Intent intent = new Intent(MainActivity.this, TasksGroupView.class);
-        intent.putExtra(TASKSGROUP_NAME, tasksGroup.getTitle());
-        intent.putExtra(TASKSGROUP_ID, tasksGroup.getId());
-        onChangedFromTasksGroupView.launch(intent);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(TASKSGROUP, tasksGroup);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     public TasksGroupViewModel getTasksGroupViewModel() {

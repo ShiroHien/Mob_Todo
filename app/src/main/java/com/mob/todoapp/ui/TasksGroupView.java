@@ -1,5 +1,7 @@
 package com.mob.todoapp.ui;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -26,6 +28,20 @@ public class TasksGroupView extends AppCompatActivity {
     Intent intent;
 
     TasksGroupViewModel tasksGroupViewModel;
+    TasksGroup tasksGroup;
+
+    ActivityResultLauncher<Intent> updateTasksGroupLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent data = result.getData();
+                    String newTitle = data.getStringExtra(MainActivity.TASKSGROUP_TITLE);
+                    tasksGroup.setTitle(newTitle);
+                    tasksGroupViewModel.update(tasksGroup);
+                    toolbarGroupView.setTitle(newTitle);
+                } else {
+                    // Xử lý khi hoạt động con bị hủy hoặc gặp lỗi
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +60,8 @@ public class TasksGroupView extends AppCompatActivity {
         setSupportActionBar(toolbarGroupView);
 
         intent = this.getIntent();
-        String title = intent.getStringExtra(MainActivity.TASKSGROUP_NAME).toString();
-        toolbarGroupView.setTitle(title);
+        tasksGroup = (TasksGroup) intent.getExtras().get(MainActivity.TASKSGROUP);
+        toolbarGroupView.setTitle(tasksGroup.getTitle());
 
 
     }
@@ -60,21 +76,13 @@ public class TasksGroupView extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.rename_group) {
+            Intent intent = new Intent(TasksGroupView.this, UpdateTasksGroupAcitivity.class);
+            intent.putExtra(MainActivity.TASKSGROUP_TITLE, tasksGroup.getTitle().toString());
+            updateTasksGroupLauncher.launch(intent);
 
         } else if(id == R.id.delete_group) {
-            TasksGroup tasksGroup = null;
-            List<TasksGroup> tasksGroups = tasksGroupViewModel.getAllTasksGroup().getValue();
-            for(int i = 0; i < tasksGroups.size(); i++) {
-                if (tasksGroups.get(i).getId() == Integer.parseInt(intent.getStringExtra(MainActivity.TASKSGROUP_ID))) {
-                    tasksGroup = tasksGroups.get(i);
-                    break;
-                }
-            }
             tasksGroupViewModel.delete(tasksGroup);
-
-//            Intent intent = new Intent();
-//            setResult(Activity.RESULT_OK, intent);
-//            finish();
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

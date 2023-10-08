@@ -39,7 +39,7 @@ public class AddTasksGroupActivity extends AppCompatActivity {
         String groupName = edtGroupName.getText().toString().trim();
         Intent intent = new Intent();
         if(groupName != "") {
-            intent.putExtra(MainActivity.TASKSGROUP_NAME, groupName);
+            intent.putExtra(MainActivity.TASKSGROUP_TITLE, groupName);
             setResult(Activity.RESULT_OK, intent);
             finish();
         }
