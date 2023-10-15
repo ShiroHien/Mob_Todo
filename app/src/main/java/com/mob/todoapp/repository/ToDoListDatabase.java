@@ -11,12 +11,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.mob.todoapp.model.Task;
 import com.mob.todoapp.model.TasksGroup;
 
-@Database(entities = {TasksGroup.class}, version = 1)
+@Database(entities = {TasksGroup.class, Task.class}, version = 1)
 public abstract class ToDoListDatabase extends RoomDatabase {
     private static ToDoListDatabase instance;
     public abstract TasksGroupDao tasksGroupDao();
+    public abstract TaskDao taskDao();
 
     public static synchronized ToDoListDatabase getInstance(Context context) {
         if(instance == null) {
@@ -39,11 +41,13 @@ public abstract class ToDoListDatabase extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private TasksGroupDao tasksGroupDao;
+        private TaskDao taskDao;
 
         private PopulateDbAsyncTask(ToDoListDatabase db) {
-            tasksGroupDao = db.tasksGroupDao();
-        }
 
+            tasksGroupDao = db.tasksGroupDao();
+            taskDao = db.taskDao();
+        }
         @Override
         protected Void doInBackground(Void... voids) {
             return null;

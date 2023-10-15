@@ -27,8 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TASKSGROUP_TITLE = "com.mob.todoapp.ui.tasksgroup_title";
     public static final String TASKSGROUP_ID = "com.mob.todoapp.ui.tasksgroup_id";
-    public static final String TASKSGROUP = "com.mob.todoapp.ui.tasksgroup_";
+    public static final String TASKSGROUP = "com.mob.todoapp.ui.tasksgroup";
     private TasksGroupViewModel tasksGroupViewModel;
+
     FloatingActionButton btnAddTasksgroup;
 
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
