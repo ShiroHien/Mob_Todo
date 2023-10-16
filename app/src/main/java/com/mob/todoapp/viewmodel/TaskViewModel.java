@@ -35,7 +35,7 @@ public class TaskViewModel extends AndroidViewModel {
         repository.delete(task);
     }
 
-    public void deleteAll(Task task) {
+    public void deleteAll() {
         repository.deleteAll();
     }
 

@@ -10,15 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mob.todoapp.model.Task;
 import com.mob.todoapp.model.TasksGroup;
 import com.mob.todoapp.ui.AddTasksGroupActivity;
 import com.mob.todoapp.ui.TasksGroupAdapter;
 import com.mob.todoapp.ui.TasksGroupView;
+import com.mob.todoapp.viewmodel.TaskViewModel;
 import com.mob.todoapp.viewmodel.TasksGroupViewModel;
 
 import java.util.List;
@@ -30,7 +33,12 @@ public class MainActivity extends AppCompatActivity {
     public static final String TASKSGROUP = "com.mob.todoapp.ui.tasksgroup";
     private TasksGroupViewModel tasksGroupViewModel;
 
+//    private TaskViewModel taskViewModel;
+//    Button addTask;
+//    Button deleteTask;
+
     FloatingActionButton btnAddTasksgroup;
+
 
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
         @Override
@@ -44,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent data = result.getData();
                     String tasksGroupTitle = data.getStringExtra(TASKSGROUP_TITLE);
                     tasksGroupViewModel.insert(new TasksGroup(tasksGroupTitle));
+//                    Log.d("db task", Integer.toString(tasksGroupViewModel.getAllTasksGroup().getValue().size()));
                 } else {
                     // Xử lý khi hoạt động con bị hủy hoặc gặp lỗi
                 }
@@ -58,6 +67,36 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.rcv_tasks_group);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
+
+//        addTask = findViewById(R.id.btn_add_task);
+//        deleteTask = findViewById(R.id.btn_delete_task);
+//        taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+//
+//        taskViewModel.getAllTask().observe(MainActivity.this, new Observer<List<Task>>() {
+//            @Override
+//            public void onChanged(List<Task> tasks) {
+//                Toast.makeText(MainActivity.this, Integer.toString(tasks.size()), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//
+//        addTask.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Task task = new Task(1, "title", "4/9", true, true, true, "note");
+//                taskViewModel.insert(task);
+//                Log.d("db task", Integer.toString(taskViewModel.getAllTask().getValue().size()));
+//            }
+//        });
+//
+//        deleteTask.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                taskViewModel.deleteAll();
+//                Log.d("db task", Integer.toString(taskViewModel.getAllTask().getValue().size()));
+//            }
+//        });
+
 
 
         recyclerView.setAdapter(adapter);

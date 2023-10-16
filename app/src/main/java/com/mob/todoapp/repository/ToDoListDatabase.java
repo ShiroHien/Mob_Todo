@@ -14,7 +14,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.mob.todoapp.model.Task;
 import com.mob.todoapp.model.TasksGroup;
 
-@Database(entities = {TasksGroup.class, Task.class}, version = 1)
+@Database(entities = {TasksGroup.class, Task.class}, version = 2)
 public abstract class ToDoListDatabase extends RoomDatabase {
     private static ToDoListDatabase instance;
     public abstract TasksGroupDao tasksGroupDao();
