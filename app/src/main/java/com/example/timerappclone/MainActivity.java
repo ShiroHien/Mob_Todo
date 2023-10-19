@@ -1,4 +1,4 @@
-package com.example.aipomo;
+package com.example.timerappclone;
 
 import android.content.Intent;
 import android.os.Bundle;

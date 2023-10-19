@@ -1,4 +1,4 @@
-package com.example.aipomo;
+package com.example.timerappclone;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -45,8 +45,6 @@ public class PomoSettingsActivity extends AppCompatActivity {
         editor.putString("breakDuration", breakDurationEditText.getText().toString());
         editor.apply();
 
-        // Optionally, you can display a message to the user indicating that the settings have been saved
-        // For now, simply finish the activity to return to the main screen
         finish();
     }
 }
