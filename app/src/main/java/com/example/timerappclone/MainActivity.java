@@ -1,8 +1,11 @@
 package com.example.timerappclone;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (isTimerRunning) {
                     pauseTimer();
-                    pauseResumeButton.setBackgroundResource(R.drawable.start_icon);
+                    pauseResumeButton.setBackgroundResource(R.drawable.ic_start);
                 } else {
                     resumeTimer();
-                    pauseResumeButton.setBackgroundResource(R.drawable.pause_icon);
+                    pauseResumeButton.setBackgroundResource(R.drawable.ic_pause);
                 }
             }
         });
@@ -90,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 isTimerRunning = false;
-                // Handle timer finish logic (e.g. play a sound, vibrate, etc.)
+                vibrateDevice();
             }
         }.start();
         isTimerRunning = true;
@@ -122,4 +125,19 @@ public class MainActivity extends AppCompatActivity {
         String timeFormatted = String.format("%02d:%02d", minutes, seconds);
         timerTextView.setText(timeFormatted);
     }
+
+    private void vibrateDevice() {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                VibrationEffect vibrationEffect = VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE);
+                vibrator.vibrate(vibrationEffect);
+            } else {
+                // For devices below API 26, use the old method
+                vibrator.vibrate(1000);
+            }
+        }
+    }
+
+
 }
