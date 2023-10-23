@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <!-- Sessions Done Today TextView -->
+    <TextView
+        android:id="@+id/sessionsDoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/timerTextView"
+        android:layout_centerHorizontal="true"
+        android:text="Session Done Today: 0"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="96dp"/>
+
+    <!-- Timer TextView -->
+    <TextView
+        android:id="@+id/timerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="25:00"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <!-- Start Button -->
+    <ImageButton
+        android:id="@+id/startButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/timerTextView"
+        android:layout_marginTop="24dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_start"
+        android:contentDescription="play"/>
+
+    <!-- Pause/Resume Button -->
+    <ImageButton
+        android:id="@+id/pauseResumeButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_toLeftOf="@+id/resetButton"
+        android:layout_alignTop="@id/startButton"
+        android:visibility="gone"
+        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_pause"
+        android:contentDescription="pause/resume"/>
+
+    <!-- Reset Button -->
+    <ImageButton
+        android:id="@+id/resetButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/startButton"
+        android:visibility="gone"
+        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_reset"
+        android:contentDescription="reset"/>
+
+    <!-- Settings Icon -->
+    <ImageView
+        android:id="@+id/settingsIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_setting" />
+
+</RelativeLayout>
