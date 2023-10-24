@@ -1,0 +1,37 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color main_color
+color white
+drawable baseline_menu_24
+drawable ic_add
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id btn_add_group
+id btn_add_task
+id btn_add_tasksgroup
+id btn_delete_task
+id btn_update_tasksgroup
+id delete_group
+id edt_group_name
+id edt_newTitle
+id ll_tasksgroup_item
+id rcv_tasks_group
+id rename_group
+id tb_group_view
+id tb_update_tasksgroup
+id toolbar
+id tvTitle
+layout activity_add_tasks_group
+layout activity_main
+layout activity_tasks_group_view
+layout activity_update_tasks_group
+layout tasksgroup_item
+menu group_view_menu
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style Base.Theme.ToDoApp
+style Theme.ToDoApp
+xml backup_rules
+xml data_extraction_rules
