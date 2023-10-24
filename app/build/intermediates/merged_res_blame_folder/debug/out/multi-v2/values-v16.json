@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.mobiletodoapp-mergeDebugResources-26:/values-v16/values-v16.xml",
+            "outputFile": "com.example.mobiletodoapp-mergeDebugResources-30:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-3\\b5364afbc06c95c72352e38d6ea75d02\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-3\\ff92050ab482929c4d0f044d21af76fb\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-3\\25d17c91d5902985514078e82b64555a\\transformed\\core-1.9.0\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-3\\45dba061abe1e5d647d9f295032bd2d4\\transformed\\core-1.9.0\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
