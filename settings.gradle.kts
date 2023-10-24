@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TimerAppClone"
+rootProject.name = "MobileTodoApp"
 include(":app")
  

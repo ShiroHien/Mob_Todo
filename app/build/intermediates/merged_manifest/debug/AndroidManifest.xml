@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mob.todoapp"
+    package="com.example.mobiletodoapp"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="29"
+        android:minSdkVersion="24"
         android:targetSdkVersion="33" />
 
     <permission
-        android:name="com.mob.todoapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.example.mobiletodoapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.mob.todoapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="com.example.mobiletodoapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
         android:allowBackup="true"
@@ -26,18 +26,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/Theme.ToDoApp" >
+        android:theme="@style/Theme.MobileTodoApp" >
         <activity
-            android:name="com.mob.todoapp.ui.UpdateTasksGroupAcitivity"
-            android:exported="false" />
-        <activity
-            android:name="com.mob.todoapp.ui.TasksGroupView"
-            android:exported="false" />
-        <activity
-            android:name="com.mob.todoapp.ui.AddTasksGroupActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.mob.todoapp.MainActivity"
+            android:name="com.example.mobiletodoapp.phuc_activity.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,14 +37,9 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="androidx.room.MultiInstanceInvalidationService"
-            android:directBootAware="true"
-            android:exported="false" />
-
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.mob.todoapp.androidx-startup"
+            android:authorities="com.example.mobiletodoapp.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"

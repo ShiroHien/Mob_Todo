@@ -1,126 +1,106 @@
 [
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-anydpi_ic_launcher.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-anydpi\\ic_launcher.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\drawable_baseline_remove_red_eye_24.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\drawable\\baseline_remove_red_eye_24.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\drawable_ic_add.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\drawable\\ic_add.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-hdpi\\ic_launcher_round.webp"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-xhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.mob.todoapp-merged_res-32:/drawable_done_icon.xml.flat",
-        "source": "com.mob.todoapp-main-34:/drawable/done_icon.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\drawable_baseline_menu_24.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\drawable\\baseline_menu_24.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\drawable_ic_launcher_background.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\drawable\\ic_launcher_background.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-mdpi\\ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-xxhdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\xml\\data_extraction_rules.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-xhdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-xhdpi\\ic_launcher_round.webp"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\xml_data_extraction_rules.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\xml\\data_extraction_rules.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\layout\\activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\menu_group_view_menu.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\menu\\group_view_menu.xml"
+        "merged": "com.example.mobiletodoapp-merged_res-28:/layout_activity_main.xml.flat",
+        "source": "com.example.mobiletodoapp-main-30:/layout/activity_main.xml"
     },
     {
-        "merged": "com.mob.todoapp-merged_res-32:/drawable_google.png.flat",
-        "source": "com.mob.todoapp-main-34:/drawable/google.png"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\layout_activity_update_tasks_group.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\layout\\activity_update_tasks_group.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.mob.todoapp-merged_res-32:/drawable_baseline_remove_red_eye_24.xml.flat",
-        "source": "com.mob.todoapp-main-34:/drawable/baseline_remove_red_eye_24.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-xxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\layout\\activity_main.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\drawable_done_icon.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\drawable\\done_icon.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-mdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\drawable_google.png.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\drawable\\google.png"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\drawable_baseline_menu_24.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\drawable\\baseline_menu_24.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\drawable_password_icon.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\drawable\\password_icon.xml"
     },
     {
-        "merged": "com.mob.todoapp-merged_res-32:/layout_activity_main.xml.flat",
-        "source": "com.mob.todoapp-main-34:/layout/activity_main.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-xxxhdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.mob.todoapp-merged_res-32:/drawable_note.xml.flat",
-        "source": "com.mob.todoapp-main-34:/drawable/note.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-mdpi\\ic_launcher_round.webp"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\drawable_bg.jpg.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\drawable\\bg.jpg"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\drawable_ic_launcher_foreground.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\drawable\\ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\layout_activity_tasks_group_view.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\layout\\activity_tasks_group_view.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\drawable_note.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\drawable\\note.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\layout_tasksgroup_item.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\layout\\tasksgroup_item.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\layout_login_layout.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\layout\\login_layout.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\xml_backup_rules.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\xml\\backup_rules.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\layout_activity_add_tasks_group.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\layout\\activity_add_tasks_group.xml"
-    },
-    {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-anydpi_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-anydpi\\ic_launcher_round.xml"
-    },
-    {
-        "merged": "com.mob.todoapp-merged_res-32:/drawable_password_icon.xml.flat",
-        "source": "com.mob.todoapp-main-34:/drawable/password_icon.xml"
-    },
-    {
-        "merged": "com.mob.todoapp-merged_res-32:/drawable_bg.jpg.flat",
-        "source": "com.mob.todoapp-main-34:/drawable/bg.jpg"
-    },
-    {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
-    },
-    {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-merged_res-32:\\mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.mob.todoapp-main-34:\\mipmap-hdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-28:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-30:\\drawable\\ic_launcher_foreground.xml"
     }
 ]

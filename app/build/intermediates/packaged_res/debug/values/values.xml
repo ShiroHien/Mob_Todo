@@ -5,10 +5,10 @@
     <color name="my_primary">#5E35B1</color>
     <color name="my_secondary">#673AB7</color>
     <color name="white">#FFFFFFFF</color>
-    <string name="app_name">ToDoApp</string>
-    <style name="Base.Theme.ToDoApp" parent="Theme.Material3.DayNight.NoActionBar">
+    <string name="app_name">MobileTodoApp</string>
+    <style name="Base.Theme.MobileTodoApp" parent="Theme.Material3.DayNight.NoActionBar">
         
         
     </style>
-    <style name="Theme.ToDoApp" parent="Base.Theme.ToDoApp"/>
+    <style name="Theme.MobileTodoApp" parent="Base.Theme.MobileTodoApp"/>
 </resources>
