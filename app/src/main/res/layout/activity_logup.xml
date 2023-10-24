@@ -80,7 +80,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/person"
-                android:inputType="textAutoComplete" />
+                android:inputType="textAutoComplete"
+                android:id="@+id/full_name"
+                android:hint="Your fullname"/>
 
             <View
                 android:layout_width="wrap_content"
@@ -97,7 +99,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/done_icon"
-                android:inputType="textAutoComplete" />
+                android:inputType="textAutoComplete"
+                android:id="@+id/username"
+                android:hint="Your username"/>
 
             <View
                 android:layout_width="wrap_content"
@@ -114,7 +118,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:id="@+id/email"
+                android:hint="Your email"/>
 
             <View
                 android:layout_width="wrap_content"
@@ -131,7 +137,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/password_icon"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:id="@+id/password"
+                android:hint="Your password"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -154,7 +162,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Logup"
-                app:cornerRadius="32dp" />
+                app:cornerRadius="32dp"
+                android:id="@+id/logup_button"/>
 
         </LinearLayout>
 

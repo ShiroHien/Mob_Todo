@@ -106,7 +106,8 @@
                     android:layout_height="wrap_content"
                     android:text="Don't have an account?"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    android:id="@+id/logupDirectText"/>
 
             </RelativeLayout>
             <View
@@ -140,17 +141,6 @@
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
                     android:background="@drawable/google"/>
-                <!--                <ImageView-->
-                <!--                    android:layout_width="40dp"-->
-                <!--                    android:layout_height="40dp"-->
-                <!--                    android:layout_margin="12dp"-->
-                <!--                    android:background="@drawable/github"/>-->
-                <!--                <ImageView-->
-                <!--                    android:layout_width="40dp"-->
-                <!--                    android:layout_height="40dp"-->
-                <!--                    android:layout_margin="12dp"-->
-                <!--                    android:background="@drawable/twitter"/>-->
-
 
             </LinearLayout>
 
