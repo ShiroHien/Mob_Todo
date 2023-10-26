@@ -8,28 +8,28 @@
         "source": "com.example.mobiletodoapp-main-34:/layout/activity_login.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\drawable_baseline_menu_24.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-34:\\drawable\\baseline_menu_24.xml"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-34:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\drawable_password_icon.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-34:\\drawable\\password_icon.xml"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-34:\\mipmap-hdpi\\ic_launcher_round.webp"
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\drawable_baseline_menu_24.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-34:\\drawable\\baseline_menu_24.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\mipmap-mdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-34:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\drawable_baseline_remove_red_eye_24.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-34:\\drawable\\baseline_remove_red_eye_24.xml"
-    },
-    {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\layout_activity_logup.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-34:\\layout\\activity_logup.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\drawable_baseline_remove_red_eye_24.xml.flat",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-34:\\drawable\\baseline_remove_red_eye_24.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\layout_activity_login.xml.flat",
@@ -106,10 +106,6 @@
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\drawable_email.xml.flat",
         "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-34:\\drawable\\email.xml"
-    },
-    {
-        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\layout_login_layout.xml.flat",
-        "source": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-main-34:\\layout\\login_layout.xml"
     },
     {
         "merged": "C:\\Users\\Admin\\.gradle\\daemon\\8.0\\com.example.mobiletodoapp-merged_res-32:\\mipmap-xxhdpi_ic_launcher.webp.flat",

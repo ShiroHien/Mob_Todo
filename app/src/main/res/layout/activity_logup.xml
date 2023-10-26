@@ -150,7 +150,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="I have an account." />
+                    android:text="I have an account."
+                    android:id="@+id/login_text"/>
 
             </RelativeLayout>
 

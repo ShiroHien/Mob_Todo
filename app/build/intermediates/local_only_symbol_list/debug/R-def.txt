@@ -19,6 +19,8 @@ drawable person
 id card_view
 id email
 id full_name
+id loginButton
+id login_text
 id logupDirectText
 id logup_button
 id password

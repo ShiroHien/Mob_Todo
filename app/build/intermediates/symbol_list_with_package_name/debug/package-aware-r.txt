@@ -3093,6 +3093,8 @@ id line3
 id linear
 id listMode
 id list_item
+id loginButton
+id login_text
 id logupDirectText
 id logup_button
 id m3_side_sheet
