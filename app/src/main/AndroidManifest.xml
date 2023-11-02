@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MobileTodoApp"
         tools:targetApi="31">
         <activity
+            android:name=".phuc_activity.MainScreenActivity"
+            android:exported="false" />
+        <activity
             android:name=".phuc_activity.LoginActivity"
             android:exported="true">
             <intent-filter>
