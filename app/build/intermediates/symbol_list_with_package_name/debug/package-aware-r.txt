@@ -2715,6 +2715,7 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable add
 drawable avd_hide_password
 drawable avd_show_password
 drawable baseline_menu_24
@@ -2919,6 +2920,7 @@ id action_text
 id actions
 id activity_chooser_view_content
 id add
+id addNewgroup
 id adjust_height
 id adjust_width
 id alertTitle
@@ -3466,6 +3468,7 @@ layout abc_tooltip
 layout activity_login
 layout activity_logup
 layout activity_main
+layout activity_main_screen
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
@@ -3610,6 +3613,7 @@ string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
+string firebase_database_url
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id

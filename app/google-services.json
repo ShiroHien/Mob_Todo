@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "564128772795",
+    "firebase_url": "https://mobiletodoapp-386b9-default-rtdb.firebaseio.com",
     "project_id": "mobiletodoapp-386b9",
     "storage_bucket": "mobiletodoapp-386b9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:564128772795:android:87aee7dca35ba67973ef9e",
+        "mobilesdk_app_id": "1:564128772795:android:51ebc6cc6fd2509e73ef9e",
         "android_client_info": {
           "package_name": "com.example.mobiletodoapp"
         }

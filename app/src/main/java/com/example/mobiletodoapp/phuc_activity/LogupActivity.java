@@ -1,5 +1,7 @@
 package com.example.mobiletodoapp.phuc_activity;
 
+import static com.google.firebase.Firebase.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.mobiletodoapp.Helper.Helper;
 import com.example.mobiletodoapp.R;
+import com.google.firebase.Firebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,11 +24,12 @@ public class LogupActivity extends AppCompatActivity {
     Button signupButton;
     FirebaseDatabase database;
     DatabaseReference reference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logup);
-
+//        val db = Firebase.firestore;
         full_name = findViewById(R.id.full_name);
         username = findViewById(R.id.username);
         email = findViewById(R.id.email);

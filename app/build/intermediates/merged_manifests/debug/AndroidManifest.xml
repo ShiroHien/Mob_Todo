@@ -31,6 +31,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.MobileTodoApp" >
         <activity
+            android:name="com.example.mobiletodoapp.phuc_activity.MainScreenActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.mobiletodoapp.phuc_activity.LoginActivity"
             android:exported="true" >
             <intent-filter>

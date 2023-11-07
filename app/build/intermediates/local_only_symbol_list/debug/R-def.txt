@@ -5,6 +5,7 @@ color main_color
 color my_primary
 color my_secondary
 color white
+drawable add
 drawable baseline_menu_24
 drawable baseline_remove_red_eye_24
 drawable bg
@@ -16,6 +17,7 @@ drawable ic_launcher_foreground
 drawable note
 drawable password_icon
 drawable person
+id addNewgroup
 id card_view
 id email
 id full_name
@@ -29,9 +31,11 @@ id username
 layout activity_login
 layout activity_logup
 layout activity_main
+layout activity_main_screen
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
+string firebase_database_url
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id
