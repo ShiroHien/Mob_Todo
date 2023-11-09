@@ -1,6 +1,4 @@
-package com.example.mobiletodoapp.phuc_activity;
-
-import static com.google.firebase.Firebase.*;
+package com.example.mobiletodoapp.phuc_activity.Logup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.mobiletodoapp.Helper.Helper;
 import com.example.mobiletodoapp.R;
-import com.google.firebase.Firebase;
+import com.example.mobiletodoapp.phuc_activity.Login.LoginActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

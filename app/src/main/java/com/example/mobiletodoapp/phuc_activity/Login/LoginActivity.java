@@ -1,4 +1,4 @@
-package com.example.mobiletodoapp.phuc_activity;
+package com.example.mobiletodoapp.phuc_activity.Login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.mobiletodoapp.MainActivity;
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.phuc_activity.Logup.LogupActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
