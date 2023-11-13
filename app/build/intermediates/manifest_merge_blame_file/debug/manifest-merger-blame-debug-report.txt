@@ -57,8 +57,8 @@
 35-->D:\Ki_1_Nam_3\Mobile\Mob_Todo\app\src\main\AndroidManifest.xml:20:13-37
 36        <activity
 36-->D:\Ki_1_Nam_3\Mobile\Mob_Todo\app\src\main\AndroidManifest.xml:21:9-33:20
-37            android:name="com.example.mobiletodoapp.phuc_activity.LoginActivity"
-37-->D:\Ki_1_Nam_3\Mobile\Mob_Todo\app\src\main\AndroidManifest.xml:22:13-56
+37            android:name="com.example.mobiletodoapp.phuc_activity.Login.LoginActivity"
+37-->D:\Ki_1_Nam_3\Mobile\Mob_Todo\app\src\main\AndroidManifest.xml:22:13-62
 38            android:exported="true" >
 38-->D:\Ki_1_Nam_3\Mobile\Mob_Todo\app\src\main\AndroidManifest.xml:23:13-36
 39            <intent-filter>
@@ -81,8 +81,8 @@
 48        </activity>
 49        <activity
 49-->D:\Ki_1_Nam_3\Mobile\Mob_Todo\app\src\main\AndroidManifest.xml:34:9-40:20
-50            android:name="com.example.mobiletodoapp.phuc_activity.LogupActivity"
-50-->D:\Ki_1_Nam_3\Mobile\Mob_Todo\app\src\main\AndroidManifest.xml:35:13-56
+50            android:name="com.example.mobiletodoapp.phuc_activity.Logup.LogupActivity"
+50-->D:\Ki_1_Nam_3\Mobile\Mob_Todo\app\src\main\AndroidManifest.xml:35:13-62
 51            android:exported="false" >
 51-->D:\Ki_1_Nam_3\Mobile\Mob_Todo\app\src\main\AndroidManifest.xml:36:13-37
 52            <meta-data
@@ -94,25 +94,25 @@
 55        </activity>
 56
 57        <service
-57-->[com.google.firebase:firebase-firestore:24.9.0] C:\Users\bomch\.gradle\caches\transforms-3\9a8efdd17a7094c4c71175cf9e7e076a\transformed\firebase-firestore-24.9.0\AndroidManifest.xml:14:9-23:19
+57-->[com.google.firebase:firebase-firestore:24.9.1] C:\Users\bomch\.gradle\caches\transforms-3\d7edc63f71f5f2e4279ee843d55fa4d9\transformed\firebase-firestore-24.9.1\AndroidManifest.xml:14:9-23:19
 58            android:name="com.google.firebase.components.ComponentDiscoveryService"
-58-->[com.google.firebase:firebase-firestore:24.9.0] C:\Users\bomch\.gradle\caches\transforms-3\9a8efdd17a7094c4c71175cf9e7e076a\transformed\firebase-firestore-24.9.0\AndroidManifest.xml:15:13-84
+58-->[com.google.firebase:firebase-firestore:24.9.1] C:\Users\bomch\.gradle\caches\transforms-3\d7edc63f71f5f2e4279ee843d55fa4d9\transformed\firebase-firestore-24.9.1\AndroidManifest.xml:15:13-84
 59            android:directBootAware="true"
 59-->[com.google.firebase:firebase-common:20.4.2] C:\Users\bomch\.gradle\caches\transforms-3\8d0f320ba852c1d2a0d0b9b208872251\transformed\firebase-common-20.4.2\AndroidManifest.xml:32:13-43
 60            android:exported="false" >
-60-->[com.google.firebase:firebase-firestore:24.9.0] C:\Users\bomch\.gradle\caches\transforms-3\9a8efdd17a7094c4c71175cf9e7e076a\transformed\firebase-firestore-24.9.0\AndroidManifest.xml:16:13-37
+60-->[com.google.firebase:firebase-firestore:24.9.1] C:\Users\bomch\.gradle\caches\transforms-3\d7edc63f71f5f2e4279ee843d55fa4d9\transformed\firebase-firestore-24.9.1\AndroidManifest.xml:16:13-37
 61            <meta-data
-61-->[com.google.firebase:firebase-firestore:24.9.0] C:\Users\bomch\.gradle\caches\transforms-3\9a8efdd17a7094c4c71175cf9e7e076a\transformed\firebase-firestore-24.9.0\AndroidManifest.xml:17:13-19:85
+61-->[com.google.firebase:firebase-firestore:24.9.1] C:\Users\bomch\.gradle\caches\transforms-3\d7edc63f71f5f2e4279ee843d55fa4d9\transformed\firebase-firestore-24.9.1\AndroidManifest.xml:17:13-19:85
 62                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
-62-->[com.google.firebase:firebase-firestore:24.9.0] C:\Users\bomch\.gradle\caches\transforms-3\9a8efdd17a7094c4c71175cf9e7e076a\transformed\firebase-firestore-24.9.0\AndroidManifest.xml:18:17-122
+62-->[com.google.firebase:firebase-firestore:24.9.1] C:\Users\bomch\.gradle\caches\transforms-3\d7edc63f71f5f2e4279ee843d55fa4d9\transformed\firebase-firestore-24.9.1\AndroidManifest.xml:18:17-122
 63                android:value="com.google.firebase.components.ComponentRegistrar" />
-63-->[com.google.firebase:firebase-firestore:24.9.0] C:\Users\bomch\.gradle\caches\transforms-3\9a8efdd17a7094c4c71175cf9e7e076a\transformed\firebase-firestore-24.9.0\AndroidManifest.xml:19:17-82
+63-->[com.google.firebase:firebase-firestore:24.9.1] C:\Users\bomch\.gradle\caches\transforms-3\d7edc63f71f5f2e4279ee843d55fa4d9\transformed\firebase-firestore-24.9.1\AndroidManifest.xml:19:17-82
 64            <meta-data
-64-->[com.google.firebase:firebase-firestore:24.9.0] C:\Users\bomch\.gradle\caches\transforms-3\9a8efdd17a7094c4c71175cf9e7e076a\transformed\firebase-firestore-24.9.0\AndroidManifest.xml:20:13-22:85
+64-->[com.google.firebase:firebase-firestore:24.9.1] C:\Users\bomch\.gradle\caches\transforms-3\d7edc63f71f5f2e4279ee843d55fa4d9\transformed\firebase-firestore-24.9.1\AndroidManifest.xml:20:13-22:85
 65                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
-65-->[com.google.firebase:firebase-firestore:24.9.0] C:\Users\bomch\.gradle\caches\transforms-3\9a8efdd17a7094c4c71175cf9e7e076a\transformed\firebase-firestore-24.9.0\AndroidManifest.xml:21:17-111
+65-->[com.google.firebase:firebase-firestore:24.9.1] C:\Users\bomch\.gradle\caches\transforms-3\d7edc63f71f5f2e4279ee843d55fa4d9\transformed\firebase-firestore-24.9.1\AndroidManifest.xml:21:17-111
 66                android:value="com.google.firebase.components.ComponentRegistrar" />
-66-->[com.google.firebase:firebase-firestore:24.9.0] C:\Users\bomch\.gradle\caches\transforms-3\9a8efdd17a7094c4c71175cf9e7e076a\transformed\firebase-firestore-24.9.0\AndroidManifest.xml:22:17-82
+66-->[com.google.firebase:firebase-firestore:24.9.1] C:\Users\bomch\.gradle\caches\transforms-3\d7edc63f71f5f2e4279ee843d55fa4d9\transformed\firebase-firestore-24.9.1\AndroidManifest.xml:22:17-82
 67            <meta-data
 67-->[com.google.firebase:firebase-database:20.3.0] C:\Users\bomch\.gradle\caches\transforms-3\aebd8dc51de370ea20b61d896c872f36\transformed\firebase-database-20.3.0\AndroidManifest.xml:29:13-31:85
 68                android:name="com.google.firebase.components:com.google.firebase.database.FirebaseDatabaseKtxRegistrar"

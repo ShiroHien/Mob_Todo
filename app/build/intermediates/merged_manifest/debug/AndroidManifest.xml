@@ -34,7 +34,7 @@
             android:name="com.example.mobiletodoapp.phuc_activity.MainScreenActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.mobiletodoapp.phuc_activity.LoginActivity"
+            android:name="com.example.mobiletodoapp.phuc_activity.Login.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +47,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.example.mobiletodoapp.phuc_activity.LogupActivity"
+            android:name="com.example.mobiletodoapp.phuc_activity.Logup.LogupActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"

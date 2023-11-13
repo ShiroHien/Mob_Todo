@@ -40,8 +40,7 @@
                     android:src="@tools:sample/avatars"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -98,7 +97,6 @@
                                 android:id="@+id/circle1"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:src="@tools:sample/avatars"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +107,7 @@
                                 android:id="@+id/icon_note"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@tools:sample/avatars"
+                                
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +149,6 @@
                                 android:id="@+id/circle2"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:src="@tools:sample/avatars"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -162,7 +159,6 @@
                                 android:id="@+id/icon_calendar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@tools:sample/avatars"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -204,7 +200,7 @@
                                 android:id="@+id/circle3"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:src="@tools:sample/avatars"
+
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -215,7 +211,7 @@
                                 android:id="@+id/icon_pomodoro"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@tools:sample/avatars"
+
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
