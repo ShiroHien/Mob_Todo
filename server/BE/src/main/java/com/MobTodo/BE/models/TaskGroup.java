@@ -8,10 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User {
+public class TaskGroup {
     private String id;
-    private String name;
-    private String username;
-    private String email;
-    private String password;
+    private String title;
+    private String userId;
 }
