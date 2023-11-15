@@ -1,5 +1,4 @@
 package com.MobTodo.BE.Reusable;
-
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
@@ -88,10 +87,27 @@ public class Function {
 
             // Update the document with the new data
             ApiFuture<WriteResult> updateFuture = documentReference.update(fieldUpdates);
-            updateFuture.get(); // Block and wait for the update to complete
+            updateFuture.get();
 
             return true;
         } catch (InterruptedException | ExecutionException | IllegalAccessException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static Boolean deleteData(String collectionName, String value, String fieldName) {
+        try {
+            Query query = dbFirestore.collection(collectionName).whereEqualTo(fieldName, value);
+            ApiFuture<QuerySnapshot> querySnapshot = query.get();
+            List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
+            if (documents.isEmpty()) {
+                return true;
+            }
+            for (QueryDocumentSnapshot document : documents) {
+                document.getReference().delete();
+            }
+            return true;
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return false;
         }

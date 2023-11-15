@@ -1,10 +1,11 @@
 package com.MobTodo.BE.service;
 
 import com.MobTodo.BE.models.TaskGroup;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
+@Service
 public interface ITaskGroupService {
     String createTaskGroup(TaskGroup data) throws ExecutionException, InterruptedException;
     List<TaskGroup> getTaskGroupById(String userId);
