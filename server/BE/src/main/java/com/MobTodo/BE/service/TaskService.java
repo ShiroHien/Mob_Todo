@@ -3,9 +3,6 @@ package com.MobTodo.BE.service;
 import com.MobTodo.BE.models.Task;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -17,9 +14,10 @@ public class TaskService implements ITaskService {
 
     @Override
     public Boolean createTask(Task data) throws ExecutionException, InterruptedException {
-        System.out.println(distanceTime(data.getStartTime(), data.getEndTime()));
-        if (distanceTime(data.getStartTime(), data.getEndTime()) >= 0) {
-            return postData(data, COLLECTION_NAME);
+        if (checkDateTimeFormat(data.getStartTime()) && checkDateTimeFormat(data.getEndTime())) {
+            if (distanceTime(data.getStartTime(), data.getEndTime()) >= 0) {
+                return postData(data, COLLECTION_NAME);
+            }
         }
         return false;
     }
@@ -31,7 +29,10 @@ public class TaskService implements ITaskService {
 
     @Override
     public Boolean updateTask(Task data) {
-        return updateData(COLLECTION_NAME, data.getId(), data);
+        if (checkDateTimeFormat(data.getStartTime()) && checkDateTimeFormat(data.getEndTime())) {
+            return updateData(COLLECTION_NAME, data.getId(), data);
+        }
+        return false;
     }
 
     @Override

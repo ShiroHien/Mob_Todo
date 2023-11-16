@@ -5,8 +5,11 @@ import com.google.firebase.cloud.FirestoreClient;
 
 import java.lang.reflect.Field;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +37,34 @@ public class Function {
         LocalDateTime endTime = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
         long durationInSeconds = Duration.between(startTime, endTime).getSeconds();
         return durationInSeconds;
+    }
+    public static boolean checkDateFormat(String input) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+        try {
+            LocalDate parsedDate = LocalDate.parse(input, dateFormatter);
+            return true; // If parsing is successful, the date is valid
+        } catch (DateTimeParseException e) {
+            return false; // If parsing fails, the date is not valid
+        }
+    }
+    public static boolean checkTimeFormat(String input) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        try {
+            LocalTime parsedDate = LocalTime.parse(input, dateFormatter);
+            return true; // If parsing is successful, the date is valid
+        } catch (DateTimeParseException e) {
+            return false; // If parsing fails, the date is not valid
+        }
+    }
+    public static boolean checkDateTimeFormat(String input) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+        try {
+            LocalDateTime parsedDate = LocalDateTime.parse(input, dateFormatter);
+            return true; // If parsing is successful, the date is valid
+        } catch (DateTimeParseException e) {
+            return false; // If parsing fails, the date is not valid
+        }
     }
     public static <T> T getDetail(String collectionName, String document, Class<T> valueType) {
         try {
