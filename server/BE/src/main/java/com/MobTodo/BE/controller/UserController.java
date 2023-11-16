@@ -14,7 +14,7 @@ public class UserController {
     @Autowired
     private IUserService userService;
     @PostMapping("/createUser")
-    public String saveUser(@RequestBody User user) throws ExecutionException, InterruptedException {
+    public Boolean saveUser(@RequestBody User user) throws ExecutionException, InterruptedException {
         return userService.logup(user);
     }
     @GetMapping("/getUserDetail/{id}")

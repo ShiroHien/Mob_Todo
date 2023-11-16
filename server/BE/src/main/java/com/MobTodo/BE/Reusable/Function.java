@@ -4,6 +4,9 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 
 import java.lang.reflect.Field;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +29,12 @@ public class Function {
         }
     }
 
+    public static Long distanceTime(String start, String end) {
+        LocalDateTime startTime = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
+        LocalDateTime endTime = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
+        long durationInSeconds = Duration.between(startTime, endTime).getSeconds();
+        return durationInSeconds;
+    }
     public static <T> T getDetail(String collectionName, String document, Class<T> valueType) {
         try {
             DocumentReference documentReference = dbFirestore.collection(collectionName).document(document);

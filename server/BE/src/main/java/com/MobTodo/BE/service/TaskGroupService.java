@@ -13,11 +13,11 @@ public class TaskGroupService implements ITaskGroupService {
     private static final String COLLECTION_NAME = "TaskGroup";
 
     @Override
-    public String createTaskGroup(TaskGroup data) throws ExecutionException, InterruptedException {
+    public Boolean createTaskGroup(TaskGroup data) throws ExecutionException, InterruptedException {
         if (postData(data, COLLECTION_NAME)) {
-            return "Thêm nhóm task thành công";
+            return true;
         }
-        return "Thêm nhóm task không thành công";
+        return false;
     }
 
     @Override

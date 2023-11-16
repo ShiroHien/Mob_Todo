@@ -14,7 +14,7 @@ public class TaskGroupController {
     @Autowired
     private ITaskGroupService taskGroupService;
     @PostMapping("/createTaskGroup")
-    public String createGroup(@RequestBody TaskGroup data) throws ExecutionException, InterruptedException {
+    public Boolean createGroup(@RequestBody TaskGroup data) throws ExecutionException, InterruptedException {
         return taskGroupService.createTaskGroup(data);
     }
     @GetMapping("/getListGroup/{userId}")

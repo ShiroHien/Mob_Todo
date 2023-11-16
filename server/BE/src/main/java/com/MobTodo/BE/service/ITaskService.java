@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public interface ITaskService {
-    String createTask(Task data) throws ExecutionException, InterruptedException;
+    Boolean createTask(Task data) throws ExecutionException, InterruptedException;
     List<Task> getTaskById(String taskGroupId);
     Boolean updateTask(Task data);
     Boolean deleteTask(String taskId);

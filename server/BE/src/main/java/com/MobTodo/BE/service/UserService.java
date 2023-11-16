@@ -14,14 +14,14 @@ import static com.MobTodo.BE.Reusable.Function.*;
 public class UserService implements IUserService {
     private static final String COLLECTION_NAME = "user";
     @Override
-    public String logup(User user) throws ExecutionException, InterruptedException {
+    public Boolean logup(User user) throws ExecutionException, InterruptedException {
         if (checkExist(COLLECTION_NAME, "email", user.getEmail())) {
-            return "Email đã tồn tại. Đăng ký không thành công";
+            return false;
         } else {
             if(postData( user, COLLECTION_NAME )) {
-                return "Đăng ký thành công.";
+                return true;
             }
-            return "Đăng ký không thành công.";
+            return false;
         }
     }
     @Override

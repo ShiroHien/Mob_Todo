@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 @Service
 public interface ITaskGroupService {
-    String createTaskGroup(TaskGroup data) throws ExecutionException, InterruptedException;
+    Boolean createTaskGroup(TaskGroup data) throws ExecutionException, InterruptedException;
     List<TaskGroup> getTaskGroupById(String userId);
     Boolean updateTaskGroup(TaskGroup data);
     Boolean deleteTaskGroup(String taskGroupId);
