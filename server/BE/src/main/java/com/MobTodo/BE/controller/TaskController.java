@@ -13,18 +13,27 @@ import java.util.concurrent.ExecutionException;
 public class TaskController {
     @Autowired
     private ITaskService taskService;
+
     @PostMapping("/createTask")
     public Boolean createTask(@RequestBody Task data) throws ExecutionException, InterruptedException {
         return taskService.createTask(data);
     }
+
     @GetMapping("/getListTaskById/{taskGroupId}")
     public List<Task> getListTask(@PathVariable String taskGroupId) {
         return taskService.getTaskById(taskGroupId);
     }
+
+    @GetMapping("/getTaskById/{taskId}")
+    public Task getDetailTask(@PathVariable String taskId) {
+        return taskService.getDetailTask(taskId);
+    }
+
     @PutMapping("/updateTask")
     public Boolean updateTask(@RequestBody Task data) {
         return taskService.updateTask(data);
     }
+
     @DeleteMapping("/deleteTask/{taskId}")
     public Boolean deleteTask(@PathVariable String taskId) {
         return taskService.deleteTask(taskId);
