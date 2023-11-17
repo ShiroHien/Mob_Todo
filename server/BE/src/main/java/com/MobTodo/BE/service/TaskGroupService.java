@@ -8,16 +8,14 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static com.MobTodo.BE.Reusable.Function.*;
+
 @Service
 public class TaskGroupService implements ITaskGroupService {
     private static final String COLLECTION_NAME = "TaskGroup";
 
     @Override
     public Boolean createTaskGroup(TaskGroup data) throws ExecutionException, InterruptedException {
-        if (postData(data, COLLECTION_NAME)) {
-            return true;
-        }
-        return false;
+        return postData(data, COLLECTION_NAME);
     }
 
     @Override
@@ -27,13 +25,13 @@ public class TaskGroupService implements ITaskGroupService {
 
     @Override
     public Boolean updateTaskGroup(TaskGroup data) {
-        System.out.println("Id: "+ data.getId());
+        System.out.println("Id: " + data.getId());
         return updateData(COLLECTION_NAME, data.getId(), data);
     }
 
     @Override
     public Boolean deleteTaskGroup(String taskGroupId) {
-        if(deleteData(COLLECTION_NAME, taskGroupId, "id") && deleteData("Task", taskGroupId, "TaskGroupId")) {
+        if (deleteData(COLLECTION_NAME, taskGroupId, "id") && deleteData("Task", taskGroupId, "TaskGroupId")) {
             return true;
         }
         return false;
