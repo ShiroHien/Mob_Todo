@@ -11,5 +11,5 @@ import lombok.*;
 public class Timetable {
     private String id;
     private String userId;
-    private String Day;
+    private String dayTime;
 }

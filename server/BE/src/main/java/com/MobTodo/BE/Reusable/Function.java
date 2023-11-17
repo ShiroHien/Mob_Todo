@@ -43,9 +43,9 @@ public class Function {
 
         try {
             LocalDate parsedDate = LocalDate.parse(input, dateFormatter);
-            return true; // If parsing is successful, the date is valid
+            return true;
         } catch (DateTimeParseException e) {
-            return false; // If parsing fails, the date is not valid
+            return false;
         }
     }
     public static boolean checkTimeFormat(String input) {

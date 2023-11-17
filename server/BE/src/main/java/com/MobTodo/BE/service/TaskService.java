@@ -28,6 +28,11 @@ public class TaskService implements ITaskService {
     }
 
     @Override
+    public Task getDetailTask(String taskId) {
+        return getDetail(COLLECTION_NAME, taskId, Task.class);
+    }
+
+    @Override
     public Boolean updateTask(Task data) {
         if (checkDateTimeFormat(data.getStartTime()) && checkDateTimeFormat(data.getEndTime())) {
             return updateData(COLLECTION_NAME, data.getId(), data);
