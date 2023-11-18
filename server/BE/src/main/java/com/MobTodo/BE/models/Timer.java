@@ -11,6 +11,6 @@ import lombok.*;
 public class Timer {
     private String id;
     private String userId;
-    private String duringTime;
+    private int duringTime;
     private String day;
 }

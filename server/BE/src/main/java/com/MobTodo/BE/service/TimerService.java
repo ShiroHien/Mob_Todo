@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static com.MobTodo.BE.Reusable.Function.*;
+
 @Service
 public class TimerService implements ITimerService {
     private static final String COLLECTION_NAME = "Timer";
@@ -18,7 +19,12 @@ public class TimerService implements ITimerService {
                 return postData(data, COLLECTION_NAME);
             }
         } else {
-            if(checkDateFormat(data.getDay())) {
+            if (checkDateFormat(data.getDay())) {
+                Timer existingTimer = getDetail(COLLECTION_NAME, data.getId(), Timer.class);
+                if (existingTimer != null) {
+                    int newDuringTime = existingTimer.getDuringTime() + data.getDuringTime();
+                    data.setDuringTime(newDuringTime);
+                }
                 return updateData(COLLECTION_NAME, data.getId(), data);
             }
         }
