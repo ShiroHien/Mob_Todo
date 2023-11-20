@@ -17,17 +17,29 @@
         android:theme="@style/Theme.MobileTodoApp"
         tools:targetApi="31">
         <activity
-            android:name=".phuc_activity.MainScreenActivity"
+            android:name=".trung_activity.MonthViewActivity"
             android:exported="false" />
         <activity
-            android:name=".phuc_activity.Login.LoginActivity"
+            android:name=".trung_activity.EventEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".trung_activity.WeekViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".trung_activity.CalendarViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".phuc_activity.MainScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
+        </activity>
+        <activity
+            android:name=".phuc_activity.Login.LoginActivity"
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
