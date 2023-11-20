@@ -77,7 +77,22 @@ public class Function {
             return null;
         }
     }
+    public static <T> T getDetailByFieldName(String collectionName, String fieldName, String value, Class<T> valueType) {
+        try {
+            // Thực hiện truy vấn
+            ApiFuture<QuerySnapshot> future = dbFirestore.collection(collectionName).whereEqualTo(fieldName, value).get();
+            QuerySnapshot querySnapshot = future.get();
 
+            // Kiểm tra và chuyển đổi tài liệu đầu tiên
+            if (!querySnapshot.isEmpty()) {
+                DocumentSnapshot firstDocument = querySnapshot.getDocuments().get(0);
+                return firstDocument.toObject(valueType);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public static <T> boolean postData(T data, String collection_name) throws ExecutionException, InterruptedException {
         CollectionReference collection = FirestoreClient.getFirestore().collection(collection_name);
         ApiFuture<DocumentReference> documentReferenceApiFuture = collection.add(data);

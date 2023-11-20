@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.mobiletodoapp.Helper.Helper;
 import com.example.mobiletodoapp.R;
 import com.example.mobiletodoapp.phuc_activity.Login.LoginActivity;
 import com.google.firebase.database.DatabaseReference;
@@ -44,14 +42,11 @@ public class LogupActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                database = FirebaseDatabase.getInstance();
-                reference = database.getReference("users");
                 String name = full_name.getText().toString();
                 String userName = username.getText().toString();
                 String Email = email.getText().toString();
                 String Password = password.getText().toString();
-                Helper helper = new Helper(name, userName, Email, Password);
-                reference.child(userName).setValue(helper);
+
 
                 Toast.makeText(LogupActivity.this, "Sign up successfully", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(LogupActivity.this, LoginActivity.class);
