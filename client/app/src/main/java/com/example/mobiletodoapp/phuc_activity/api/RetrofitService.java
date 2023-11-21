@@ -1,4 +1,4 @@
-package com.example.mobiletodoapp.phuc_activity.retrofit;
+package com.example.mobiletodoapp.phuc_activity.api;
 
 import com.google.gson.Gson;
 
@@ -10,7 +10,7 @@ public class RetrofitService {
 
     public RetrofitService() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.40.222:8080")
+                .baseUrl("http://192.168.40.222:8080/")
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
                 .build();
     }

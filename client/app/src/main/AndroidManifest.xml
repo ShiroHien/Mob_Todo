@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -29,7 +30,7 @@
             android:name=".trung_activity.CalendarViewActivity"
             android:exported="false" />
         <activity
-            android:name=".phuc_activity.MainScreenActivity"
+            android:name=".phuc_activity.view.Login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,18 +39,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".phuc_activity.Login.LoginActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+            android:name=".phuc_activity.MainScreenActivity"
+            android:exported="false">
         </activity>
         <activity
-            android:name=".phuc_activity.Logup.LogupActivity"
+            android:name=".phuc_activity.view.Logup.LogupActivity"
             android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
         </activity>
     </application>
 

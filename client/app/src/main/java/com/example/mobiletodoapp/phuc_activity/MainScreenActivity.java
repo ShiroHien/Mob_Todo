@@ -1,5 +1,6 @@
 package com.example.mobiletodoapp.phuc_activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -27,7 +28,9 @@ public class MainScreenActivity extends AppCompatActivity {
         binding = ActivityMainScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        CalendarUtils.selectedDate = LocalDate.now();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CalendarUtils.selectedDate = LocalDate.now();
+        }
         HomeFragment homeFragment = new HomeFragment();
         SettingFragment settingFragment = new SettingFragment();
 

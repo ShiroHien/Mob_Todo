@@ -1,4 +1,5 @@
 package com.MobTodo.BE.Reusable;
+
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
@@ -22,11 +23,14 @@ public class Function {
 
     public static boolean checkExist(String collectionName, String fieldName, String value) {
         try {
-            ApiFuture<QuerySnapshot> future = dbFirestore.collection(collectionName).whereEqualTo(fieldName, value).get();
+            ApiFuture<QuerySnapshot> future = dbFirestore
+                    .collection(collectionName)
+                    .whereEqualTo(fieldName, value)
+                    .get();
+
             QuerySnapshot querySnapshot = future.get();
             return !querySnapshot.isEmpty();
         } catch (InterruptedException | ExecutionException e) {
-            // Handle the exception as needed
             e.printStackTrace();
             return false;
         }
@@ -38,6 +42,7 @@ public class Function {
         long durationInSeconds = Duration.between(startTime, endTime).getSeconds();
         return durationInSeconds;
     }
+
     public static boolean checkDateFormat(String input) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
@@ -48,6 +53,7 @@ public class Function {
             return false;
         }
     }
+
     public static boolean checkTimeFormat(String input) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         try {
@@ -57,6 +63,7 @@ public class Function {
             return false; // If parsing fails, the date is not valid
         }
     }
+
     public static boolean checkDateTimeFormat(String input) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
         try {
@@ -66,6 +73,7 @@ public class Function {
             return false; // If parsing fails, the date is not valid
         }
     }
+
     public static <T> T getDetail(String collectionName, String document, Class<T> valueType) {
         try {
             DocumentReference documentReference = dbFirestore.collection(collectionName).document(document);
@@ -77,6 +85,7 @@ public class Function {
             return null;
         }
     }
+
     public static <T> T getDetailByFieldName(String collectionName, String fieldName, String value, Class<T> valueType) {
         try {
             // Thực hiện truy vấn
@@ -93,6 +102,7 @@ public class Function {
         }
         return null;
     }
+
     public static <T> boolean postData(T data, String collection_name) throws ExecutionException, InterruptedException {
         CollectionReference collection = FirestoreClient.getFirestore().collection(collection_name);
         ApiFuture<DocumentReference> documentReferenceApiFuture = collection.add(data);
@@ -150,6 +160,7 @@ public class Function {
             return false;
         }
     }
+
     public static Boolean deleteData(String collectionName, String value, String fieldName) {
         try {
             Query query = dbFirestore.collection(collectionName).whereEqualTo(fieldName, value);

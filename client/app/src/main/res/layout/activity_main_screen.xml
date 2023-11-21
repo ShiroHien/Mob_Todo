@@ -10,8 +10,7 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-    />
+        android:layout_height="match_parent" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
@@ -19,24 +18,27 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/white"
+        app:elevation="0dp"
         app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="50dp" >
+        app:fabCradleRoundedCornerRadius="50dp"> <!-- Set elevation to 0dp -->
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:background="@android:color/transparent"
+            app:elevation="0dp"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_navigation" />
     </com.google.android.material.bottomappbar.BottomAppBar>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         android:src="@drawable/add"
+        android:contentDescription="addGroup"
         app:layout_anchor="@id/bottomAppBar"
         app:maxImageSize="40dp"
-        app:tint ="@color/main_color"/>
+        app:tint="@color/main_color" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

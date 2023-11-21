@@ -34,13 +34,18 @@ public class UserService implements IUserService {
 
     @Override
     public Boolean login(Login login) {
+        System.out.println(login.getEmail());
         if (!checkExist(COLLECTION_NAME, "email", login.getEmail())) {
+            System.out.println("Passed 1");
             return false;
         }
         User user = getDetailByFieldName(COLLECTION_NAME, "email", login.getEmail(), User.class);
         if (user == null) {
+            System.out.println("Passed 2");
             return false;
         }
+        System.out.println("Passed 3");
+        System.out.println(user);
         return user.getPassword().equals(login.getPassword());
     }
 }
