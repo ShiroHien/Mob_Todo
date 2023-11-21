@@ -1,6 +1,7 @@
 package com.example.mobiletodoapp.phuc_activity.view.Logup;
 
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.validateEmpty;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.mobiletodoapp.R;
 import com.example.mobiletodoapp.phuc_activity.MainScreenActivity;
+import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
+import com.example.mobiletodoapp.phuc_activity.api.UserApi;
 import com.example.mobiletodoapp.phuc_activity.view.Login.LoginActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -54,6 +57,8 @@ public class LogupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_logup);
 
         initialize();
+        RetrofitService retrofitService = new RetrofitService();
+        UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
         loginDirect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,10 +95,10 @@ public class LogupActivity extends AppCompatActivity {
                 String userName = username.getText().toString();
                 String Email = email.getText().toString();
                 String Password = password.getText().toString();
-                if (!validateEmail(Email) || !validatePassword(Password) || name.isEmpty() || userName.isEmpty()) {
-                    showToast(LogupActivity.this, "");
-                } else {
+                if (!validateEmail(Email) || !validatePassword(Password) || !validateEmpty(name, "Tên không được để trống", LogupActivity.this) || !validateEmpty(userName, "Tên người dùng không được để trống", LogupActivity.this)) {
 
+                } else {
+                    logupUser(userApi);
                 }
             }
         });
@@ -101,10 +106,10 @@ public class LogupActivity extends AppCompatActivity {
 
     private Boolean validateEmail(String value) {
         if (value.isEmpty()) {
-            showToast(LogupActivity.this, "Email cannot be empty");
+            showToast(LogupActivity.this, "Email không được để trống");
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
-            showToast(LogupActivity.this, "Invalid email address");
+            showToast(LogupActivity.this, "Email không hợp lệ");
             return false;
         } else {
             return true;
@@ -113,7 +118,7 @@ public class LogupActivity extends AppCompatActivity {
 
     private Boolean validatePassword(String value) {
         if (value.isEmpty()) {
-            showToast(LogupActivity.this, "Password cannot be empty");
+            showToast(LogupActivity.this, "Mật khẩu không được để trống");
             return false;
         } else if (value.length() < 6) {
             showToast(LogupActivity.this, "Password must be at least 6 characters long");
@@ -152,5 +157,8 @@ public class LogupActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         signupButton = findViewById(R.id.logup_button);
         loginDirect = findViewById(R.id.login_text);
+    }
+    private void logupUser(UserApi userApi) {
+
     }
 }

@@ -1,4 +1,4 @@
-package com.example.mobiletodoapp.phuc_activity.model;
+package com.example.mobiletodoapp.phuc_activity.dto;
 
 public class Login {
     public Login(String toString, String toString1) {

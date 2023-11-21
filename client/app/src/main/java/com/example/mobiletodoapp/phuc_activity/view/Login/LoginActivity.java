@@ -1,6 +1,7 @@
 package com.example.mobiletodoapp.phuc_activity.view.Login;
 
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.validateEmpty;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,12 +17,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mobiletodoapp.R;
 import com.example.mobiletodoapp.phuc_activity.view.Logup.LogupActivity;
 import com.example.mobiletodoapp.phuc_activity.MainScreenActivity;
-import com.example.mobiletodoapp.phuc_activity.model.Login;
+import com.example.mobiletodoapp.phuc_activity.dto.Login;
 import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
 import com.example.mobiletodoapp.phuc_activity.api.UserApi;
 
@@ -74,8 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!validateEmail() || !validatePassword()) {
-                    showToast(LoginActivity.this, "Email hoặc mật khẩu không hợp lệ");
+                if (!validateEmpty(loginEmail.getText().toString(), "Email không được để trống", LoginActivity.this) || !validateEmpty(loginPassword.getText().toString(), "Mật khẩu không được để trống", LoginActivity.this)) {
                 } else {
                     loginUser(userApi);
                 }
@@ -112,28 +111,6 @@ public class LoginActivity extends AppCompatActivity {
         loginPassword = findViewById(R.id.password);
     }
 
-    public Boolean validateEmail() {
-        String value = loginEmail.getText().toString();
-        if (value.isEmpty()) {
-            loginEmail.setError("Email cannot be empty");
-            return false;
-        } else {
-            loginEmail.setError(null);
-            return true;
-        }
-    }
-
-    public Boolean validatePassword() {
-        String value = loginPassword.getText().toString();
-        if (value.isEmpty()) {
-            loginPassword.setError("Password cannot be empty");
-            return false;
-        } else {
-            loginPassword.setError(null);
-            return true;
-        }
-    }
-
     private void loginUser(UserApi userApi) {
         Login login = new Login(loginEmail.getText().toString(), loginPassword.getText().toString());
         userApi.loginUser(login).enqueue(new Callback<Boolean>() {
@@ -142,7 +119,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Boolean loginResult = response.body();
                     if (loginResult != null && loginResult) {
-                        // Successful login, handle accordingly
                         showToast(LoginActivity.this, "Đăng nhập thành công");
                         Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
                         startActivity(intent);
