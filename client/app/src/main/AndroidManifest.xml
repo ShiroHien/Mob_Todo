@@ -30,7 +30,7 @@
             android:name=".thuyen_services.ImportantActivity"
             android:exported="false" />
         <activity
-            android:name=".thuyen_services.MainScreenActivity"
+            android:name=".phuc_activity.view.Login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +51,7 @@
             android:name=".trung_activity.CalendarViewActivity"
             android:exported="false" />
         <activity
-            android:name=".phuc_activity.view.Login.LoginActivity"
+            android:name=".thuyen_services.MainScreenActivity"
             android:exported="false" />
         <activity
             android:name=".phuc_activity.view.Logup.LogupActivity"

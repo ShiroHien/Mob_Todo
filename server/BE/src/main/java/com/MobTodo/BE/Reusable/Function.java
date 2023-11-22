@@ -35,6 +35,21 @@ public class Function {
             return false;
         }
     }
+    public static boolean checkExist(String collectionName, String fieldName1, String value1, String fieldName2, String value2) {
+        try {
+            ApiFuture<QuerySnapshot> future = dbFirestore
+                    .collection(collectionName)
+                    .whereEqualTo(fieldName1, value1)
+                    .whereEqualTo(fieldName2, value2)
+                    .get();
+
+            QuerySnapshot querySnapshot = future.get();
+            return !querySnapshot.isEmpty();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public static Long distanceTime(String start, String end) {
         LocalDateTime startTime = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));

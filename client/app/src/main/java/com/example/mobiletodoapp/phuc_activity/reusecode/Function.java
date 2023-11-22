@@ -17,7 +17,6 @@ public class Function {
         return true;
     }
 
-
     public static <T> void saveSharedPref(Context context, String key, T value) {
         SharedPreferences sharedPref = context.getSharedPreferences("MobTodo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();

@@ -14,7 +14,7 @@ public class TimetableService implements ITimetableService {
 
     @Override
     public Boolean createTimetable(Timetable data) throws ExecutionException, InterruptedException {
-        if (!checkExist(COLLECTION_NAME, "dayTime", data.getDayTime())) {
+        if (!checkExist(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId()) ) {
             if (checkDateFormat(data.getDayTime())) {
                 return postData(data, COLLECTION_NAME);
             }
