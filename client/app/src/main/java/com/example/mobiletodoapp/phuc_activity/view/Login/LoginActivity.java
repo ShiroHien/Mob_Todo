@@ -29,6 +29,7 @@ import com.example.mobiletodoapp.phuc_activity.dto.Login;
 import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
 import com.example.mobiletodoapp.phuc_activity.api.UserApi;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -115,24 +116,18 @@ public class LoginActivity extends AppCompatActivity {
         loginPassword = findViewById(R.id.password);
     }
 
-    private void loginUser(UserApi userApi) {
+    private CompletableFuture<Void> loginUser(UserApi userApi) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
         Login login = new Login(loginEmail.getText().toString(), loginPassword.getText().toString());
         userApi.loginUser(login).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    User loginResult = response.body();
-                    System.out.println(loginResult);
-                    if (loginResult != null) {
-                        showToast(LoginActivity.this, "Đăng nhập thành công");
-                        saveSharedPref(LoginActivity.this, "email", loginEmail.getText().toString());
-                        Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
-                        startActivity(intent);
-                    } else {
-                        showToast(LoginActivity.this, "Sai email hoặc mật khẩu");
-                    }
-                } else {
-                    showToast(LoginActivity.this, "Lỗi server");
+                try {
+                    processLoginResponse(response);
+                    future.complete(null);
+                } catch (Exception e) {
+                    future.completeExceptionally(e);
                 }
             }
 
@@ -140,15 +135,42 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<User> call, Throwable t) {
                 showToast(LoginActivity.this, "Đăng nhập thất bại. Kiểm tra lại đường truyền của bạn.");
                 Logger.getLogger(LoginActivity.class.getName()).log(Level.SEVERE, "Error: ", t);
+                future.completeExceptionally(t);
             }
         });
+
+        return future;
+    }
+
+    private void processLoginResponse(Response<User> response) {
+        if (response.isSuccessful()) {
+            User loginResult = response.body();
+            System.out.println(loginResult);
+            if (loginResult != null) {
+                showToast(LoginActivity.this, "Đăng nhập thành công");
+                saveSharedPref(LoginActivity.this, "userId", loginResult.getId());
+                saveSharedPref(LoginActivity.this, "email", loginResult.getEmail());
+                saveSharedPref(LoginActivity.this, "name", loginResult.getName());
+                saveSharedPref(LoginActivity.this, "username", loginResult.getUsername());
+                Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
+                startActivity(intent);
+            } else {
+                showToast(LoginActivity.this, "Sai email hoặc mật khẩu");
+            }
+        } else {
+            showToast(LoginActivity.this, "Lỗi server");
+        }
     }
     private void checkLoginWithCondition() {
         String savedEmail = getSharedPref(LoginActivity.this, "email", "");
-        if (savedEmail != null && savedEmail != "") {
+        String userId = getSharedPref(LoginActivity.this, "userId", "");
+        String name = getSharedPref(LoginActivity.this, "name", "");
+        String username = getSharedPref(LoginActivity.this, "username", "");
+        if (!savedEmail.isEmpty() && !username.isEmpty() && !userId.isEmpty() && !name.isEmpty()) {
+            showToast(LoginActivity.this, "Tự động đăng nhập thành công");
             Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
             startActivity(intent);
-//            finish();
+            finish();
         }
     }
 }
