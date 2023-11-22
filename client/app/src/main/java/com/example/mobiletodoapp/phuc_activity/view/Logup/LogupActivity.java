@@ -24,9 +24,14 @@ import com.example.mobiletodoapp.R;
 import com.example.mobiletodoapp.phuc_activity.MainScreenActivity;
 import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
 import com.example.mobiletodoapp.phuc_activity.api.UserApi;
+import com.example.mobiletodoapp.phuc_activity.dto.User;
 import com.example.mobiletodoapp.phuc_activity.view.Login.LoginActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LogupActivity extends AppCompatActivity {
     EditText full_name, username, email, password;
@@ -98,7 +103,7 @@ public class LogupActivity extends AppCompatActivity {
                 if (!validateEmail(Email) || !validatePassword(Password) || !validateEmpty(name, "Tên không được để trống", LogupActivity.this) || !validateEmpty(userName, "Tên người dùng không được để trống", LogupActivity.this)) {
 
                 } else {
-                    logupUser(userApi);
+                    logupUser(userApi, name, userName, Email, Password);
                 }
             }
         });
@@ -158,7 +163,30 @@ public class LogupActivity extends AppCompatActivity {
         signupButton = findViewById(R.id.logup_button);
         loginDirect = findViewById(R.id.login_text);
     }
-    private void logupUser(UserApi userApi) {
 
+    private void logupUser(UserApi userApi, String name, String userName, String Email, String Password) {
+        User user = new User(name, userName, Email, Password);
+        userApi.saveUser(user).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    Boolean logupResult = response.body();
+                    if (logupResult != null && logupResult) {
+                        showToast(LogupActivity.this, "Đăng ký thành công");
+                        Intent intent = new Intent(LogupActivity.this, MainScreenActivity.class);
+                        startActivity(intent);
+                    } else {
+                        showToast(LogupActivity.this, "Đăng ký không thành công. Tài khoản email đã tồn tại");
+                    }
+                } else {
+                    showToast(LogupActivity.this, "Đăng ký không thành công");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                showToast(LogupActivity.this, "Có lỗi xảy ra");
+            }
+        });
     }
 }

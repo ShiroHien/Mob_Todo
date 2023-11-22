@@ -15,8 +15,7 @@ public class UserController {
     @Autowired
     private IUserService userService;
     @PostMapping("/loginUser")
-    public Boolean loginUser(@RequestBody Login user) {
-        System.out.println(user);
+    public User loginUser(@RequestBody Login user) {
         return userService.login(user);
     }
     @PostMapping("/createUser")

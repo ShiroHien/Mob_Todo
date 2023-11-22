@@ -9,7 +9,7 @@ import retrofit2.http.POST;
 
 public interface UserApi {
     @POST("user/loginUser")
-    Call<Boolean> loginUser(@Body Login login);
+    Call<User> loginUser(@Body Login login);
     @POST("user/createUser")
     Call<Boolean> saveUser(@Body User data);
 }

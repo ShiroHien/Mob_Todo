@@ -1,5 +1,7 @@
 package com.example.mobiletodoapp.phuc_activity.view.Login;
 
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.saveSharedPref;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.validateEmpty;
 
@@ -11,6 +13,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.phuc_activity.dto.User;
 import com.example.mobiletodoapp.phuc_activity.view.Logup.LogupActivity;
 import com.example.mobiletodoapp.phuc_activity.MainScreenActivity;
 import com.example.mobiletodoapp.phuc_activity.dto.Login;
@@ -61,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initialize();
-
+        checkLoginWithCondition();
         RetrofitService retrofitService = new RetrofitService();
         UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
         logupDirectText.setOnClickListener(new View.OnClickListener() {
@@ -113,13 +117,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginUser(UserApi userApi) {
         Login login = new Login(loginEmail.getText().toString(), loginPassword.getText().toString());
-        userApi.loginUser(login).enqueue(new Callback<Boolean>() {
+        userApi.loginUser(login).enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
-                    Boolean loginResult = response.body();
-                    if (loginResult != null && loginResult) {
+                    User loginResult = response.body();
+                    System.out.println(loginResult);
+                    if (loginResult != null) {
                         showToast(LoginActivity.this, "Đăng nhập thành công");
+                        saveSharedPref(LoginActivity.this, "email", loginEmail.getText().toString());
                         Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
                         startActivity(intent);
                     } else {
@@ -131,11 +137,18 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 showToast(LoginActivity.this, "Đăng nhập thất bại. Kiểm tra lại đường truyền của bạn.");
                 Logger.getLogger(LoginActivity.class.getName()).log(Level.SEVERE, "Error: ", t);
             }
         });
     }
-
+    private void checkLoginWithCondition() {
+        String savedEmail = getSharedPref(LoginActivity.this, "email", "");
+        if (savedEmail != null && savedEmail != "") {
+            Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
+            startActivity(intent);
+//            finish();
+        }
+    }
 }
