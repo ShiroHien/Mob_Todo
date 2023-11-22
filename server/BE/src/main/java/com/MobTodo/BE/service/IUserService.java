@@ -9,5 +9,5 @@ import java.util.concurrent.ExecutionException;
 public interface IUserService {
     Boolean logup(User user) throws ExecutionException, InterruptedException;
     User getUserDetail(String id) throws ExecutionException, InterruptedException;
-    Boolean login(Login user);
+    User login(Login user);
 }

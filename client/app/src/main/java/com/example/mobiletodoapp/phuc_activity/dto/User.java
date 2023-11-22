@@ -35,12 +35,22 @@ public class User {
     }
 
     public User(String name, String username, String email, String password) {
+        this.id = "";
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String id;
     private String name;
     private String username;
     private String email;
