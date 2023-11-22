@@ -7,6 +7,7 @@ import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.validat
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -42,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton;
     EditText loginEmail, loginPassword;
     private boolean isPasswordVisible = false;
-
+    private ProgressDialog progressDialog;
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -81,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!validateEmpty(loginEmail.getText().toString(), "Email không được để trống", LoginActivity.this) || !validateEmpty(loginPassword.getText().toString(), "Mật khẩu không được để trống", LoginActivity.this)) {
                 } else {
+                    showLoading();
                     loginUser(userApi);
                 }
             }
@@ -125,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 try {
                     processLoginResponse(response);
+                    hideLoading();
                     future.complete(null);
                 } catch (Exception e) {
                     future.completeExceptionally(e);
@@ -133,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                hideLoading();
                 showToast(LoginActivity.this, "Đăng nhập thất bại. Kiểm tra lại đường truyền của bạn.");
                 Logger.getLogger(LoginActivity.class.getName()).log(Level.SEVERE, "Error: ", t);
                 future.completeExceptionally(t);
@@ -171,6 +175,18 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
             startActivity(intent);
             finish();
+        }
+    }
+    private void showLoading() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Đang xử lý...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    private void hideLoading() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
     }
 }
