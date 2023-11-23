@@ -11,6 +11,7 @@ import lombok.*;
 public class TaskDay {
     private String id;
     private String timetableId;
+    private String title;
     private String desciption;
     private String startTime;
     private String endTime;

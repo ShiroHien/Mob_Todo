@@ -18,16 +18,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mobiletodoapp.R;
-import com.example.mobiletodoapp.phuc_activity.MainScreenActivity;
 import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
 import com.example.mobiletodoapp.phuc_activity.api.UserApi;
 import com.example.mobiletodoapp.phuc_activity.dto.User;
 import com.example.mobiletodoapp.phuc_activity.view.Login.LoginActivity;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.mobiletodoapp.thuyen_services.MainScreenActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

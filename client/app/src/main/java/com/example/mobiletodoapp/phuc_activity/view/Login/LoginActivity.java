@@ -14,7 +14,6 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,10 +24,10 @@ import android.widget.TextView;
 import com.example.mobiletodoapp.R;
 import com.example.mobiletodoapp.phuc_activity.dto.User;
 import com.example.mobiletodoapp.phuc_activity.view.Logup.LogupActivity;
-import com.example.mobiletodoapp.phuc_activity.MainScreenActivity;
 import com.example.mobiletodoapp.phuc_activity.dto.Login;
 import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
 import com.example.mobiletodoapp.phuc_activity.api.UserApi;
+import com.example.mobiletodoapp.thuyen_services.MainScreenActivity;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -68,8 +67,11 @@ public class LoginActivity extends AppCompatActivity {
 
         initialize();
         checkLoginWithCondition();
+
+        //Tạo retrofit
         RetrofitService retrofitService = new RetrofitService();
         UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
+
         logupDirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,12 +124,12 @@ public class LoginActivity extends AppCompatActivity {
         CompletableFuture<Void> future = new CompletableFuture<>();
 
         Login login = new Login(loginEmail.getText().toString(), loginPassword.getText().toString());
+
         userApi.loginUser(login).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 try {
                     processLoginResponse(response);
-                    hideLoading();
                     future.complete(null);
                 } catch (Exception e) {
                     future.completeExceptionally(e);
@@ -151,13 +153,15 @@ public class LoginActivity extends AppCompatActivity {
             User loginResult = response.body();
             System.out.println(loginResult);
             if (loginResult != null) {
-                showToast(LoginActivity.this, "Đăng nhập thành công");
                 saveSharedPref(LoginActivity.this, "userId", loginResult.getId());
                 saveSharedPref(LoginActivity.this, "email", loginResult.getEmail());
                 saveSharedPref(LoginActivity.this, "name", loginResult.getName());
                 saveSharedPref(LoginActivity.this, "username", loginResult.getUsername());
+                showToast(LoginActivity.this, "Đăng nhập thành công");
+                hideLoading();
                 Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
                 startActivity(intent);
+                finish();
             } else {
                 showToast(LoginActivity.this, "Sai email hoặc mật khẩu");
             }
