@@ -19,7 +19,7 @@ public class UserController {
         return userService.login(user);
     }
     @PostMapping("/createUser")
-    public Boolean saveUser(@RequestBody User user) throws ExecutionException, InterruptedException {
+    public User saveUser(@RequestBody User user) throws ExecutionException, InterruptedException {
         return userService.logup(user);
     }
     @GetMapping("/getUserDetail/{id}")

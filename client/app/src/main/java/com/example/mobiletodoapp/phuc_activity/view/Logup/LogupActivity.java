@@ -1,10 +1,12 @@
 package com.example.mobiletodoapp.phuc_activity.view.Logup;
 
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.saveSharedPref;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.validateEmpty;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -26,6 +28,8 @@ import com.example.mobiletodoapp.phuc_activity.dto.User;
 import com.example.mobiletodoapp.phuc_activity.view.Login.LoginActivity;
 import com.example.mobiletodoapp.thuyen_services.MainScreenActivity;
 
+import java.util.concurrent.CompletableFuture;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,6 +39,7 @@ public class LogupActivity extends AppCompatActivity {
     TextView loginDirect;
     Button signupButton;
     private boolean isPasswordVisible = false;
+    private ProgressDialog progressDialog;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -100,6 +105,7 @@ public class LogupActivity extends AppCompatActivity {
                 if (!validateEmail(Email) || !validatePassword(Password) || !validateEmpty(name, "Tên không được để trống", LogupActivity.this) || !validateEmpty(userName, "Tên người dùng không được để trống", LogupActivity.this)) {
 
                 } else {
+                    showLoading();
                     logupUser(userApi, name, userName, Email, Password);
                 }
             }
@@ -161,29 +167,61 @@ public class LogupActivity extends AppCompatActivity {
         loginDirect = findViewById(R.id.login_text);
     }
 
-    private void logupUser(UserApi userApi, String name, String userName, String Email, String Password) {
+    private CompletableFuture<Void> logupUser(UserApi userApi, String name, String userName, String Email, String Password) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
         User user = new User(name, userName, Email, Password);
-        userApi.saveUser(user).enqueue(new Callback<Boolean>() {
+        userApi.saveUser(user).enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.isSuccessful()) {
-                    Boolean logupResult = response.body();
-                    if (logupResult != null && logupResult) {
-                        showToast(LogupActivity.this, "Đăng ký thành công");
-                        Intent intent = new Intent(LogupActivity.this, MainScreenActivity.class);
-                        startActivity(intent);
-                    } else {
-                        showToast(LogupActivity.this, "Đăng ký không thành công. Tài khoản email đã tồn tại");
-                    }
-                } else {
-                    showToast(LogupActivity.this, "Đăng ký không thành công");
+            public void onResponse(Call<User> call, Response<User> response) {
+                try {
+                    processLogupResponse(response);
+                    future.complete(null);
+                } catch (Exception e) {
+                    future.completeExceptionally(e);
                 }
             }
 
             @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
+                hideLoading();
                 showToast(LogupActivity.this, "Có lỗi xảy ra");
+                future.completeExceptionally(t);
             }
         });
+        return future;
+    }
+
+    private void processLogupResponse(Response<User> response) {
+        if (response.isSuccessful()) {
+            User logupResult = response.body();
+            if (logupResult != null) {
+                saveSharedPref(LogupActivity.this, "userId", logupResult.getId());
+                saveSharedPref(LogupActivity.this, "email", logupResult.getEmail());
+                saveSharedPref(LogupActivity.this, "name", logupResult.getName());
+                saveSharedPref(LogupActivity.this, "username", logupResult.getUsername());
+                showToast(LogupActivity.this, "Đăng ký thành công");
+                hideLoading();
+                Intent intent = new Intent(LogupActivity.this, MainScreenActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                showToast(LogupActivity.this, "Đăng ký không thành công");
+            }
+        } else {
+            showToast(LogupActivity.this, "Lỗi server");
+        }
+    }
+
+    private void showLoading() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Đang xử lý...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    private void hideLoading() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 }

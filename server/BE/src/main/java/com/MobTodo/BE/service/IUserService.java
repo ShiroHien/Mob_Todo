@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.ExecutionException;
 @Service
 public interface IUserService {
-    Boolean logup(User user) throws ExecutionException, InterruptedException;
+    User logup(User user) throws ExecutionException, InterruptedException;
     User getUserDetail(String id) throws ExecutionException, InterruptedException;
     User login(Login user);
 }

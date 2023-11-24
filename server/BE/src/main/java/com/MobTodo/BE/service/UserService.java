@@ -16,14 +16,15 @@ public class UserService implements IUserService {
     private static final String COLLECTION_NAME = "user";
 
     @Override
-    public Boolean logup(User user) throws ExecutionException, InterruptedException {
+    public User logup(User user) throws ExecutionException, InterruptedException {
         if (checkExist(COLLECTION_NAME, "email", user.getEmail())) {
-            return false;
+            return null;
         } else {
             if (postData(user, COLLECTION_NAME)) {
-                return true;
+                User result = getDetailByFieldName(COLLECTION_NAME, "email", user.getEmail(), User.class);
+                return result;
             }
-            return false;
+            return null;
         }
     }
 

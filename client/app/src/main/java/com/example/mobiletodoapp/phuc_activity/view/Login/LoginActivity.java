@@ -122,9 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private CompletableFuture<Void> loginUser(UserApi userApi) {
         CompletableFuture<Void> future = new CompletableFuture<>();
-
         Login login = new Login(loginEmail.getText().toString(), loginPassword.getText().toString());
-
         userApi.loginUser(login).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -151,7 +149,6 @@ public class LoginActivity extends AppCompatActivity {
     private void processLoginResponse(Response<User> response) {
         if (response.isSuccessful()) {
             User loginResult = response.body();
-            System.out.println(loginResult);
             if (loginResult != null) {
                 saveSharedPref(LoginActivity.this, "userId", loginResult.getId());
                 saveSharedPref(LoginActivity.this, "email", loginResult.getEmail());
