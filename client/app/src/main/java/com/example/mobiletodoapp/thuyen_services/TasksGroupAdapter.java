@@ -11,23 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.phuc_activity.dto.TaskGroup;
 
 import java.util.List;
 
 public class TasksGroupAdapter extends RecyclerView.Adapter<TasksGroupAdapter.TasksGroupViewHolder> {
 
-    private List<TasksGroup> mTasksGroup;
+    private List<TaskGroup> mTasksGroup;
 
     private IClickTasksGroupItem iClickTasksGroupItem;
     public interface IClickTasksGroupItem {
-        void moveToTaskGroupView(TasksGroup tasksGroup);
+        void moveToTaskGroupView(TaskGroup tasksGroup);
     }
 
     public TasksGroupAdapter(IClickTasksGroupItem iClickTasksGroupItem) {
         this.iClickTasksGroupItem = iClickTasksGroupItem;
     }
 
-    public void setData(List<TasksGroup> tasksGroups) {
+    public void setData(List<TaskGroup> tasksGroups) {
         Log.d("adapter", Integer.toString(tasksGroups.size()));
         this.mTasksGroup = tasksGroups;
         notifyDataSetChanged();
@@ -43,7 +44,7 @@ public class TasksGroupAdapter extends RecyclerView.Adapter<TasksGroupAdapter.Ta
 
     @Override
     public void onBindViewHolder(@NonNull TasksGroupViewHolder holder, int position) {
-        TasksGroup tasksGroup = mTasksGroup.get(position);
+        TaskGroup tasksGroup = mTasksGroup.get(position);
         if(tasksGroup == null) {
             return;
         }

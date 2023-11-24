@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,8 +29,7 @@
             android:layout_marginTop="16dp"
             android:text="Tạo nhóm mới"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/payone"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,6 +42,7 @@
             android:layout_marginEnd="32dp"
             android:text="Tạo nhóm"
             android:textStyle="bold"
+            android:fontFamily="@font/roboto_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,13 +50,15 @@
             android:id="@+id/edt_group_title"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="50dp"
             android:hint="Tên nhóm"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/roboto_regular"
             app:layout_constraintHorizontal_bias="0.32"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="@color/main_color" />
 
         <TextView
             android:id="@+id/tv_cancel_add_tasksgroup"
@@ -66,8 +67,9 @@
             android:layout_marginStart="156dp"
             android:layout_marginTop="112dp"
             android:text="Hủy"
-            android:textColor="#FF2C2C"
+            android:textColor="@color/black"
             android:textStyle="bold"
+            android:fontFamily="@font/roboto_bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

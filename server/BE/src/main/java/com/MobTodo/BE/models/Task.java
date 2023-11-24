@@ -11,11 +11,11 @@ import lombok.*;
 public class Task {
     private String id;
     private String taskGroupId;
+    private String title;
     private String description;
-    //0 là chưa hoàn thành, 1 là đã hoàn thành
-    private int isCompleted;
     private String startTime;
     private String endTime;
-    // 0 là bình thường, 1 là MyDay, 2 là Important
-    private int type;
+    private boolean completed = false;
+    private boolean myDay = false;
+    private boolean important = false;
 }

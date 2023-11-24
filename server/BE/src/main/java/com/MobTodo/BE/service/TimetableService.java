@@ -13,13 +13,17 @@ public class TimetableService implements ITimetableService {
     private static final String COLLECTION_NAME = "Timetable";
 
     @Override
-    public Boolean createTimetable(Timetable data) throws ExecutionException, InterruptedException {
-        if (!checkExist(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId()) ) {
+    public Timetable createTimetable(Timetable data) throws ExecutionException, InterruptedException {
+        if (!checkExist(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId())) {
             if (checkDateFormat(data.getDayTime())) {
-                return postData(data, COLLECTION_NAME);
+                if (postData(data, COLLECTION_NAME)) {
+                    Timetable timetable = getDetailByFieldName(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId(), Timetable.class);
+                    return timetable;
+                }
+                return null;
             }
         }
-        return false;
+        return null;
     }
 
     @Override
