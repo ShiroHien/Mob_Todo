@@ -35,6 +35,7 @@ public class Function {
             return false;
         }
     }
+
     public static boolean checkExist(String collectionName, String fieldName1, String value1, String fieldName2, String value2) {
         try {
             ApiFuture<QuerySnapshot> future = dbFirestore
@@ -105,6 +106,23 @@ public class Function {
         try {
             // Thực hiện truy vấn
             ApiFuture<QuerySnapshot> future = dbFirestore.collection(collectionName).whereEqualTo(fieldName, value).get();
+            QuerySnapshot querySnapshot = future.get();
+
+            // Kiểm tra và chuyển đổi tài liệu đầu tiên
+            if (!querySnapshot.isEmpty()) {
+                DocumentSnapshot firstDocument = querySnapshot.getDocuments().get(0);
+                return firstDocument.toObject(valueType);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static <T> T getDetailByFieldName(String collectionName, String fieldName1, String value1, String fieldName2, String value2, Class<T> valueType) {
+        try {
+            // Thực hiện truy vấn
+            ApiFuture<QuerySnapshot> future = dbFirestore.collection(collectionName).whereEqualTo(fieldName1, value1).whereEqualTo(fieldName2, value2).get();
             QuerySnapshot querySnapshot = future.get();
 
             // Kiểm tra và chuyển đổi tài liệu đầu tiên

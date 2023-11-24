@@ -30,8 +30,7 @@
             android:layout_marginTop="16dp"
             android:text="Tạo nhóm mới"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/payone"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,6 +43,7 @@
             android:layout_marginEnd="32dp"
             android:text="Tạo nhóm"
             android:textStyle="bold"
+            android:fontFamily="@font/roboto_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,9 +55,11 @@
             android:hint="Tên nhóm"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/roboto_regular"
             app:layout_constraintHorizontal_bias="0.32"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="@color/main_color" />
 
         <TextView
             android:id="@+id/tv_cancel_add_tasksgroup"
@@ -68,6 +70,7 @@
             android:text="Hủy"
             android:textColor="#FF2C2C"
             android:textStyle="bold"
+            android:fontFamily="@font/roboto_regular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
