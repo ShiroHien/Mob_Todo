@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public interface ITimetableService {
-    Boolean createTimetable(Timetable data) throws ExecutionException, InterruptedException;
+    Timetable createTimetable(Timetable data) throws ExecutionException, InterruptedException;
     List<Timetable> getTimetableById(String userId);
 
 }

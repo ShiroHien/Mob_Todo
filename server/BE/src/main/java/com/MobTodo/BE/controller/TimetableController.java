@@ -14,7 +14,7 @@ public class TimetableController {
     @Autowired
     private ITimetableService timetableService;
     @PostMapping("/createTimetable")
-    public Boolean createTimetable(@RequestBody Timetable data) throws ExecutionException, InterruptedException {
+    public Timetable createTimetable(@RequestBody Timetable data) throws ExecutionException, InterruptedException {
         return timetableService.createTimetable(data);
     }
     @GetMapping("/getListTimetable/{userId}")
