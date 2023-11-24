@@ -17,8 +17,7 @@ public class TimetableService implements ITimetableService {
         if (!checkExist(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId())) {
             if (checkDateFormat(data.getDayTime())) {
                 if (postData(data, COLLECTION_NAME)) {
-                    Timetable timetable = getDetailByFieldName(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId(), Timetable.class);
-                    return timetable;
+                    return getDetailByFieldName(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId(), Timetable.class);
                 }
                 return null;
             }
