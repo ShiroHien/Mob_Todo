@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
@@ -183,6 +184,7 @@ public class LogupActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                Log.d("error", "loi gi do", t);
                 hideLoading();
                 showToast(LogupActivity.this, "Có lỗi xảy ra");
                 future.completeExceptionally(t);

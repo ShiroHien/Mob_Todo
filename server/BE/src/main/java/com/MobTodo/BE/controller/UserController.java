@@ -20,6 +20,7 @@ public class UserController {
     }
     @PostMapping("/createUser")
     public User saveUser(@RequestBody User user) throws ExecutionException, InterruptedException {
+        System.out.println(user);
         return userService.logup(user);
     }
     @GetMapping("/getUserDetail/{id}")

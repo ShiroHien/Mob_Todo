@@ -22,6 +22,7 @@ public class UserService implements IUserService {
         } else {
             if (postData(user, COLLECTION_NAME)) {
                 User result = getDetailByFieldName(COLLECTION_NAME, "email", user.getEmail(), User.class);
+                System.out.println(result);
                 return result;
             }
             return null;
