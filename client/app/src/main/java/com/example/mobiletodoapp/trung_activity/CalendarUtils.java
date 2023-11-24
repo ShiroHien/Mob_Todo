@@ -1,16 +1,39 @@
 package com.example.mobiletodoapp.trung_activity;
 
 
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.saveSharedPref;
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
+
+import android.content.Context;
+
+import com.example.mobiletodoapp.phuc_activity.dto.Timetable;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CalendarUtils
 {
     public static LocalDate selectedDate;
+
+    public static List<Timetable> existingTimetableList;
+
+    public static String monthDayYearDate(LocalDate date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        return date.format(formatter);
+    }
 
     public static String formattedDate(LocalDate date)
     {

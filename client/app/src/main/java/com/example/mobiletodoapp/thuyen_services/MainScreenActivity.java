@@ -15,7 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.trung_activity.CalendarUtils;
+import com.example.mobiletodoapp.trung_activity.MonthViewActivity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,10 +106,18 @@ public class MainScreenActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MonthViewActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
     private void init() {
+        CalendarUtils.selectedDate = LocalDate.now();
         myDay = findViewById(R.id.my_day);
         important = findViewById(R.id.important);
         calendar = findViewById(R.id.calendar);
