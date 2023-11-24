@@ -1,12 +1,16 @@
 package com.example.mobiletodoapp.thuyen_services;
 
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,9 +19,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
+import com.example.mobiletodoapp.phuc_activity.api.TaskGroupApi;
+import com.example.mobiletodoapp.phuc_activity.dto.TaskGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainScreenActivity extends AppCompatActivity {
 
@@ -37,11 +49,14 @@ public class MainScreenActivity extends AppCompatActivity {
 
 
 
-    List<TasksGroup> tasksGroups = new ArrayList<>();
+    List<TaskGroup> tasksGroups = new ArrayList<>();
+    TaskGroupApi taskGroupApi;
+
+    private ProgressDialog progressDialog;
 
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
         @Override
-        public void moveToTaskGroupView(TasksGroup tasksGroup) {
+        public void moveToTaskGroupView(TaskGroup tasksGroup) {
             Intent intent = new Intent(MainScreenActivity.this, TasksGroupView.class);
             startActivity(intent);
         }
@@ -53,6 +68,13 @@ public class MainScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_screen);
 
         init();
+
+        RetrofitService retrofitService = new RetrofitService();
+        taskGroupApi = retrofitService.getRetrofit().create(TaskGroupApi.class);
+
+        getTasksGroupsFromServer(taskGroupApi);
+
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -121,22 +143,81 @@ public class MainScreenActivity extends AppCompatActivity {
 
 
 
-        TasksGroup t1 = new TasksGroup("nhom 1");
-        TasksGroup t2 = new TasksGroup("nhom 2");
-        TasksGroup t3 = new TasksGroup("nhom 3");
-        tasksGroups.add(t1);
-        tasksGroups.add(t2);
-        tasksGroups.add(t3);
+
     }
 
     private void addTasksGroup(String title) {
         if(title == null || title.isEmpty()) {
             Toast.makeText(MainScreenActivity.this, "Tên nhóm không được để trống", Toast.LENGTH_SHORT).show();
         } else {
-            tasksGroups.add(new TasksGroup(title));
-            adapter.setData(tasksGroups);
+            String userId = getSharedPref(this, "userId", "default id");
+            Log.d("pref", userId);
+            TaskGroup taskGroup = new TaskGroup(title, userId);
+            createTasksGroup(taskGroupApi, taskGroup);
+
             edtGroupTitle.setText("");
             layoutAddTasksgroup.setVisibility(View.GONE);
         }
+    }
+
+    private CompletableFuture<Void> createTasksGroup(TaskGroupApi taskGroupApi, TaskGroup taskGroup) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        Log.d("create tasksgroup", "create tasksgroup func");
+
+        taskGroupApi.createTaskGroup(taskGroup).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                try {
+                    if(response.body()) {
+                        tasksGroups.add(taskGroup);
+                        adapter.setData(tasksGroups);
+                        Log.d("create tasksgroup", "them nhom thanh cong");
+                    } else {
+                        Log.d("create tasksgroup", "them nhom that bai");
+                    }
+                    future.complete(null);
+                }catch (Exception e) {
+                    Log.d("create tasksgroup", "loi");
+                    future.completeExceptionally(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.d("create tasksgroup", "onFailure");
+                future.completeExceptionally(t);
+            }
+        });
+
+        return  future;
+    }
+
+    private CompletableFuture<Void> getTasksGroupsFromServer(TaskGroupApi taskGroupApi) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        String userId = getSharedPref(this, "userId", "default id");
+        Log.d("pref", userId);
+
+        taskGroupApi.getTasksGroup(userId).enqueue(new Callback<List<TaskGroup>>() {
+            @Override
+            public void onResponse(Call<List<TaskGroup>> call, Response<List<TaskGroup>> response) {
+                try {
+                    tasksGroups = response.body();
+                    adapter.setData(tasksGroups);
+                    Log.d("get data", response.body().toString());
+                    future.complete(null);
+                } catch (Exception e) {
+                    future.completeExceptionally(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TaskGroup>> call, Throwable t) {
+                future.completeExceptionally(t);
+            }
+        });
+
+        return future;
     }
 }
