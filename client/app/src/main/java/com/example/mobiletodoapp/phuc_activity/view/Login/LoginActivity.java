@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     private ShapeableImageView googleSignInButton;
     private RetrofitService retrofitService;
     private UserApi userApi;
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -224,25 +225,17 @@ public class LoginActivity extends AppCompatActivity {
     private void handleGoogleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            // Signed in successfully, show authenticated UI.
             if (account != null) {
-                saveGoogleSignInData(account);
-                showToast(LoginActivity.this, "Đăng nhập thành công với Google");
-                Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
-                startActivity(intent);
-                finish();
+                signInDatabase(userApi, account);
             } else {
                 showToast(LoginActivity.this, "Đăng nhập không thành công với Google");
             }
         } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
+            Log.e("error", "messgae: ", e);
             showToast(LoginActivity.this, "Đăng nhập không thành công với Google: " + e.getStatusCode());
         }
     }
 
-    private void saveGoogleSignInData(GoogleSignInAccount account) {
-        signInDatabase(userApi, account);
-    }
     private CompletableFuture<Void> signInDatabase(UserApi userApi, GoogleSignInAccount account) {
         CompletableFuture<Void> future = new CompletableFuture<>();
         User user = new User(account.getDisplayName(), account.getGivenName(), account.getEmail(), "svVNU123");
@@ -267,6 +260,7 @@ public class LoginActivity extends AppCompatActivity {
 
         return future;
     }
+
     private void processSignInWithGoogleResponse(Response<User> response) {
         if (response.isSuccessful()) {
             User logupResult = response.body();
@@ -275,6 +269,10 @@ public class LoginActivity extends AppCompatActivity {
                 saveSharedPref(LoginActivity.this, "email", logupResult.getEmail());
                 saveSharedPref(LoginActivity.this, "name", logupResult.getName());
                 saveSharedPref(LoginActivity.this, "username", logupResult.getUsername());
+                showToast(LoginActivity.this, "Đăng nhập thành công với Google");
+                Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
+                startActivity(intent);
+                finish();
             } else {
                 showToast(LoginActivity.this, "Đăng nhập với tài khoản Google không thành công");
             }
@@ -282,6 +280,7 @@ public class LoginActivity extends AppCompatActivity {
             showToast(LoginActivity.this, "Lỗi server");
         }
     }
+
     private void showLoading() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Đang xử lý...");

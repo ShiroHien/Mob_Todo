@@ -77,8 +77,6 @@ public class MainScreenActivity extends AppCompatActivity {
 
         getTasksGroupsFromServer(taskGroupApi);
 
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
@@ -151,9 +149,6 @@ public class MainScreenActivity extends AppCompatActivity {
         edtGroupTitle = findViewById(R.id.edt_group_title);
         tvCancelAddGroup = findViewById(R.id.tv_cancel_add_tasksgroup);
         tvAddGroup = findViewById(R.id.tv_add_tasksgroup);
-
-
-
 
     }
 
