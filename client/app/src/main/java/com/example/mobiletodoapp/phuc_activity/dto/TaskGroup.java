@@ -34,4 +34,9 @@ public class TaskGroup {
     private String id;
     private String title;
     private String userId;
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

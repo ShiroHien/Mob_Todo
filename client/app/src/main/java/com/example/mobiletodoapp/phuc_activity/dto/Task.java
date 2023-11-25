@@ -3,20 +3,24 @@ package com.example.mobiletodoapp.phuc_activity.dto;
 public class Task {
     private String id;
     private String taskGroupId;
+    private String title;
     private String description;
-    //0 là chưa hoàn thành, 1 là đã hoàn thành
-    private int isCompleted = 0;
     private String startTime;
     private String endTime;
-    // 0 là bình thường, 1 là MyDay, 2 là Important
-    private boolean isMyDay;
-    private boolean isImportant;
+    private boolean completed = false;
+    private boolean myDay = false;
+    private boolean important = false;
 
-    public Task(String taskGroupId, String description, String startTime, String endTime) {
+    public Task(String taskGroupId, String title, String description, String startTime, String endTime) {
         this.taskGroupId = taskGroupId;
+        this.title = title;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTaskGroupId() {
@@ -27,20 +31,20 @@ public class Task {
         this.taskGroupId = taskGroupId;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getIsCompleted() {
-        return isCompleted;
-    }
-
-    public void setIsCompleted(int isCompleted) {
-        this.isCompleted = isCompleted;
     }
 
     public String getStartTime() {
@@ -59,19 +63,27 @@ public class Task {
         this.endTime = endTime;
     }
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
     public boolean isMyDay() {
-        return isMyDay;
+        return myDay;
     }
 
     public void setMyDay(boolean myDay) {
-        isMyDay = myDay;
+        this.myDay = myDay;
     }
 
     public boolean isImportant() {
-        return isImportant;
+        return important;
     }
 
     public void setImportant(boolean important) {
-        isImportant = important;
+        this.important = important;
     }
 }

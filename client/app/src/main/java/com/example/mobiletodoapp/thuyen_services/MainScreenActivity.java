@@ -61,6 +61,8 @@ public class MainScreenActivity extends AppCompatActivity {
         @Override
         public void moveToTaskGroupView(TaskGroup tasksGroup) {
             Intent intent = new Intent(MainScreenActivity.this, TasksGroupView.class);
+            intent.putExtra("tasksgroupId", tasksGroup.getId());
+            intent.putExtra("tasksgroupTitle", tasksGroup.getTitle());
             startActivity(intent);
         }
     });
@@ -75,6 +77,7 @@ public class MainScreenActivity extends AppCompatActivity {
         RetrofitService retrofitService = new RetrofitService();
         taskGroupApi = retrofitService.getRetrofit().create(TaskGroupApi.class);
 
+        showLoading();
         getTasksGroupsFromServer(taskGroupApi);
 
 
@@ -164,6 +167,7 @@ public class MainScreenActivity extends AppCompatActivity {
             String userId = getSharedPref(this, "userId", "default id");
             Log.d("pref", userId);
             TaskGroup taskGroup = new TaskGroup(title, userId);
+            showLoading();
             createTasksGroup(taskGroupApi, taskGroup);
 
             edtGroupTitle.setText("");
@@ -183,6 +187,7 @@ public class MainScreenActivity extends AppCompatActivity {
                     if(response.body()) {
                         tasksGroups.add(taskGroup);
                         adapter.setData(tasksGroups);
+                        hideLoading();
                         Log.d("create tasksgroup", "them nhom thanh cong");
                     } else {
                         Log.d("create tasksgroup", "them nhom that bai");
@@ -216,6 +221,7 @@ public class MainScreenActivity extends AppCompatActivity {
                 try {
                     tasksGroups = response.body();
                     adapter.setData(tasksGroups);
+                    hideLoading();
                     Log.d("get data", response.body().toString());
                     future.complete(null);
                 } catch (Exception e) {
@@ -230,5 +236,18 @@ public class MainScreenActivity extends AppCompatActivity {
         });
 
         return future;
+    }
+
+    private void showLoading() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Đang xử lý...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    private void hideLoading() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 }

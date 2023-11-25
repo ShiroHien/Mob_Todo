@@ -12,13 +12,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.phuc_activity.dto.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImportantActivity extends AppCompatActivity {
 
-    List<Task> tasks;
+    List<Task> tasks = new ArrayList<>();
     List<Task> previousTasks = new ArrayList<>();
     RecyclerView rcvTaskList;
     ImageButton btnAddTask;
@@ -34,10 +35,10 @@ public class ImportantActivity extends AppCompatActivity {
         @Override
         public void handleCompleteBtn(Task task) {
             copyData(previousTasks, tasks);
-            if(task.getType() == false) {
-                task.setType(true);
+            if(task.isCompleted() == false) {
+                task.setCompleted(true);
             } else {
-                task.setType(false);
+                task.setCompleted(false);
             }
 
             tasks.remove(task);
@@ -48,10 +49,10 @@ public class ImportantActivity extends AppCompatActivity {
         @Override
         public void handleImportantBtn(Task task) {
             copyData(previousTasks, tasks);
-            if(task.getType() == false) {
-                task.setType(true);
+            if(task.isImportant() == false) {
+                task.setImportant(true);
             } else {
-                task.setType(false);
+                task.setImportant(false);
             }
             tasks.remove(task);
             adapter.setData(tasks);
@@ -97,22 +98,12 @@ public class ImportantActivity extends AppCompatActivity {
         btnUndo = findViewById(R.id.btn_undo);
 
 
-        tasks = new ArrayList<>();
-        tasks.add(new Task("Task1", Task.CHECK, "bla"));
-        tasks.add(new Task("Task2", Task.CHECK, "bla"));
-        tasks.add(new Task("Task3", Task.CHECK, "bla"));
+
 
     }
     public void copyData(List<Task> a, List<Task> b) {
         a.clear();
-        for(Task t : b) {
-            Task task = new Task();
-            task.setTitle(t.getTitle());
-            task.setType(t.getType());
-            task.setDescription(t.getDescription());
-            task.setCompleted(t.isCompleted);
-            a.add(task);
-        }
+
 
     }
 }
