@@ -9,6 +9,7 @@ import static com.example.mobiletodoapp.trung_activity.CalendarUtils.monthYearFr
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -120,22 +121,26 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
         }
     }
 
-    private CompletableFuture<Timetable> handleTimetableForDate(LocalDate date) {
-        CompletableFuture<Timetable> future = new CompletableFuture<>();
-        String userId = getSharedPref(getApplicationContext(),"userId","");
-
+    private CompletableFuture<Void> handleTimetableForDate(LocalDate date) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        String userId = getSharedPref(MonthViewActivity.this,"userId","");
         Timetable timetable = new Timetable(userId,CalendarUtils.monthDayYearDate(date));
         timetableApi.createTimetable(timetable).enqueue(new Callback<Timetable>() {
-
             @Override
             public void onResponse(Call<Timetable> call, Response<Timetable> response) {
                 try {
-                    hideLoading();
-                    if(response.body() == null){
-                        handleExistingTimetable(CalendarUtils.monthDayYearDate(date));
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            // Xử lý dữ liệu JSON khi nó không null
+                            saveSharedPref(MonthViewActivity.this, "chosenTimetableId", response.body().getId());
+                        } else {
+                            // Xử lý khi response body là null
+                            handleExistingTimetable(CalendarUtils.monthDayYearDate(date));
+                        }
                     } else {
-                        saveSharedPref(getApplicationContext(),"chosenTimetableId",response.body().getId());
+                        showToast(MonthViewActivity.this, "Lỗi server: " + response.code());
                     }
+                    hideLoading();
                     future.complete(null);
                 } catch (Exception e){
                     future.completeExceptionally(e);
