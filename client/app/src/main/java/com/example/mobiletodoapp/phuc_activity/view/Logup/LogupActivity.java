@@ -28,6 +28,8 @@ import com.example.mobiletodoapp.phuc_activity.api.UserApi;
 import com.example.mobiletodoapp.phuc_activity.dto.User;
 import com.example.mobiletodoapp.phuc_activity.view.Login.LoginActivity;
 import com.example.mobiletodoapp.thuyen_services.MainScreenActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -41,7 +43,8 @@ public class LogupActivity extends AppCompatActivity {
     Button signupButton;
     private boolean isPasswordVisible = false;
     private ProgressDialog progressDialog;
-
+    FirebaseAuth auth;
+    GoogleSignInClient googleSignInClient;
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {

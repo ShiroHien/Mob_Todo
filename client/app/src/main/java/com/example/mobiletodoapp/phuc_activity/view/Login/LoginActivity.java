@@ -5,8 +5,10 @@ import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.saveSha
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.validateEmpty;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,6 +31,13 @@ import com.example.mobiletodoapp.phuc_activity.dto.Login;
 import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
 import com.example.mobiletodoapp.phuc_activity.api.UserApi;
 import com.example.mobiletodoapp.thuyen_services.MainScreenActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -43,6 +53,10 @@ public class LoginActivity extends AppCompatActivity {
     EditText loginEmail, loginPassword;
     private boolean isPasswordVisible = false;
     private ProgressDialog progressDialog;
+    private GoogleSignInClient googleSignInClient;
+    private ShapeableImageView googleSignInButton;
+    private RetrofitService retrofitService;
+    private UserApi userApi;
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -69,8 +83,8 @@ public class LoginActivity extends AppCompatActivity {
         checkLoginWithCondition();
 
         //Tạo retrofit
-        RetrofitService retrofitService = new RetrofitService();
-        UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
+        retrofitService = new RetrofitService();
+        userApi = retrofitService.getRetrofit().create(UserApi.class);
 
         logupDirectText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +125,12 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
+        googleSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signInWithGoogle();
+            }
+        });
     }
 
     private void initialize() {
@@ -118,6 +138,12 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         loginEmail = findViewById(R.id.email);
         loginPassword = findViewById(R.id.password);
+        googleSignInButton = findViewById(R.id.googleSignInButton);
+        GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.client_id))
+                .requestEmail()
+                .build();
+        googleSignInClient = GoogleSignIn.getClient(LoginActivity.this, options);
     }
 
     private CompletableFuture<Void> loginUser(UserApi userApi) {
@@ -166,16 +192,94 @@ public class LoginActivity extends AppCompatActivity {
             showToast(LoginActivity.this, "Lỗi server");
         }
     }
+
     private void checkLoginWithCondition() {
         String savedEmail = getSharedPref(LoginActivity.this, "email", "");
         String userId = getSharedPref(LoginActivity.this, "userId", "");
-        String name = getSharedPref(LoginActivity.this, "name", "");
-        String username = getSharedPref(LoginActivity.this, "username", "");
-        if (!savedEmail.isEmpty() && !username.isEmpty() && !userId.isEmpty() && !name.isEmpty()) {
+        if (!savedEmail.isEmpty() && !userId.isEmpty()) {
             showToast(LoginActivity.this, "Tự động đăng nhập thành công");
             Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
             startActivity(intent);
             finish();
+        }
+    }
+
+    private void signInWithGoogle() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private static final int RC_SIGN_IN = 123;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleGoogleSignInResult(task);
+        }
+    }
+
+    private void handleGoogleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            // Signed in successfully, show authenticated UI.
+            if (account != null) {
+                saveGoogleSignInData(account);
+                showToast(LoginActivity.this, "Đăng nhập thành công với Google");
+                Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                showToast(LoginActivity.this, "Đăng nhập không thành công với Google");
+            }
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            showToast(LoginActivity.this, "Đăng nhập không thành công với Google: " + e.getStatusCode());
+        }
+    }
+
+    private void saveGoogleSignInData(GoogleSignInAccount account) {
+        signInDatabase(userApi, account);
+    }
+    private CompletableFuture<Void> signInDatabase(UserApi userApi, GoogleSignInAccount account) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        User user = new User(account.getDisplayName(), account.getGivenName(), account.getEmail(), "svVNU123");
+        userApi.saveUser(user).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                try {
+                    processSignInWithGoogleResponse(response);
+                    future.complete(null);
+                } catch (Exception e) {
+                    future.completeExceptionally(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("error", "loi gi do", t);
+                showToast(LoginActivity.this, "Có lỗi xảy ra");
+                future.completeExceptionally(t);
+            }
+        });
+
+        return future;
+    }
+    private void processSignInWithGoogleResponse(Response<User> response) {
+        if (response.isSuccessful()) {
+            User logupResult = response.body();
+            if (logupResult != null) {
+                saveSharedPref(LoginActivity.this, "userId", logupResult.getId());
+                saveSharedPref(LoginActivity.this, "email", logupResult.getEmail());
+                saveSharedPref(LoginActivity.this, "name", logupResult.getName());
+                saveSharedPref(LoginActivity.this, "username", logupResult.getUsername());
+            } else {
+                showToast(LoginActivity.this, "Đăng nhập với tài khoản Google không thành công");
+            }
+        } else {
+            showToast(LoginActivity.this, "Lỗi server");
         }
     }
     private void showLoading() {

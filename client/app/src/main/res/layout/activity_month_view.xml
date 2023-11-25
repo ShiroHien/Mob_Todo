@@ -8,10 +8,10 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/mainCalendarView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
+        android:orientation="vertical">
 
         <Button
             android:layout_width="wrap_content"
@@ -169,15 +169,25 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Các sự kiện trong ngày"
-                android:textSize="30sp"
                 android:textColor="#808080"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toStartOf="@+id/progressBar"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnAddEvent" />
+                app:layout_constraintTop_toBottomOf="@+id/btnAddEvent" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintTop_toBottomOf="@+id/btnAddEvent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

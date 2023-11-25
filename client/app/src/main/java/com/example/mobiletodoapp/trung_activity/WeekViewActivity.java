@@ -24,7 +24,6 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
-    public BottomSheetBehavior bottomSheetBehavior;
 
 
     @Override
@@ -40,8 +39,6 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
-        bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottomSheet));
-        bottomSheetBehavior.setHalfExpandedRatio(0.6f);
     }
 
     private void setWeekView()
@@ -73,7 +70,6 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     {
         CalendarUtils.selectedDate = date;
         setWeekView();
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
     }
 
     @Override

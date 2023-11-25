@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">MobileTodoApp</string>
+    <string name="app_name">VNOTE</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="client_id">564128772795-omujpn7td64g4hk39vkgep8s87h6clks.apps.googleusercontent.com</string>
 </resources>
