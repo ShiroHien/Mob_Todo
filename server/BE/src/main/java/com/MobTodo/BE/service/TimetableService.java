@@ -17,13 +17,14 @@ public class TimetableService implements ITimetableService {
         if (!checkExist(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId())) {
             if (checkDateFormat(data.getDayTime())) {
                 if (postData(data, COLLECTION_NAME)) {
-                    Timetable timetable = getDetailByFieldName(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId(), Timetable.class);
-                    return timetable;
+                    return getDetailByFieldName(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId(), Timetable.class);
                 }
+                System.out.println("Pass with null 1");
                 return null;
             }
         }
-        return null;
+        System.out.println("Pass with null 2");
+        return getDetailByFieldName(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId(), Timetable.class);
     }
 
     @Override

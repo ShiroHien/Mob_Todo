@@ -43,9 +43,10 @@ public class UserService implements IUserService {
         if (user == null) {
             return null;
         }
-        if(!user.getPassword().equals(login.getPassword())) {
+        if (!user.getPassword().equals(login.getPassword())) {
             return null;
         }
         return user;
     }
+
 }
