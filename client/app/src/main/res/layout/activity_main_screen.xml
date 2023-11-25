@@ -7,60 +7,60 @@
     android:background="@drawable/bg"
     tools:context=".thuyen_services.MainScreenActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#BA482B82">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="#BA482B82"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/ava_user"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/image"
+            android:clickable="true" />
 
         <TextView
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/ava_user"
             android:text="User name"
             android:textColor="@color/white"
-            android:textSize="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+            android:textSize="24dp" />
 
         <TextView
             android:id="@+id/gmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="4dp"
+            android:layout_below="@+id/user_name"
+            android:layout_alignStart="@+id/user_name"
             android:text="Gmail"
             android:textColor="@color/white"
-            android:textSize="14dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_name"
-            tools:ignore="MissingConstraints,TextSizeCheck" />
+            android:textSize="14dp" />
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white"
-        android:paddingLeft="10dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
         android:paddingTop="10dp"
-        android:paddingRight="10dp"
+        android:paddingRight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp"
-        android:orientation="vertical">
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:id="@+id/my_day"
@@ -71,23 +71,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="39dp">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/white_sun_icon"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/white_sun_icon" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto_bold"
                     android:gravity="center_vertical"
-                    android:text="Ngày của tôi" />
-
+                    android:text="Ngày của tôi"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#ccc"/>
         </LinearLayout>
 
         <LinearLayout
@@ -99,23 +98,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="39dp">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/white_star_important"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/white_star_important" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto_bold"
                     android:gravity="center_vertical"
-                    android:text="Quan trọng" />
+                    android:text="Quan trọng"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#ccc"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -127,23 +127,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="39dp">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/calendar_icon"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/calendar_icon" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto_bold"
                     android:gravity="center_vertical"
-                    android:text="Xem lịch" />
+                    android:text="Lịch"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#ccc"/>
         </LinearLayout>
 
         <LinearLayout
@@ -155,23 +155,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="39dp">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/clock_icon"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/clock_icon" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto_bold"
                     android:gravity="center_vertical"
-                    android:text="Chế độ tập trung" />
+                    android:text="Chế độ tập trung"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ccc"/>
+                android:background="#ccc" />
         </LinearLayout>
 
         <LinearLayout
@@ -182,37 +187,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="39dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/menu_alt_icon"
-                    android:layout_marginRight="8dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="Ngày của tôi" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/arrow_down_icon"
-                    android:layout_marginRight="8dp"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp">
+                >
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_tasksgroup"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
-
 
     </LinearLayout>
 
