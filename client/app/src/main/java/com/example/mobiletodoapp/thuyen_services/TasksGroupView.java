@@ -188,8 +188,8 @@ public class TasksGroupView extends AppCompatActivity {
     private void handleClickedBtnAddTask() {
         String title = edtTaskTitle.getText().toString().trim();
         String des = edtDescription.getText().toString().trim();
-        String startTime = tvStartTime.toString().trim();
-        String endTime = tvEndTime.toString().trim();
+        String startTime = tvStartTime.getText().toString().trim();
+        String endTime = tvEndTime.getText().toString().trim();
         if(title == null || title.isEmpty()) {
             Toast.makeText(TasksGroupView.this, "Tên nhiệm vụ không được để trống", Toast.LENGTH_SHORT).show();
         } else {
@@ -201,6 +201,12 @@ public class TasksGroupView extends AppCompatActivity {
 
     private CompletableFuture<Void> createTask(TaskApi taskApi, Task task) {
         CompletableFuture<Void> future = new CompletableFuture<>();
+
+        Log.d("create task", tasksGroupIdSelected + '\n' +
+                task.getTitle() + '\n' +
+                task.getDescription() + '\n' +
+                task.getStartTime() + '\n' +
+                task.getEndTime());
 
         taskApi.createTask(task).enqueue(new Callback<Boolean>() {
             @Override
@@ -217,6 +223,7 @@ public class TasksGroupView extends AppCompatActivity {
                 } catch (Exception e) {
 
                     future.completeExceptionally(e);
+                    Log.d("create task", "loi ket noi");
                 }
             }
 
@@ -341,7 +348,7 @@ public class TasksGroupView extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TaskGroup taskGroup = (TaskGroup) parent.getSelectedItem();
                 tasksGroupIdSelected = intent1.getStringExtra("tasksgroupId");
-
+                Log.d("create task", "select id: " + intent1.getStringExtra("tasksgroupId"));
             }
 
             @Override
