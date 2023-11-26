@@ -62,6 +62,7 @@ public class MainScreenActivity extends AppCompatActivity {
             intent.putExtra("tasksgroupId", tasksGroup.getId());
             intent.putExtra("tasksgroupTitle", tasksGroup.getTitle());
             startActivity(intent);
+//            Toast.makeText(MainScreenActivity.this, tasksGroup.getId(), Toast.LENGTH_SHORT).show();
         }
     });
 
@@ -180,8 +181,8 @@ public class MainScreenActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 try {
-                    if (response.body()) {
-                        tasksGroups.add(taskGroup);
+                    if(response.body()) {
+                        getTasksGroupsFromServer(taskGroupApi);
                         adapter.setData(tasksGroups);
                         hideLoading();
                         Log.d("create tasksgroup", "them nhom thanh cong");
