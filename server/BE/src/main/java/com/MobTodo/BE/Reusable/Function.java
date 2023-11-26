@@ -51,10 +51,15 @@ public class Function {
             return false;
         }
     }
-
-    public static Long distanceTime(String start, String end) {
+    public static Long distanceDateTime(String start, String end) {
         LocalDateTime startTime = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
         LocalDateTime endTime = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
+        long durationInSeconds = Duration.between(startTime, endTime).getSeconds();
+        return durationInSeconds;
+    }
+    public static Long distanceTime(String start, String end) {
+        LocalTime startTime = LocalTime.parse(start, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        LocalTime endTime = LocalTime.parse(end, DateTimeFormatter.ofPattern("HH:mm:ss"));
         long durationInSeconds = Duration.between(startTime, endTime).getSeconds();
         return durationInSeconds;
     }
@@ -71,12 +76,13 @@ public class Function {
     }
 
     public static boolean checkTimeFormat(String input) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         try {
-            LocalTime parsedDate = LocalTime.parse(input, dateFormatter);
-            return true; // If parsing is successful, the date is valid
+            LocalTime parsedTime = LocalTime.parse(input.trim(), timeFormatter);
+            return true; // If parsing is successful, the time is valid
         } catch (DateTimeParseException e) {
-            return false; // If parsing fails, the date is not valid
+            System.out.println(e);
+            return false; // If parsing fails, the time is not valid
         }
     }
 

@@ -50,11 +50,9 @@ public class MainScreenActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
-
-
     List<TaskGroup> tasksGroups = new ArrayList<>();
     TaskGroupApi taskGroupApi;
-
+    TextView username, email;
     private ProgressDialog progressDialog;
 
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
@@ -152,11 +150,14 @@ public class MainScreenActivity extends AppCompatActivity {
         edtGroupTitle = findViewById(R.id.edt_group_title);
         tvCancelAddGroup = findViewById(R.id.tv_cancel_add_tasksgroup);
         tvAddGroup = findViewById(R.id.tv_add_tasksgroup);
-
+        username = findViewById(R.id.user_name);
+        email = findViewById(R.id.gmail);
+        username.setText(getSharedPref(MainScreenActivity.this, "username", ""));
+        email.setText(getSharedPref(MainScreenActivity.this, "email", ""));
     }
 
     private void addTasksGroup(String title) {
-        if(title == null || title.isEmpty()) {
+        if (title == null || title.isEmpty()) {
             Toast.makeText(MainScreenActivity.this, "Tên nhóm không được để trống", Toast.LENGTH_SHORT).show();
         } else {
             String userId = getSharedPref(this, "userId", "default id");
@@ -179,7 +180,7 @@ public class MainScreenActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 try {
-                    if(response.body()) {
+                    if (response.body()) {
                         tasksGroups.add(taskGroup);
                         adapter.setData(tasksGroups);
                         hideLoading();
@@ -188,7 +189,7 @@ public class MainScreenActivity extends AppCompatActivity {
                         Log.d("create tasksgroup", "them nhom that bai");
                     }
                     future.complete(null);
-                }catch (Exception e) {
+                } catch (Exception e) {
                     Log.d("create tasksgroup", "loi");
                     future.completeExceptionally(e);
                 }
@@ -201,7 +202,7 @@ public class MainScreenActivity extends AppCompatActivity {
             }
         });
 
-        return  future;
+        return future;
     }
 
     private CompletableFuture<Void> getTasksGroupsFromServer(TaskGroupApi taskGroupApi) {
