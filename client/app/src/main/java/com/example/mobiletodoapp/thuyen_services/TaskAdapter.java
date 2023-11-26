@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -53,16 +54,21 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             return;
         }
 
-        holder.btnCheckComplete.setChecked(task.isCompleted());
-
         holder.tvTitle.setText(task.getTitle());
         if(task.isCompleted() == true) {
             holder.tvTitle.setPaintFlags(holder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.btnCheckComplete.setImageResource(R.drawable.radio_button_checked_icon_20);
         } else {
             holder.tvTitle.setPaintFlags(holder.tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            holder.btnCheckComplete.setImageResource(R.drawable.radio_button_unchecked_icon_20);
         }
         holder.tvDescription.setText(task.getDescription());
-        holder.btnImportant.setChecked(task.isImportant());
+        if(task.isImportant() == true) {
+            holder.btnImportant.setImageResource(R.drawable.black_star_important);
+        } else {
+            holder.btnImportant.setImageResource(R.drawable.white_star_important);
+        }
+
         holder.clTaskItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,10 +100,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     public class TaskViewHolder extends RecyclerView.ViewHolder {
-        private RadioButton btnCheckComplete;
+        private ImageView btnCheckComplete;
         private TextView tvTitle;
         private TextView tvDescription;
-        private RadioButton btnImportant;
+        private ImageView btnImportant;
         private ConstraintLayout clTaskItem;
 
         public TaskViewHolder(@NonNull View itemView) {

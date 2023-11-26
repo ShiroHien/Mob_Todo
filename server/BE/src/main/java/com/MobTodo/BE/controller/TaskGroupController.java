@@ -1,5 +1,6 @@
 package com.MobTodo.BE.controller;
 
+import com.MobTodo.BE.models.Task;
 import com.MobTodo.BE.models.TaskGroup;
 import com.MobTodo.BE.service.ITaskGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,9 @@ public class TaskGroupController {
     @DeleteMapping("/deleteGroup/{id}")
     public Boolean deleteGroup(@PathVariable String id) {
         return taskGroupService.deleteTaskGroup(id);
+    }
+    @GetMapping("/getTaskGroupById/{taskgroupId}")
+    public TaskGroup getDetailTaskgroup(@PathVariable String taskGroupId) {
+        return taskGroupService.getDetailTaskGroup(taskGroupId);
     }
 }

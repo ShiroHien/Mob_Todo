@@ -36,4 +36,9 @@ public class TaskGroupService implements ITaskGroupService {
         }
         return false;
     }
+
+    @Override
+    public TaskGroup getDetailTaskGroup(String taskGroupId) {
+        return getDetail(COLLECTION_NAME, taskGroupId, TaskGroup.class);
+    }
 }

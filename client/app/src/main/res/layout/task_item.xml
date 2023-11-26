@@ -8,14 +8,16 @@
     android:background="@drawable/task_bg"
     android:orientation="horizontal">
 
-    <RadioButton
+    <ImageView
         android:id="@+id/btn_check_completed"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:checked="true"
+        android:src="@drawable/radio_button_checked_icon_20"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="0dp"></RadioButton>
+        tools:layout_editor_absoluteY="0dp"></ImageView>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -42,16 +44,12 @@
 
     </LinearLayout>
 
-    <RadioButton
+    <ImageView
         android:id="@+id/btn_important"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginStart="214dp"
-        android:checked="true"
-        android:button="@drawable/custom_star_radio_btn"
+        android:src="@drawable/white_star_important"
         android:paddingLeft="10dp"
-        android:gravity="center_vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout"
-        tools:layout_editor_absoluteY="0dp" />
+        android:paddingRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

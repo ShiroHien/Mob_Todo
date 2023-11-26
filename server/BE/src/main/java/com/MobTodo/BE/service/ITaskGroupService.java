@@ -11,4 +11,5 @@ public interface ITaskGroupService {
     List<TaskGroup> getTaskGroupById(String userId);
     Boolean updateTaskGroup(TaskGroup data);
     Boolean deleteTaskGroup(String taskGroupId);
+    TaskGroup getDetailTaskGroup(String TaskGroupId);
 }
