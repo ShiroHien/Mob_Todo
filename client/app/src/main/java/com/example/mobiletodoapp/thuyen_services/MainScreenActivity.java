@@ -1,6 +1,7 @@
 package com.example.mobiletodoapp.thuyen_services;
 
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.setImage;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +55,7 @@ public class MainScreenActivity extends AppCompatActivity {
     List<TaskGroup> tasksGroups = new ArrayList<>();
     TaskGroupApi taskGroupApi;
     TextView username, email;
+    ImageView ava;
     private ProgressDialog progressDialog;
 
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
@@ -155,6 +158,8 @@ public class MainScreenActivity extends AppCompatActivity {
         email = findViewById(R.id.gmail);
         username.setText(getSharedPref(MainScreenActivity.this, "username", ""));
         email.setText(getSharedPref(MainScreenActivity.this, "email", ""));
+        ava = findViewById(R.id.ava_user);
+        setImage(MainScreenActivity.this, "ava2.jpg", ava);
     }
 
     private void addTasksGroup(String title) {
@@ -181,7 +186,7 @@ public class MainScreenActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 try {
-                    if(response.body()) {
+                    if (response.body()) {
                         getTasksGroupsFromServer(taskGroupApi);
                         adapter.setData(tasksGroups);
                         hideLoading();

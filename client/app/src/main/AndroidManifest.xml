@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".phuc_activity.view.TaskDetail.TaskDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".phuc_activity.view.Setting.SettingActivity"
             android:exported="false" />
         <activity

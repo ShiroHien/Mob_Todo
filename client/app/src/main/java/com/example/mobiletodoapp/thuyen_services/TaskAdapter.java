@@ -17,15 +17,18 @@ import com.example.mobiletodoapp.phuc_activity.dto.Task;
 
 import java.util.List;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder>{
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private List<Task> mTask;
 
 
     private IClickTaskItem iClickTaskItem;
+
     public interface IClickTaskItem {
         void moveToTaskView(Task task);
+
         void handleCompleteBtn(Task task);
+
         void handleImportantBtn(Task task);
     }
 
@@ -49,14 +52,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task task = mTask.get(position);
-        if(task == null) {
+        if (task == null) {
             return;
         }
 
         holder.btnCheckComplete.setChecked(task.isCompleted());
 
         holder.tvTitle.setText(task.getTitle());
-        if(task.isCompleted() == true) {
+        if (task.isCompleted() == true) {
             holder.tvTitle.setPaintFlags(holder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             holder.tvTitle.setPaintFlags(holder.tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
@@ -87,7 +90,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     @Override
     public int getItemCount() {
-        if(mTask != null) {
+        if (mTask != null) {
             return mTask.size();
         }
         return 0;
