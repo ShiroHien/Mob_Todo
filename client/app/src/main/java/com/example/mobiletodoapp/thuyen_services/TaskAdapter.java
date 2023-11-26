@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.phuc_activity.dto.Task;
 
 import java.util.List;
 
@@ -55,13 +56,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.btnCheckComplete.setChecked(task.isCompleted());
 
         holder.tvTitle.setText(task.getTitle());
-        if(task.isCompleted == true) {
+        if(task.isCompleted() == true) {
             holder.tvTitle.setPaintFlags(holder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             holder.tvTitle.setPaintFlags(holder.tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
         }
         holder.tvDescription.setText(task.getDescription());
-        holder.btnImportant.setChecked(task.getType());
+        holder.btnImportant.setChecked(task.isImportant());
         holder.clTaskItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

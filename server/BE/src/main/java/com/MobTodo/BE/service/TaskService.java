@@ -15,7 +15,7 @@ public class TaskService implements ITaskService {
     @Override
     public Boolean createTask(Task data) throws ExecutionException, InterruptedException {
         if (checkDateTimeFormat(data.getStartTime()) && checkDateTimeFormat(data.getEndTime())) {
-            if (distanceTime(data.getStartTime(), data.getEndTime()) >= 0) {
+            if (distanceDateTime(data.getStartTime(), data.getEndTime()) >= 0) {
                 return postData(data, COLLECTION_NAME);
             }
         }

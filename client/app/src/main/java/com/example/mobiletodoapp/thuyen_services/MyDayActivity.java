@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.phuc_activity.dto.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,12 +95,10 @@ public class MyDayActivity extends AppCompatActivity {
         line = findViewById(R.id.line);
 
         tasks = new ArrayList<>();
-        tasks.add(new Task("Task1", Task.CHECK, "bla", Task.CHECK));
-        tasks.add(new Task("Task2", Task.CHECK, "bla", Task.UNCHECK));
-        tasks.add(new Task("Task3", Task.CHECK, "bla", Task.UNCHECK));
+
 
         for(Task t : tasks) {
-            if(t.isCompleted == true) {
+            if(t.isCompleted() == true) {
                 completedTasks.add(t);
             } else {
                 uncompletedTasks.add(t);
@@ -137,7 +136,7 @@ public class MyDayActivity extends AppCompatActivity {
     }
 
     private void handleImportantButton(Task task) {
-        task.setType(!task.getType());
+        task.setImportant(!task.isImportant());
         uncompletedAdapter.setData(uncompletedTasks);
         completedAdapter.setData(completedTasks);
     }

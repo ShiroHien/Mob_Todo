@@ -27,6 +27,7 @@
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         <TextView
+            android:id="@+id/tv_header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -69,12 +70,14 @@
 
 
 
+
+
     </LinearLayout>
 
 
 
     <ImageButton
-        android:id="@+id/btn_add_task"
+        android:id="@+id/btn_show_add_task_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="36dp"
@@ -84,5 +87,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
+
+    <include
+        android:id="@+id/inc_add_task_layout"
+        android:visibility="gone"
+        layout="@layout/add_task_layout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
