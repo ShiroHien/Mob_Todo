@@ -31,7 +31,7 @@ public class TaskGroupController {
         return taskGroupService.deleteTaskGroup(id);
     }
     @GetMapping("/getTaskGroupById/{taskgroupId}")
-    public TaskGroup getDetailTaskgroup(@PathVariable String taskGroupId) {
-        return taskGroupService.getDetailTaskGroup(taskGroupId);
+    public TaskGroup getDetailTaskgroup(@PathVariable String taskgroupId) {
+        return taskGroupService.getDetailTaskGroup(taskgroupId);
     }
 }
