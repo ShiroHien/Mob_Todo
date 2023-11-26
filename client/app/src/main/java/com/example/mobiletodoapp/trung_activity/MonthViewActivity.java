@@ -5,23 +5,30 @@ import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.saveSha
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.daysInMonthArray;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.monthYearFromDate;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.taskDayApi;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.timetableApi;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiletodoapp.R;
 import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
+import com.example.mobiletodoapp.phuc_activity.api.TaskDayApi;
 import com.example.mobiletodoapp.phuc_activity.api.TimetableApi;
+import com.example.mobiletodoapp.phuc_activity.dto.TaskDay;
 import com.example.mobiletodoapp.phuc_activity.dto.Timetable;
 import com.example.mobiletodoapp.phuc_activity.view.Login.LoginActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -42,11 +49,13 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
 {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
+    private RecyclerView taskDaysRecyclerView;
+
     public BottomSheetBehavior bottomSheetBehavior;
     private LinearLayout mainCalendarView;
-    private TimetableApi timetableApi;
 
     private ProgressBar progressBar;
+    private Button btnAddEvent;
 
 
     @Override
@@ -57,10 +66,9 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
         initWidgets();
 
         setMonthView();
-        //Tạo retrofit
-        RetrofitService retrofitService = new RetrofitService();
-        timetableApi = retrofitService.getRetrofit().create(TimetableApi.class);
-        updateExistingTimetableList();
+
+
+        // updateExistingTimetableList(); ko can dung nua
     }
 
 
@@ -68,6 +76,7 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
     {
         progressBar = findViewById(R.id.progressBar);
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
+        taskDaysRecyclerView = findViewById(R.id.taskDaysRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
         bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottomSheet));
         bottomSheetBehavior.setHalfExpandedRatio(0.6f);
@@ -76,6 +85,18 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
             @Override
             public void onClick(View view) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+        btnAddEvent = findViewById(R.id.btnAddEvent);
+        btnAddEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(progressBar.isAnimating()){
+
+                }else{
+                    Intent intent = new Intent(getApplicationContext(), AddEventActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -132,10 +153,12 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
                             // Xử lý dữ liệu JSON khi nó không null
-                            saveSharedPref(MonthViewActivity.this, "chosenTimetableId", response.body().getId());
+//                            saveSharedPref(MonthViewActivity.this, "chosenTimetableId", response.body().getId());
+//                            showToast(getApplicationContext(),getSharedPref(getApplicationContext(),"chosenTimetableId",""));
+                            loadTaskDaysForDate(response.body().getId());
                         } else {
                             // Xử lý khi response body là null
-                            handleExistingTimetable(CalendarUtils.monthDayYearDate(date));
+                            showToast(getApplicationContext(),"Date format bị sai");
                         }
                     } else {
                         showToast(MonthViewActivity.this, "Lỗi server: " + response.code());
@@ -159,14 +182,40 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
         return future;
     }
 
-    private void handleExistingTimetable(String date) {
-        for(int i = 0; i< CalendarUtils.existingTimetableList.size(); i++){
-            Timetable timetable = CalendarUtils.existingTimetableList.get(i);
-            if(timetable.getDayTime().equals(date)){
-                saveSharedPref(getApplicationContext(),"chosenTimetableId",timetable.getId());
-                return;
+    private CompletableFuture<Void> loadTaskDaysForDate(String timetableId) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        showLoading();
+        taskDayApi.getListTaskDay(timetableId).enqueue(new Callback<List<TaskDay>>() {
+            @Override
+            public void onResponse(Call<List<TaskDay>> call, Response<List<TaskDay>> response) {
+                try {
+                    if (response.body() != null) {
+                        TaskDayAdapter adapter = new TaskDayAdapter(response.body());
+                        showToast(getApplicationContext(),response.body().toString());
+                        Log.d("TaskDay",response.body().get(0).getTitle());
+                        taskDaysRecyclerView.setAdapter(adapter);
+                        taskDaysRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    } else {
+                        // Xử lý khi response body là null
+                        showToast(getApplicationContext(),"TaskDay List bị null");
+                    }
+                    hideLoading();
+                    future.complete(null);
+                } catch (Exception e){
+                    future.completeExceptionally(e);
+                }
             }
-        }
+
+            @Override
+            public void onFailure(Call<List<TaskDay>> call, Throwable t) {
+                hideLoading();
+                showToast(getApplicationContext(),"Không lấy đc taskday list");
+                Logger.getLogger(MonthViewActivity.class.getName()).log(Level.SEVERE, "Error: ",t);
+                future.completeExceptionally(t);
+            }
+        });
+
+        return future;
     }
 
 
