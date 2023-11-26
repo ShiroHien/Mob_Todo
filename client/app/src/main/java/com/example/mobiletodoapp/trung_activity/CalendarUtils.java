@@ -7,6 +7,9 @@ import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToa
 
 import android.content.Context;
 
+import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
+import com.example.mobiletodoapp.phuc_activity.api.TaskDayApi;
+import com.example.mobiletodoapp.phuc_activity.api.TimetableApi;
 import com.example.mobiletodoapp.phuc_activity.dto.Timetable;
 
 import java.time.DayOfWeek;
@@ -27,6 +30,8 @@ import retrofit2.Response;
 public class CalendarUtils
 {
     public static LocalDate selectedDate;
+    public static TimetableApi timetableApi;
+    public static TaskDayApi taskDayApi;
 
     public static List<Timetable> existingTimetableList;
 
