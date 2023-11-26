@@ -2,7 +2,13 @@ package com.example.mobiletodoapp.phuc_activity.reusecode;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Function {
     public static void showToast(Context context, String message) {
@@ -59,5 +65,14 @@ public class Function {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.clear();
         editor.apply();
+    }
+    public static void setImage(Context context, String image, ImageView imageView) {
+        try {
+            InputStream inputStream = context.getAssets().open(image);
+            Bitmap bitmapImage = BitmapFactory.decodeStream(inputStream);
+            imageView.setImageBitmap(bitmapImage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

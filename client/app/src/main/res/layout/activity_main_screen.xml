@@ -22,7 +22,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/image"
+            android:background="@drawable/google"
             android:clickable="true" />
 
         <TextView

@@ -85,7 +85,6 @@ public class TasksGroupView extends AppCompatActivity {
     TaskGroup mTaskGroup;
 
 
-
     private final TaskAdapter taskAdapter = new TaskAdapter(new TaskAdapter.IClickTaskItem() {
         @Override
         public void moveToTaskView(Task task) {
@@ -284,7 +283,7 @@ public class TasksGroupView extends AppCompatActivity {
         String des = edtDescription.getText().toString().trim();
         String startTime = tvStartTime.getText().toString().trim();
         String endTime = tvEndTime.getText().toString().trim();
-        if(title == null || title.isEmpty()) {
+        if (title == null || title.isEmpty()) {
             Toast.makeText(TasksGroupView.this, "Tên nhiệm vụ không được để trống", Toast.LENGTH_SHORT).show();
         } else {
             Task task = new Task(tasksGroupIdSelected, title, des, startTime, endTime);
@@ -306,7 +305,7 @@ public class TasksGroupView extends AppCompatActivity {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 try {
-                    if(response.body()) {
+                    if (response.body()) {
                         tasks.add(task);
                         taskAdapter.setData(tasks);
                         hideLoading();
@@ -429,7 +428,6 @@ public class TasksGroupView extends AppCompatActivity {
         List<TaskGroup> taskGroups = new ArrayList<>();
         Intent intent1 = this.getIntent();
         taskGroups.add(new TaskGroup(intent1.getStringExtra("tasksgroupTitle"), "1"));
-
 
 
         ArrayAdapter<TaskGroup> spinnerAdapter = new ArrayAdapter<TaskGroup>(TasksGroupView.this,

@@ -1,6 +1,7 @@
 package com.example.mobiletodoapp.thuyen_services;
 
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.setImage;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,11 +15,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.phuc_activity.api.TaskDayApi;
+import com.example.mobiletodoapp.phuc_activity.api.TimetableApi;
 import com.example.mobiletodoapp.trung_activity.CalendarUtils;
 import com.example.mobiletodoapp.trung_activity.MonthViewActivity;
 import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
@@ -50,11 +54,10 @@ public class MainScreenActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
-
-
     List<TaskGroup> tasksGroups = new ArrayList<>();
     TaskGroupApi taskGroupApi;
-
+    TextView username, email;
+    ImageView ava;
     private ProgressDialog progressDialog;
 
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
@@ -77,6 +80,8 @@ public class MainScreenActivity extends AppCompatActivity {
 
         RetrofitService retrofitService = new RetrofitService();
         taskGroupApi = retrofitService.getRetrofit().create(TaskGroupApi.class);
+        CalendarUtils.timetableApi = retrofitService.getRetrofit().create(TimetableApi.class);
+        CalendarUtils.taskDayApi = retrofitService.getRetrofit().create(TaskDayApi.class);
 
         showLoading();
         getTasksGroupsFromServer(taskGroupApi);
@@ -153,11 +158,16 @@ public class MainScreenActivity extends AppCompatActivity {
         edtGroupTitle = findViewById(R.id.edt_group_title);
         tvCancelAddGroup = findViewById(R.id.tv_cancel_add_tasksgroup);
         tvAddGroup = findViewById(R.id.tv_add_tasksgroup);
-
+        username = findViewById(R.id.user_name);
+        email = findViewById(R.id.gmail);
+        username.setText(getSharedPref(MainScreenActivity.this, "username", ""));
+        email.setText(getSharedPref(MainScreenActivity.this, "email", ""));
+        ava = findViewById(R.id.ava_user);
+        setImage(MainScreenActivity.this, "ava2.jpg", ava);
     }
 
     private void addTasksGroup(String title) {
-        if(title == null || title.isEmpty()) {
+        if (title == null || title.isEmpty()) {
             Toast.makeText(MainScreenActivity.this, "Tên nhóm không được để trống", Toast.LENGTH_SHORT).show();
         } else {
             String userId = getSharedPref(this, "userId", "default id");
@@ -180,7 +190,7 @@ public class MainScreenActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 try {
-                    if(response.body()) {
+                    if (response.body()) {
                         getTasksGroupsFromServer(taskGroupApi);
                         adapter.setData(tasksGroups);
                         hideLoading();
@@ -189,7 +199,7 @@ public class MainScreenActivity extends AppCompatActivity {
                         Log.d("create tasksgroup", "them nhom that bai");
                     }
                     future.complete(null);
-                }catch (Exception e) {
+                } catch (Exception e) {
                     Log.d("create tasksgroup", "loi");
                     future.completeExceptionally(e);
                 }
@@ -202,7 +212,7 @@ public class MainScreenActivity extends AppCompatActivity {
             }
         });
 
-        return  future;
+        return future;
     }
 
     private CompletableFuture<Void> getTasksGroupsFromServer(TaskGroupApi taskGroupApi) {
