@@ -1,8 +1,10 @@
 package com.MobTodo.BE.service;
 
 import com.MobTodo.BE.models.Task;
+import com.MobTodo.BE.models.TaskGroup;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -11,6 +13,7 @@ import static com.MobTodo.BE.Reusable.Function.*;
 @Service
 public class TaskService implements ITaskService {
     private static final String COLLECTION_NAME = "Task";
+    private static final String COLLECTION_NAME_TASK_GROUP = "TaskGroup";
 
     @Override
     public Boolean createTask(Task data) throws ExecutionException, InterruptedException {
@@ -49,12 +52,46 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public List<Task> getImportant(String taskgroupId) {
-        return getListDataByFieldName(COLLECTION_NAME, "taskGroupId", taskgroupId, "important", true, Task.class);
+    public List<Task> getImportant(String userId) {
+        List<Task> importantTasks = new ArrayList<>();
+
+        // Get all TaskGroups for the given userId
+        List<TaskGroup> taskGroups = getListData(COLLECTION_NAME_TASK_GROUP, "userId", userId, TaskGroup.class);
+
+        // For each TaskGroup, get tasks with important set to true
+        for (TaskGroup taskGroup : taskGroups) {
+            importantTasks.addAll(getListDataByFieldName(
+                    COLLECTION_NAME,
+                    "taskGroupId",
+                    taskGroup.getId(),
+                    "important",
+                    true,
+                    Task.class
+            ));
+        }
+
+        return importantTasks;
     }
 
     @Override
-    public List<Task> getMyDay(String taskgroupId) {
-        return getListDataByFieldName(COLLECTION_NAME, "taskGroupId", taskgroupId, "myDay", true, Task.class);
+    public List<Task> getMyDay(String userId) {
+        List<Task> myDayTasks = new ArrayList<>();
+
+        // Get all TaskGroups for the given userId
+        List<TaskGroup> taskGroups = getListData(COLLECTION_NAME_TASK_GROUP, "userId", userId, TaskGroup.class);
+
+        // For each TaskGroup, get tasks with myDay set to true
+        for (TaskGroup taskGroup : taskGroups) {
+            myDayTasks.addAll(getListDataByFieldName(
+                    COLLECTION_NAME,
+                    "taskGroupId",
+                    taskGroup.getId(),
+                    "myDay",
+                    true,
+                    Task.class
+            ));
+        }
+
+        return myDayTasks;
     }
 }
