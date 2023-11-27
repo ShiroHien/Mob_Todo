@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:background="@drawable/task_bg"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginTop="10dp">
 
     <ImageView
         android:id="@+id/btn_check_completed"

@@ -78,10 +78,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_task_list"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
 
     </LinearLayout>
 
@@ -102,6 +100,7 @@
         android:id="@+id/inc_add_task_layout"
         layout="@layout/add_task_layout"
         android:visibility="gone" />
+
     <include
         android:id="@+id/inc_update_taskgroup_layout"
         layout="@layout/update_taskgroup_layout"
