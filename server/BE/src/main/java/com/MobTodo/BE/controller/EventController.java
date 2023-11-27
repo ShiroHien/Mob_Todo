@@ -1,9 +1,8 @@
 package com.MobTodo.BE.controller;
 
-import com.MobTodo.BE.models.TaskDay;
-import com.MobTodo.BE.service.ITaskDayService;
+import com.MobTodo.BE.models.Events;
+import com.MobTodo.BE.service.IEventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,27 +10,27 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/taskday")
-public class TaskDayController {
+public class EventController {
     @Autowired
-    private ITaskDayService taskDayService;
+    private IEventService taskDayService;
 
     @PostMapping("/createTaskDay")
-    public Boolean createTaskDay(@RequestBody TaskDay data) throws ExecutionException, InterruptedException {
+    public Boolean createTaskDay(@RequestBody Events data) throws ExecutionException, InterruptedException {
         return taskDayService.createTaskDay(data);
     }
 
     @GetMapping("/getDetailTaskDay/{id}")
-    public TaskDay getDetailTaskDay(@PathVariable String id) {
+    public Events getDetailTaskDay(@PathVariable String id) {
         return taskDayService.getDetailTaskDay(id);
     }
 
     @GetMapping("/getListTaskDay/{timetableId}")
-    public List<TaskDay> getListTaskDay(@PathVariable String timetableId) {
+    public List<Events> getListTaskDay(@PathVariable String timetableId) {
         return taskDayService.getListTaskDay(timetableId);
     }
 
     @PutMapping("/updateTaskDay")
-    public Boolean updateTaskDay(@RequestBody TaskDay data) {
+    public Boolean updateTaskDay(@RequestBody Events data) {
         return taskDayService.updateTaskDay(data);
     }
 

@@ -11,10 +11,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class Function {
@@ -217,5 +214,8 @@ public class Function {
             return false;
         }
     }
-
+    public static String generateRandomId(String COLLECTION_NAME) {
+        DocumentReference documentReference = FirestoreClient.getFirestore().collection(COLLECTION_NAME).document();
+        return documentReference.getId();
+    }
 }
