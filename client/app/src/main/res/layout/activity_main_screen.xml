@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".thuyen_services.MainScreenActivity">
+    tools:context=".thuyen_services.main_screen.MainScreenActivity">
 
     <RelativeLayout
         android:id="@+id/header"

@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Timetable {
-    private String id;
+    private String id = "";
     private String userId;
     private String dayTime;
     private List<Events> events = new ArrayList<>();;

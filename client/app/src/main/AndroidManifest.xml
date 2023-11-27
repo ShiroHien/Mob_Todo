@@ -33,7 +33,7 @@
             android:name=".thuyen_services.PomodoroActivity"
             android:exported="false" />
         <activity
-            android:name=".thuyen_services.TasksGroupView"
+            android:name=".thuyen_services.taskgroup_view.TasksGroupView"
             android:exported="false" />
         <activity
             android:name=".thuyen_services.MyDayActivity"
@@ -63,7 +63,7 @@
             android:name=".trung_activity.CalendarViewActivity"
             android:exported="false" />
         <activity
-            android:name=".thuyen_services.MainScreenActivity"
+            android:name=".thuyen_services.main_screen.MainScreenActivity"
             android:exported="false" />
         <activity
             android:name=".phuc_activity.view.Logup.LogupActivity"

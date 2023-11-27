@@ -15,7 +15,6 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class Function {
-    // Đối tượng đại diện cho csdl
     private static Firestore dbFirestore = FirestoreClient.getFirestore();
 
     public static boolean checkExist(String collectionName, String fieldName, String value) {

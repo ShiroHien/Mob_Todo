@@ -22,7 +22,7 @@ public interface TaskGroupApi {
     @DELETE("taskgroup/deleteGroup/{id}")
     Call<Boolean> delateTaskGroup(@Path("id") String id);
 
-    @PUT("taskgroup/updateGroup}")
+    @PUT("taskgroup/updateGroup")
     Call<Boolean> updateTaskGroup(@Body TaskGroup data);
 
     @GET("taskgroup/getTaskGroupById/{taskgroupId}")
