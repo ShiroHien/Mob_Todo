@@ -19,4 +19,10 @@ public interface TaskApi {
     @POST("task/createTask")
     Call<Boolean> createTask(@Body Task data);
 
+    @GET("task/getImportant/{userId}")
+    Call<List<Task>> getImportantTask(@Path("userId") String userId);
+
+    @GET("task/getMyDay/{userId}")
+    Call<List<Task>> getMyDayTask(@Path("userId") String userId);
+
 }
