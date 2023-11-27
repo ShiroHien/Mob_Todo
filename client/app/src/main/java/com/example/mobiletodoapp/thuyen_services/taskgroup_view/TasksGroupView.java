@@ -31,6 +31,7 @@ import com.example.mobiletodoapp.phuc_activity.api.TaskApi;
 import com.example.mobiletodoapp.phuc_activity.api.TaskGroupApi;
 import com.example.mobiletodoapp.phuc_activity.dto.Task;
 import com.example.mobiletodoapp.phuc_activity.dto.TaskGroup;
+import com.example.mobiletodoapp.phuc_activity.view.TaskDetail.TaskDetailActivity;
 import com.example.mobiletodoapp.thuyen_services.TaskAdapter;
 
 import java.text.ParseException;
@@ -89,7 +90,8 @@ public class TasksGroupView extends AppCompatActivity {
     private final TaskAdapter taskAdapter = new TaskAdapter(new TaskAdapter.IClickTaskItem() {
         @Override
         public void moveToTaskView(Task task) {
-
+            Intent taskDetailIntent = new Intent(TasksGroupView.this, TaskDetailActivity.class);
+            startActivity(taskDetailIntent);
         }
 
         @Override
