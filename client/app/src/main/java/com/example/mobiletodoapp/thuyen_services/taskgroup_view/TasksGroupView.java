@@ -91,6 +91,9 @@ public class TasksGroupView extends AppCompatActivity {
         @Override
         public void moveToTaskView(Task task) {
             Intent taskDetailIntent = new Intent(TasksGroupView.this, TaskDetailActivity.class);
+            taskDetailIntent.putExtra("taskId", task.getId());
+            taskDetailIntent.putExtra("taskTitle", task.getTitle());
+            taskDetailIntent.putExtra("taskgroupTitle", intent.getStringExtra("tasksgroupTitle"));
             startActivity(taskDetailIntent);
         }
 
