@@ -1,6 +1,18 @@
 package com.example.mobiletodoapp.phuc_activity.dto;
 
-public class TaskDay {
+public class Events {
+    private String id;
+    private String timetableId;
+
+    public Events(String timetableId, String title, String description, String startTime, String endTime) {
+        this.id = "";
+        this.timetableId = timetableId;
+        this.title = title;
+        this.description = description;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public String getId() {
         return id;
     }
@@ -49,20 +61,8 @@ public class TaskDay {
         this.endTime = endTime;
     }
 
-    private String id;
-    private String timetableId;
     private String title;
     private String description;
-
-    public TaskDay(String timetableId, String title, String description, String startTime, String endTime) {
-        this.id = "";
-        this.timetableId = timetableId;
-        this.title = title;
-        this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
-
     private String startTime;
     private String endTime;
 }

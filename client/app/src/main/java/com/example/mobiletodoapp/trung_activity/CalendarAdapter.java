@@ -1,15 +1,19 @@
 package com.example.mobiletodoapp.trung_activity;
 
 
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedTimetableId;
+
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.phuc_activity.dto.Timetable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -49,8 +53,21 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
         else
         {
             holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
-            if(date.equals(CalendarUtils.selectedDate))
+            if(date.equals(CalendarUtils.selectedDate)){
                 holder.parentView.setBackgroundColor(Color.LTGRAY);
+                holder.dayOfMonth.setTextColor(Color.WHITE);
+            }
+
+            for(int i = 0; i< CalendarUtils.existingTimetableList.size(); i++){
+                Timetable timetableItem = CalendarUtils.existingTimetableList.get(i);
+
+                if(timetableItem.getDayTime().equals(CalendarUtils.monthDayYearDate(date))){
+                    if(!timetableItem.getEvents().isEmpty()){
+                        holder.iwHasEvent.setVisibility(View.VISIBLE);
+                    }
+                    return;
+                }
+            }
         }
     }
 

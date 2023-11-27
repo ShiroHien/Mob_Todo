@@ -1,14 +1,12 @@
 package com.example.mobiletodoapp.trung_activity;
 
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
-import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.saveSharedPref;
-import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.daysInMonthArray;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.monthDayYearDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.monthYearFromDate;
-import static com.example.mobiletodoapp.trung_activity.CalendarUtils.taskDayApi;
-import static com.example.mobiletodoapp.trung_activity.CalendarUtils.timetableApi;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedDate;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedTimetableId;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,31 +23,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiletodoapp.R;
-import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
-import com.example.mobiletodoapp.phuc_activity.api.TaskDayApi;
-import com.example.mobiletodoapp.phuc_activity.api.TimetableApi;
-import com.example.mobiletodoapp.phuc_activity.dto.TaskDay;
+import com.example.mobiletodoapp.phuc_activity.dto.Events;
 import com.example.mobiletodoapp.phuc_activity.dto.Timetable;
-import com.example.mobiletodoapp.phuc_activity.view.Login.LoginActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
-public class MonthViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener
+public class MonthViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener, EventsAdapter.OnItemClickListener
 {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
-    private RecyclerView taskDaysRecyclerView;
+    private RecyclerView eventsRecyclerView;
+    private EventsAdapter eventsAdapter;
 
     public BottomSheetBehavior bottomSheetBehavior;
     private LinearLayout mainCalendarView;
@@ -67,16 +55,20 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
 
         setMonthView();
 
-
-        // updateExistingTimetableList(); ko can dung nua
     }
 
 
     private void initWidgets()
     {
         progressBar = findViewById(R.id.progressBar);
+        hideLoading();
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
-        taskDaysRecyclerView = findViewById(R.id.taskDaysRecyclerView);
+        eventsRecyclerView = findViewById(R.id.eventsRecyclerView);
+        eventsAdapter = new EventsAdapter(new ArrayList<>());
+        eventsAdapter.setOnItemClickListener(this);
+        eventsRecyclerView.setAdapter(eventsAdapter);
+        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         monthYearText = findViewById(R.id.monthYearTV);
         bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottomSheet));
         bottomSheetBehavior.setHalfExpandedRatio(0.6f);
@@ -91,20 +83,25 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
         btnAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(progressBar.isAnimating()){
-
-                }else{
-                    Intent intent = new Intent(getApplicationContext(), AddEventActivity.class);
-                    startActivity(intent);
+                if(selectedTimetableId == null){
+                    CalendarUtils.creatingTimetable = true;
+                    String userId = getSharedPref(getApplicationContext(), "userId", "");
+                    Timetable newTimetable = new Timetable(userId,CalendarUtils.monthDayYearDate(selectedDate),new ArrayList<>());
+                    CalendarUtils.createTimetableForDate(getApplicationContext(),newTimetable).whenComplete((result,throwable)->{
+                        CalendarUtils.creatingTimetable = false;
+                    });
                 }
+                Intent intent = new Intent(getApplicationContext(), AddEventActivity.class);
+                startActivity(intent);
+
             }
         });
     }
 
     private void setMonthView()
     {
-        monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
-        ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarUtils.selectedDate);
+        monthYearText.setText(monthDayYearDate(selectedDate));
+        ArrayList<LocalDate> daysInMonth = daysInMonthArray(selectedDate);
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
@@ -114,13 +111,13 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
 
     public void previousMonthAction(View view)
     {
-        CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1);
+        selectedDate = selectedDate.minusMonths(1);
         setMonthView();
     }
 
     public void nextMonthAction(View view)
     {
-        CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
+        selectedDate = selectedDate.plusMonths(1);
         setMonthView();
     }
 
@@ -129,120 +126,27 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
     {
         if(date != null)
         {
-            CalendarUtils.selectedDate = date;
+            selectedDate = date;
             setMonthView();
-            if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HALF_EXPANDED){
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-            else{
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
-            }
-            showLoading();
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
             handleTimetableForDate(date);
         }
     }
 
-    private CompletableFuture<Void> handleTimetableForDate(LocalDate date) {
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        String userId = getSharedPref(MonthViewActivity.this,"userId","");
-        Timetable timetable = new Timetable(userId,CalendarUtils.monthDayYearDate(date));
-        timetableApi.createTimetable(timetable).enqueue(new Callback<Timetable>() {
-            @Override
-            public void onResponse(Call<Timetable> call, Response<Timetable> response) {
-                try {
-                    if (response.isSuccessful()) {
-                        if (response.body() != null) {
-                            // Xử lý dữ liệu JSON khi nó không null
-//                            saveSharedPref(MonthViewActivity.this, "chosenTimetableId", response.body().getId());
-//                            showToast(getApplicationContext(),getSharedPref(getApplicationContext(),"chosenTimetableId",""));
-                            loadTaskDaysForDate(response.body().getId());
-                        } else {
-                            // Xử lý khi response body là null
-                            showToast(getApplicationContext(),"Date format bị sai");
-                        }
-                    } else {
-                        showToast(MonthViewActivity.this, "Lỗi server: " + response.code());
-                    }
-                    hideLoading();
-                    future.complete(null);
-                } catch (Exception e){
-                    future.completeExceptionally(e);
-                }
+    private void handleTimetableForDate(LocalDate selectedDate) {
+        for(int i = 0; i< CalendarUtils.existingTimetableList.size(); i++){
+            Timetable timetableItem = CalendarUtils.existingTimetableList.get(i);
+
+            if(timetableItem.getDayTime().equals(CalendarUtils.monthDayYearDate(selectedDate))){
+                selectedTimetableId = timetableItem.getId();
+                Toast.makeText(this,selectedTimetableId,Toast.LENGTH_SHORT).show();
+                eventsAdapter.updateEventsList(timetableItem.getEvents());
+                return;
             }
-
-            @Override
-            public void onFailure(Call<Timetable> call, Throwable t) {
-                hideLoading();
-                showToast(getApplicationContext(),"Không tạo được timetable ở hàm check ở BE");
-                Logger.getLogger(MonthViewActivity.class.getName()).log(Level.SEVERE, "Error: ",t);
-                future.completeExceptionally(t);
-            }
-            });
-
-        return future;
-    }
-
-    private CompletableFuture<Void> loadTaskDaysForDate(String timetableId) {
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        showLoading();
-        taskDayApi.getListTaskDay(timetableId).enqueue(new Callback<List<TaskDay>>() {
-            @Override
-            public void onResponse(Call<List<TaskDay>> call, Response<List<TaskDay>> response) {
-                try {
-                    if (response.body() != null) {
-                        TaskDayAdapter adapter = new TaskDayAdapter(response.body());
-                        showToast(getApplicationContext(),response.body().toString());
-                        Log.d("TaskDay",response.body().get(0).getTitle());
-                        taskDaysRecyclerView.setAdapter(adapter);
-                        taskDaysRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    } else {
-                        // Xử lý khi response body là null
-                        showToast(getApplicationContext(),"TaskDay List bị null");
-                    }
-                    hideLoading();
-                    future.complete(null);
-                } catch (Exception e){
-                    future.completeExceptionally(e);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<TaskDay>> call, Throwable t) {
-                hideLoading();
-                showToast(getApplicationContext(),"Không lấy đc taskday list");
-                Logger.getLogger(MonthViewActivity.class.getName()).log(Level.SEVERE, "Error: ",t);
-                future.completeExceptionally(t);
-            }
-        });
-
-        return future;
-    }
-
-
-    private CompletableFuture<Void> updateExistingTimetableList() {
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        String userId = getSharedPref(getApplicationContext(),"userId","");
-        timetableApi.getTimetableById(userId).enqueue(new Callback<List<Timetable>>() {
-            @Override
-            public void onResponse(Call<List<Timetable>> call, Response<List<Timetable>> response) {
-                try {
-                    CalendarUtils.existingTimetableList = response.body();
-                    future.complete(null);
-                } catch (Exception e) {
-                    future.completeExceptionally(e);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Timetable>> call, Throwable t) {
-                hideLoading();
-                showToast(getApplicationContext(), "Không thể cập nhật danh sách Timetable");
-                Logger.getLogger(MonthViewActivity.class.getName()).log(Level.SEVERE, "Error: ", t);
-                future.completeExceptionally(t);
-            }
-        });
-
-        return future;
+        }
+        Toast.makeText(this,"Không có sự kiện nào trong ngày này",Toast.LENGTH_SHORT).show();
+        selectedTimetableId = null;
+        eventsAdapter.updateEventsList(new ArrayList<>());
     }
 
 
@@ -257,6 +161,33 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
 
     private void hideLoading() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_COLLAPSED){
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onEventItemClick(Events event) {
+        Intent intent = new Intent(this, EditEventActivity.class);
+        intent.putExtra("title",event.getTitle());
+        intent.putExtra("description",event.getDescription());
+        intent.putExtra("timetableId",event.getTimetableId());
+        intent.putExtra("id",event.getId());
+        intent.putExtra("startTime",event.getStartTime());
+        intent.putExtra("endTime",event.getEndTime());
+        startActivity(intent);
     }
 }
 

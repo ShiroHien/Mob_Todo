@@ -142,7 +142,7 @@
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         app:behavior_peekHeight="0dp"
         app:behavior_hideable="true"
-        android:background="@color/black"
+        android:background="@drawable/custombottomsheetborder"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -190,7 +190,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/btnAddEvent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/taskDaysRecyclerView"
+                android:id="@+id/eventsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/textView5"

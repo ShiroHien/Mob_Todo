@@ -21,8 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobiletodoapp.R;
-import com.example.mobiletodoapp.phuc_activity.api.TaskDayApi;
+import com.example.mobiletodoapp.phuc_activity.api.EventsApi;
 import com.example.mobiletodoapp.phuc_activity.api.TimetableApi;
+import com.example.mobiletodoapp.phuc_activity.dto.Timetable;
+import com.example.mobiletodoapp.phuc_activity.view.Login.LoginActivity;
 import com.example.mobiletodoapp.trung_activity.CalendarUtils;
 import com.example.mobiletodoapp.trung_activity.MonthViewActivity;
 import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
@@ -81,7 +83,10 @@ public class MainScreenActivity extends AppCompatActivity {
         RetrofitService retrofitService = new RetrofitService();
         taskGroupApi = retrofitService.getRetrofit().create(TaskGroupApi.class);
         CalendarUtils.timetableApi = retrofitService.getRetrofit().create(TimetableApi.class);
-        CalendarUtils.taskDayApi = retrofitService.getRetrofit().create(TaskDayApi.class);
+        CalendarUtils.eventsApi = retrofitService.getRetrofit().create(EventsApi.class);
+        String userId = getSharedPref(this, "userId", "");
+        Log.d("Calendar","userId: "+userId);
+        CalendarUtils.loadTimetableForUser(this,userId);
 
         showLoading();
         getTasksGroupsFromServer(taskGroupApi);

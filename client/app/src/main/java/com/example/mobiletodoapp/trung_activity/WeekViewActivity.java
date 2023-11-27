@@ -1,21 +1,26 @@
 package com.example.mobiletodoapp.trung_activity;
 
 
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.daysInWeekArray;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.monthYearFromDate;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedDate;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedTimetableId;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiletodoapp.R;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.example.mobiletodoapp.phuc_activity.dto.Timetable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,6 +29,10 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
+    private RecyclerView eventsRecyclerView;
+
+    private EventsAdapter eventsAdapter;
+    private FloatingActionButton btnAddEvent;
 
 
     @Override
@@ -39,6 +48,27 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
+        eventsRecyclerView = findViewById(R.id.rvEvents);
+        eventsAdapter = new EventsAdapter(new ArrayList<>());
+        eventsRecyclerView.setAdapter(eventsAdapter);
+        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        btnAddEvent = findViewById(R.id.btnAddEvent);
+        btnAddEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(selectedTimetableId == null){
+                    CalendarUtils.creatingTimetable = true;
+                    String userId = getSharedPref(getApplicationContext(), "userId", "");
+                    Timetable newTimetable = new Timetable(userId,CalendarUtils.monthDayYearDate(selectedDate),new ArrayList<>());
+                    CalendarUtils.createTimetableForDate(getApplicationContext(),newTimetable).whenComplete((result,throwable)->{
+                        CalendarUtils.creatingTimetable = false;
+                    });
+                }
+                Intent intent = new Intent(getApplicationContext(), AddEventActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setWeekView()
@@ -68,8 +98,28 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     @Override
     public void onItemClick(int position, LocalDate date)
     {
-        CalendarUtils.selectedDate = date;
-        setWeekView();
+        if(date != null){
+            CalendarUtils.selectedDate = date;
+            setWeekView();
+            handleTimetableForDate(date);
+        }
+
+    }
+
+    private void handleTimetableForDate(LocalDate selectedDate) {
+        for(int i = 0; i< CalendarUtils.existingTimetableList.size(); i++){
+            Timetable timetableItem = CalendarUtils.existingTimetableList.get(i);
+
+            if(timetableItem.getDayTime().equals(CalendarUtils.monthDayYearDate(selectedDate))){
+                selectedTimetableId = timetableItem.getId();
+                Toast.makeText(this,selectedTimetableId,Toast.LENGTH_SHORT).show();
+                eventsAdapter.updateEventsList(timetableItem.getEvents());
+                return;
+            }
+        }
+        Toast.makeText(this,"Không có sự kiện nào trong ngày này",Toast.LENGTH_SHORT).show();
+        selectedTimetableId = null;
+        eventsAdapter.updateEventsList(new ArrayList<>());
     }
 
     @Override
