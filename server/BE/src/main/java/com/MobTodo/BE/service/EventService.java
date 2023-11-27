@@ -20,7 +20,7 @@ public class EventService implements IEventService {
         if (checkTimeFormat(data.getStartTime()) && checkTimeFormat(data.getEndTime())) {
             if (distanceTime(data.getStartTime(), data.getEndTime()) >= 0) {
                 Timetable timetable = getDetail(COLLECTION_NAME, data.getTimetableId(), Timetable.class);
-                if(timetable != null) {
+                if (timetable != null) {
                     String randomId = generateRandomId(COLLECTION_NAME);
                     data.setId(randomId);
                     timetable.getEvents().add(data);
@@ -58,10 +58,13 @@ public class EventService implements IEventService {
         if (checkTimeFormat(data.getStartTime()) && checkTimeFormat(data.getEndTime())) {
             if (distanceTime(data.getStartTime(), data.getEndTime()) >= 0) {
                 Timetable timetable = getDetail(COLLECTION_NAME, data.getTimetableId(), Timetable.class);
-                if(timetable != null) {
-                    for (Events event : timetable.getEvents()) {
-                        if (event.getId().equals(data.getId())) {
-
+                if (timetable != null) {
+                    List<Events> eventsList = timetable.getEvents();
+                    for (int i = 0; i < eventsList.size(); i++) {
+                        Events existingEvent = eventsList.get(i);
+                        if (existingEvent.getId().equals(data.getId())) {
+                            eventsList.set(i, data);
+                            return updateData(COLLECTION_NAME, timetable.getId(), timetable);
                         }
                     }
                 }
@@ -71,7 +74,18 @@ public class EventService implements IEventService {
     }
 
     @Override
-    public Boolean deleteTaskDay(String taskDayId) {
-        return deleteData(COLLECTION_NAME, taskDayId, "id");
+    public Boolean deleteTaskDay(String timetableId, String eventId) {
+        Timetable timetable = getDetail(COLLECTION_NAME, timetableId, Timetable.class);
+        if (timetable != null) {
+            List<Events> eventsList = timetable.getEvents();
+            for (Events event : eventsList) {
+                if (event.getId().equals(eventId)) {
+                    eventsList.remove(event);
+                    return updateData(COLLECTION_NAME, timetable.getId(), timetable);
+                }
+            }
+        }
+        return false;
     }
+
 }

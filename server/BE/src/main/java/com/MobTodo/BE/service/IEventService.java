@@ -12,5 +12,5 @@ public interface IEventService {
     Events getDetailTaskDay(String timetableId, String id);
     List<Events> getListTaskDay(String timetableId);
     Boolean updateTaskDay(Events data);
-    Boolean deleteTaskDay(String taskDayId);
+    Boolean deleteTaskDay(String timetableId, String taskDayId);
 }
