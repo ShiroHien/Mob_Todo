@@ -47,4 +47,14 @@ public class TaskService implements ITaskService {
         }
         return false;
     }
+
+    @Override
+    public List<Task> getImportant(String taskgroupId) {
+        return getListDataByFieldName(COLLECTION_NAME, "taskGroupId", taskgroupId, "important", true, Task.class);
+    }
+
+    @Override
+    public List<Task> getMyDay(String taskgroupId) {
+        return getListDataByFieldName(COLLECTION_NAME, "taskGroupId", taskgroupId, "myDay", true, Task.class);
+    }
 }

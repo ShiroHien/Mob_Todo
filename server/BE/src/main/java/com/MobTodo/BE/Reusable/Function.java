@@ -48,12 +48,14 @@ public class Function {
             return false;
         }
     }
+
     public static Long distanceDateTime(String start, String end) {
         LocalDateTime startTime = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
         LocalDateTime endTime = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
         long durationInSeconds = Duration.between(startTime, endTime).getSeconds();
         return durationInSeconds;
     }
+
     public static Long distanceTime(String start, String end) {
         LocalTime startTime = LocalTime.parse(start, DateTimeFormatter.ofPattern("HH:mm:ss"));
         LocalTime endTime = LocalTime.parse(end, DateTimeFormatter.ofPattern("HH:mm:ss"));
@@ -169,6 +171,21 @@ public class Function {
         return resultList;
     }
 
+    public static <T, A, B> List<T> getListDataByFieldName(String collectionName, String fieldName1, A value1, String fieldName2, B value2, Class<T> classType) {
+        List<T> resultList = new ArrayList<>();
+        try {
+            ApiFuture<QuerySnapshot> future = dbFirestore.collection(collectionName).whereEqualTo(fieldName1, value1).whereEqualTo(fieldName2, value2).get();
+            QuerySnapshot querySnapshot = future.get();
+            for (QueryDocumentSnapshot document : querySnapshot) {
+                T data = document.toObject(classType);
+                resultList.add(data);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
     public static <T> Boolean updateData(String collectionName, String document, T data) {
         try {
             DocumentReference documentReference = dbFirestore.collection(collectionName).document(document);
@@ -214,6 +231,7 @@ public class Function {
             return false;
         }
     }
+
     public static String generateRandomId(String COLLECTION_NAME) {
         DocumentReference documentReference = FirestoreClient.getFirestore().collection(COLLECTION_NAME).document();
         return documentReference.getId();
