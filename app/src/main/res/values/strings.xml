@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TimerAppClone</string>
+    <string name="timerTextView">25:00</string>
+    <string name="sessions">1/4 Sessions</string>
+    <string name="time_in_minutes">%1$s Mins</string>
+    <string name="rounds_format">%1$s Rounds</string>
+    <string name="auto_start_break">Auto Start Break\n</string>
+    <string name="auto_start_pomo">Auto Start Pomodoro</string>
+    <string name="restore_default">Restore default</string>
+    <string name="save_config">Save</string>
 </resources>
