@@ -65,7 +65,7 @@ public class MainScreenActivity extends AppCompatActivity  {
     ImageView ava;
     private ProgressDialog progressDialog;
 
-    Boolean isDialogFragmentShowed = false;
+    Boolean isShowedDialogFragment = false;
 
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
         @Override
@@ -105,8 +105,7 @@ public class MainScreenActivity extends AppCompatActivity  {
             public void onClick(View v) {
 
                 layoutAddTasksgroup.setVisibility(View.VISIBLE);
-                isDialogFragmentShowed = true;
-                Toast.makeText(MainScreenActivity.this, Boolean.toString(isDialogFragmentShowed), Toast.LENGTH_SHORT).show();
+                isShowedDialogFragment = true;
 
             }
         });
@@ -115,31 +114,39 @@ public class MainScreenActivity extends AppCompatActivity  {
         important.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainScreenActivity.this, ImportantActivity.class);
-                startActivity(intent);
+                if(isShowedDialogFragment == false) {
+                    Intent intent = new Intent(MainScreenActivity.this, ImportantActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
         myDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainScreenActivity.this, MyDayActivity.class);
-                startActivity(intent);
+                if(isShowedDialogFragment == false) {
+                    Intent intent = new Intent(MainScreenActivity.this, MyDayActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
         pomodoro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainScreenActivity.this, PomodoroActivity.class);
-                startActivity(intent);
+                if(isShowedDialogFragment == false) {
+                    Intent intent = new Intent(MainScreenActivity.this, PomodoroActivity.class);
+                    startActivity(intent);
+                }
             }
         });
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MonthViewActivity.class);
-                startActivity(intent);
+                if(isShowedDialogFragment == false) {
+                    Intent intent = new Intent(getApplicationContext(), MonthViewActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -149,7 +156,7 @@ public class MainScreenActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 edtGroupTitle.setText("");
                 layoutAddTasksgroup.setVisibility(View.GONE);
-                isDialogFragmentShowed = false;
+                isShowedDialogFragment = false;
             }
         });
         tvAddGroup.setOnClickListener(new View.OnClickListener() {
@@ -195,7 +202,7 @@ public class MainScreenActivity extends AppCompatActivity  {
 
             edtGroupTitle.setText("");
             layoutAddTasksgroup.setVisibility(View.GONE);
-            isDialogFragmentShowed = false;
+            isShowedDialogFragment = false;
         }
     }
 

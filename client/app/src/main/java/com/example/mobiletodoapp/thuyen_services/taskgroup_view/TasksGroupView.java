@@ -86,35 +86,43 @@ public class TasksGroupView extends AppCompatActivity {
     TextView btnCancelUpdateTaskGroup;
     TextView btnUpdateTaskGroup;
 
+    Boolean isShowedDialogFragment = false;
+
 
     private final TaskAdapter taskAdapter = new TaskAdapter(new TaskAdapter.IClickTaskItem() {
         @Override
         public void moveToTaskView(Task task) {
-            Intent taskDetailIntent = new Intent(TasksGroupView.this, TaskDetailActivity.class);
-            taskDetailIntent.putExtra("taskId", task.getId());
-            taskDetailIntent.putExtra("taskTitle", task.getTitle());
-            taskDetailIntent.putExtra("taskgroupTitle", intent.getStringExtra("tasksgroupTitle"));
-            startActivity(taskDetailIntent);
+            if(isShowedDialogFragment == false) {
+                Intent taskDetailIntent = new Intent(TasksGroupView.this, TaskDetailActivity.class);
+                taskDetailIntent.putExtra("taskId", task.getId());
+                taskDetailIntent.putExtra("taskTitle", task.getTitle());
+                taskDetailIntent.putExtra("taskgroupTitle", intent.getStringExtra("tasksgroupTitle"));
+                startActivity(taskDetailIntent);
+            }
         }
 
         @Override
         public void handleCompleteBtn(Task task) {
-            if (task.isCompleted()) {
-                task.setCompleted(false);
-            } else {
-                task.setCompleted(true);
+            if(isShowedDialogFragment == false) {
+                if (task.isCompleted()) {
+                    task.setCompleted(false);
+                } else {
+                    task.setCompleted(true);
+                }
+                taskAdapter.setData(tasks);
             }
-            taskAdapter.setData(tasks);
         }
 
         @Override
         public void handleImportantBtn(Task task) {
-            if(task.isImportant()) {
-                task.setImportant(false);
-            } else {
-                task.setImportant(true);
+            if(isShowedDialogFragment == false) {
+                if(task.isImportant()) {
+                    task.setImportant(false);
+                } else {
+                    task.setImportant(true);
+                }
+                taskAdapter.setData(tasks);
             }
-            taskAdapter.setData(tasks);
         }
     });
 
@@ -137,14 +145,19 @@ public class TasksGroupView extends AppCompatActivity {
         btnBackToPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if(isShowedDialogFragment == false) {
+                    finish();
+                }
             }
         });
 
         btnShowAddTaskLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleShowAddTaskLayout();
+                if(isShowedDialogFragment == false) {
+                    isShowedDialogFragment = true;
+                    handleShowAddTaskLayout();
+                }
             }
         });
 
@@ -168,6 +181,7 @@ public class TasksGroupView extends AppCompatActivity {
                 edtTaskTitle.setText("");
                 clAddTask.setVisibility(View.GONE);
                 edtDescription.setText("");
+                isShowedDialogFragment = false;
             }
         });
 
@@ -181,7 +195,9 @@ public class TasksGroupView extends AppCompatActivity {
         btnShowPopupMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupMenu();
+                if(isShowedDialogFragment == false) {
+                    showPopupMenu();
+                }
             }
         });
 
@@ -248,6 +264,7 @@ public class TasksGroupView extends AppCompatActivity {
             showLoading();
             getTaskGroupById(taskGroupApi, intent.getStringExtra("tasksgroupId"));
             clUpdateTaskGroup.setVisibility(View.GONE);
+            isShowedDialogFragment = false;
         }
     }
 
@@ -263,9 +280,11 @@ public class TasksGroupView extends AppCompatActivity {
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.update_title) {
                     clUpdateTaskGroup.setVisibility(View.VISIBLE);
+                    isShowedDialogFragment = true;
                     return true;
                 } else if (itemId == R.id.delete_tasksgroup) {
-                    Toast.makeText(TasksGroupView.this, "delete", Toast.LENGTH_SHORT).show();
+                    showLoading();
+                    deleteTaskGroupById();
                     return true;
                 }
                 return false;
@@ -276,6 +295,28 @@ public class TasksGroupView extends AppCompatActivity {
         });
 
         popupMenu.show();
+    }
+
+    private CompletableFuture<Void> deleteTaskGroupById() {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        String taskGroupId = intent.getStringExtra("tasksgroupId");
+        taskGroupApi.delateTaskGroup(taskGroupId).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if(response.body()) {
+                    hideLoading();
+                    finish();
+                } else {
+                    Log.d("delete taskgroup", "false");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.d("delete taskgroup", t.toString());
+            }
+        });
+        return future;
     }
 
     private CompletableFuture<Void> getTaskGroupById(TaskGroupApi taskGroupApi, String taskgroupId) {
@@ -340,6 +381,7 @@ public class TasksGroupView extends AppCompatActivity {
             Task task = new Task(tasksGroupIdSelected, title, des, startTime, endTime);
             createTask(taskApi, task);
             clAddTask.setVisibility(View.GONE);
+            isShowedDialogFragment = false;
         }
     }
 
@@ -474,6 +516,7 @@ public class TasksGroupView extends AppCompatActivity {
 
     private void handleShowAddTaskLayout() {
         clAddTask.setVisibility(View.VISIBLE);
+        isShowedDialogFragment = true;
 
 
         List<TaskGroup> taskGroups = new ArrayList<>();
