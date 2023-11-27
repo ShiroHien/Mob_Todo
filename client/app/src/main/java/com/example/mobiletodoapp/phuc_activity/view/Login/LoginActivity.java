@@ -8,7 +8,6 @@ import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.validat
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +29,7 @@ import com.example.mobiletodoapp.phuc_activity.view.Logup.LogupActivity;
 import com.example.mobiletodoapp.phuc_activity.dto.Login;
 import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
 import com.example.mobiletodoapp.phuc_activity.api.UserApi;
-import com.example.mobiletodoapp.thuyen_services.MainScreenActivity;
+import com.example.mobiletodoapp.thuyen_services.main_screen.MainScreenActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

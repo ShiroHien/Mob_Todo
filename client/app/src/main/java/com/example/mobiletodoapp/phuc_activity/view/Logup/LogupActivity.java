@@ -27,7 +27,7 @@ import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
 import com.example.mobiletodoapp.phuc_activity.api.UserApi;
 import com.example.mobiletodoapp.phuc_activity.dto.User;
 import com.example.mobiletodoapp.phuc_activity.view.Login.LoginActivity;
-import com.example.mobiletodoapp.thuyen_services.MainScreenActivity;
+import com.example.mobiletodoapp.thuyen_services.main_screen.MainScreenActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 

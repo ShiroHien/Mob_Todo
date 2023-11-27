@@ -1,4 +1,4 @@
-package com.example.mobiletodoapp.thuyen_services;
+package com.example.mobiletodoapp.thuyen_services.main_screen;
 
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.setImage;
@@ -23,6 +23,11 @@ import android.widget.Toast;
 import com.example.mobiletodoapp.R;
 import com.example.mobiletodoapp.phuc_activity.api.TaskDayApi;
 import com.example.mobiletodoapp.phuc_activity.api.TimetableApi;
+import com.example.mobiletodoapp.thuyen_services.ImportantActivity;
+import com.example.mobiletodoapp.thuyen_services.MyDayActivity;
+import com.example.mobiletodoapp.thuyen_services.PomodoroActivity;
+import com.example.mobiletodoapp.thuyen_services.TasksGroupAdapter;
+import com.example.mobiletodoapp.thuyen_services.taskgroup_view.TasksGroupView;
 import com.example.mobiletodoapp.trung_activity.CalendarUtils;
 import com.example.mobiletodoapp.trung_activity.MonthViewActivity;
 import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
@@ -38,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainScreenActivity extends AppCompatActivity {
+public class MainScreenActivity extends AppCompatActivity  {
 
     LinearLayout myDay;
     LinearLayout important;
@@ -59,6 +64,8 @@ public class MainScreenActivity extends AppCompatActivity {
     TextView username, email;
     ImageView ava;
     private ProgressDialog progressDialog;
+
+    Boolean isDialogFragmentShowed = false;
 
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
         @Override
@@ -92,25 +99,18 @@ public class MainScreenActivity extends AppCompatActivity {
         adapter.setData(tasksGroups);
         recyclerView.setAdapter(adapter);
 
+
         btnAddTasksgroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 layoutAddTasksgroup.setVisibility(View.VISIBLE);
+                isDialogFragmentShowed = true;
+                Toast.makeText(MainScreenActivity.this, Boolean.toString(isDialogFragmentShowed), Toast.LENGTH_SHORT).show();
+
             }
         });
-        tvCancelAddGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edtGroupTitle.setText("");
-                layoutAddTasksgroup.setVisibility(View.GONE);
-            }
-        });
-        tvAddGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addTasksGroup(edtGroupTitle.getText().toString().trim());
-            }
-        });
+
 
         important.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +143,24 @@ public class MainScreenActivity extends AppCompatActivity {
             }
         });
 
+
+        tvCancelAddGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtGroupTitle.setText("");
+                layoutAddTasksgroup.setVisibility(View.GONE);
+                isDialogFragmentShowed = false;
+            }
+        });
+        tvAddGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTasksGroup(edtGroupTitle.getText().toString().trim());
+            }
+        });
+
     }
+
 
     private void init() {
         CalendarUtils.selectedDate = LocalDate.now();
@@ -178,6 +195,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
             edtGroupTitle.setText("");
             layoutAddTasksgroup.setVisibility(View.GONE);
+            isDialogFragmentShowed = false;
         }
     }
 
@@ -244,6 +262,12 @@ public class MainScreenActivity extends AppCompatActivity {
         return future;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getTasksGroupsFromServer(taskGroupApi);
+    }
+
     private void showLoading() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Đang xử lý...");
@@ -256,4 +280,6 @@ public class MainScreenActivity extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
+
+
 }
