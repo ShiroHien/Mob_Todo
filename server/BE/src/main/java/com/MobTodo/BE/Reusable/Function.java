@@ -11,14 +11,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class Function {
-    // Đối tượng đại diện cho csdl
     private static Firestore dbFirestore = FirestoreClient.getFirestore();
 
     public static boolean checkExist(String collectionName, String fieldName, String value) {
@@ -51,15 +47,17 @@ public class Function {
             return false;
         }
     }
+
     public static Long distanceDateTime(String start, String end) {
-        LocalDateTime startTime = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
-        LocalDateTime endTime = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
+        LocalDateTime startTime = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
+        LocalDateTime endTime = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
         long durationInSeconds = Duration.between(startTime, endTime).getSeconds();
         return durationInSeconds;
     }
+
     public static Long distanceTime(String start, String end) {
-        LocalTime startTime = LocalTime.parse(start, DateTimeFormatter.ofPattern("HH:mm:ss"));
-        LocalTime endTime = LocalTime.parse(end, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        LocalTime startTime = LocalTime.parse(start, DateTimeFormatter.ofPattern("HH:mm"));
+        LocalTime endTime = LocalTime.parse(end, DateTimeFormatter.ofPattern("HH:mm"));
         long durationInSeconds = Duration.between(startTime, endTime).getSeconds();
         return durationInSeconds;
     }
@@ -76,7 +74,7 @@ public class Function {
     }
 
     public static boolean checkTimeFormat(String input) {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         try {
             LocalTime parsedTime = LocalTime.parse(input.trim(), timeFormatter);
             return true; // If parsing is successful, the time is valid
@@ -87,7 +85,7 @@ public class Function {
     }
 
     public static boolean checkDateTimeFormat(String input) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
         try {
             LocalDateTime parsedDate = LocalDateTime.parse(input, dateFormatter);
             return true; // If parsing is successful, the date is valid
@@ -172,6 +170,21 @@ public class Function {
         return resultList;
     }
 
+    public static <T, A, B> List<T> getListDataByFieldName(String collectionName, String fieldName1, A value1, String fieldName2, B value2, Class<T> classType) {
+        List<T> resultList = new ArrayList<>();
+        try {
+            ApiFuture<QuerySnapshot> future = dbFirestore.collection(collectionName).whereEqualTo(fieldName1, value1).whereEqualTo(fieldName2, value2).get();
+            QuerySnapshot querySnapshot = future.get();
+            for (QueryDocumentSnapshot document : querySnapshot) {
+                T data = document.toObject(classType);
+                resultList.add(data);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
     public static <T> Boolean updateData(String collectionName, String document, T data) {
         try {
             DocumentReference documentReference = dbFirestore.collection(collectionName).document(document);
@@ -218,4 +231,8 @@ public class Function {
         }
     }
 
+    public static String generateRandomId(String COLLECTION_NAME) {
+        DocumentReference documentReference = FirestoreClient.getFirestore().collection(COLLECTION_NAME).document();
+        return documentReference.getId();
+    }
 }

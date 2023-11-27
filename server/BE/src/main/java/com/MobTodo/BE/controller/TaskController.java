@@ -28,7 +28,14 @@ public class TaskController {
     public Task getDetailTask(@PathVariable String taskId) {
         return taskService.getDetailTask(taskId);
     }
-
+    @GetMapping("/getImportant/{userId}")
+    public List<Task> getImportant(@PathVariable String userId) {
+        return taskService.getImportant(userId);
+    }
+    @GetMapping("/getMyDay/{userId}")
+    public List<Task> getMyDay(@PathVariable String userId) {
+        return taskService.getMyDay(userId);
+    }
     @PutMapping("/updateTask")
     public Boolean updateTask(@RequestBody Task data) {
         return taskService.updateTask(data);

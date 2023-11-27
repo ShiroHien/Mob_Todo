@@ -19,7 +19,6 @@ public class TimetableService implements ITimetableService {
                 if (postData(data, COLLECTION_NAME)) {
                     return getDetailByFieldName(COLLECTION_NAME, "dayTime", data.getDayTime(), "userId", data.getUserId(), Timetable.class);
                 }
-                System.out.println("Pass with null 1");
                 return null;
             }
         }

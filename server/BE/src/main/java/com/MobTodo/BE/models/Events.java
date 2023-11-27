@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TaskDay {
+public class Events {
     private String id;
     private String timetableId;
     private String title;
