@@ -17,9 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Weekly"
+            android:text="Hiện thị theo tuần"
+            android:textAllCaps="false"
             android:background="@null"
-            android:textStyle="bold"
             android:onClick="weeklyAction"
             android:textSize="20sp"/>
 
@@ -31,15 +31,12 @@
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp">
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="PREV"
-                android:background="@null"
-                android:textStyle="bold"
-                android:onClick="previousMonthAction"
-                android:textSize="20sp"/>
+                android:src="@drawable/ic_previous"
+                android:onClick="previousMonthAction"/>
 
             <TextView
                 android:id="@+id/monthYearTV"
@@ -48,18 +45,14 @@
                 android:layout_height="wrap_content"
                 android:text="Feb 2021"
                 android:textSize="20sp"
-                android:textAlignment="center"
-                android:textColor="@color/black"/>
+                android:textAlignment="center"/>
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="NEXT"
-                android:background="@null"
-                android:textStyle="bold"
-                android:onClick="nextMonthAction"
-                android:textSize="20sp"/>
+                android:src="@drawable/ic_next"
+                android:onClick="nextMonthAction"/>
 
         </LinearLayout>
 

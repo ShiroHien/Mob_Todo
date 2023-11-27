@@ -2,6 +2,7 @@ package com.example.mobiletodoapp.trung_activity;
 
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.daysInMonthArray;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.handleTimetableForDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.monthDayYearDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.monthYearFromDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedDate;
@@ -100,7 +101,7 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
 
     private void setMonthView()
     {
-        monthYearText.setText(monthDayYearDate(selectedDate));
+        monthYearText.setText(monthYearFromDate(selectedDate));
         ArrayList<LocalDate> daysInMonth = daysInMonthArray(selectedDate);
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
@@ -129,24 +130,8 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
             selectedDate = date;
             setMonthView();
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
-            handleTimetableForDate(date);
+            handleTimetableForDate(date,eventsAdapter);
         }
-    }
-
-    private void handleTimetableForDate(LocalDate selectedDate) {
-        for(int i = 0; i< CalendarUtils.existingTimetableList.size(); i++){
-            Timetable timetableItem = CalendarUtils.existingTimetableList.get(i);
-
-            if(timetableItem.getDayTime().equals(CalendarUtils.monthDayYearDate(selectedDate))){
-                selectedTimetableId = timetableItem.getId();
-                Toast.makeText(this,selectedTimetableId,Toast.LENGTH_SHORT).show();
-                eventsAdapter.updateEventsList(timetableItem.getEvents());
-                return;
-            }
-        }
-        Toast.makeText(this,"Không có sự kiện nào trong ngày này",Toast.LENGTH_SHORT).show();
-        selectedTimetableId = null;
-        eventsAdapter.updateEventsList(new ArrayList<>());
     }
 
 

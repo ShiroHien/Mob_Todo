@@ -3,6 +3,7 @@ package com.example.mobiletodoapp.trung_activity;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.eventsApi;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedDate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -51,7 +52,7 @@ public class EditEventActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int h, int m) {
                         startHour = h;
                         startMin = m;
-                        binding.tvStartTime.setText(String.format(Locale.getDefault(),"%02d:%02d",h,m));
+                        binding.etStartTime.setText(String.format(Locale.getDefault(),"%02d:%02d",h,m));
                     }
                 };
                 TimePickerDialog timePickerDialog = new TimePickerDialog(view.getContext(),onTimeSetListener,startHour,startMin,true);
@@ -67,7 +68,7 @@ public class EditEventActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int h, int m) {
                         endHour = h;
                         endMin = m;
-                        binding.tvEndTime.setText(String.format(Locale.getDefault(),"%02d:%02d",h,m));
+                        binding.etEndTime.setText(String.format(Locale.getDefault(),"%02d:%02d",h,m));
                     }
                 };
                 TimePickerDialog timePickerDialog = new TimePickerDialog(view.getContext(),onTimeSetListener,endHour,endMin,true);
@@ -75,10 +76,13 @@ public class EditEventActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
-        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
+        binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Events event = new Events(timetableId,title,description,startTime,endTime);
+                Events event = new Events(timetableId,binding.etTitle.getText().toString(),binding.etDescription.getText().toString(),
+                        binding.etStartTime.getText().toString(),binding.etEndTime.getText().toString());
+                event.setId(id);
+                Log.d("Calendar","event: "+event.getTitle());
                 showLoading();
                 editEvent(event).whenComplete((result,throwable)->{
                     hideLoading();
@@ -109,8 +113,8 @@ public class EditEventActivity extends AppCompatActivity {
         description = this.getIntent().getStringExtra("description");
 
         binding.etTitle.setText(title);
-        binding.tvStartTime.setText(startTime);
-        binding.tvEndTime.setText(endTime);
+        binding.etStartTime.setText(startTime);
+        binding.etEndTime.setText(endTime);
         binding.etDescription.setText(description);
     }
 
@@ -120,25 +124,19 @@ public class EditEventActivity extends AppCompatActivity {
         eventsApi.updateEvent(newEvent).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                try {
-                    if (response.body() == true) {
-                        Log.d("Calendar","edit event response: success");
-                        showToast(getApplicationContext(),"Sửa event thành công!");
-                        CalendarUtils.loadTimetableForUser(getApplicationContext(),getSharedPref(getApplicationContext(), "userId", ""));
-                    } else {
-                        // Xử lý khi response body là false
-                        showToast(getApplicationContext(),"Không thể sửa event");
-                    }
-                    future.complete(null);
-                } catch (Exception e){
-                    future.completeExceptionally(e);
+                if (response.body() == true) {
+                    Log.d("Calendar","edit event response: success");
+                    showToast(getApplicationContext(),"edit event thành công!");
+                    CalendarUtils.loadTimetableForUser(getApplicationContext(),getSharedPref(getApplicationContext(), "userId", ""));
+                } else {
+                    // Xử lý khi response body là false
+                    showToast(getApplicationContext(),"Không thể edit event");
                 }
+                future.complete(null);
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                showToast(getApplicationContext(),"Lỗi server!");
-                Logger.getLogger(MonthViewActivity.class.getName()).log(Level.SEVERE, "Error: ",t);
                 future.completeExceptionally(t);
             }
         });

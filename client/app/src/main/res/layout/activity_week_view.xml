@@ -17,15 +17,12 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:layout_width="20dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="PREV"
-            android:background="@null"
-            android:textStyle="bold"
-            android:onClick="previousWeekAction"
-            android:textSize="20sp"/>
+            android:src="@drawable/ic_previous"
+            android:onClick="previousWeekAction"/>
 
         <TextView
             android:id="@+id/monthYearTV"
@@ -34,18 +31,14 @@
             android:layout_height="wrap_content"
             android:text="Feb 2021"
             android:textSize="20sp"
-            android:textAlignment="center"
-            android:textColor="@color/black"/>
+            android:textAlignment="center"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:layout_width="20dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="NEXT"
-            android:background="@null"
-            android:textStyle="bold"
-            android:onClick="nextWeekAction"
-            android:textSize="20sp"/>
+            android:src="@drawable/ic_next"
+            android:onClick="nextWeekAction"/>
 
     </LinearLayout>
 
@@ -126,12 +119,11 @@
 
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tvEventsHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Các sự kiện trong ngày"
-            android:textColor="#808080"
-            android:textSize="30sp"
+            android:text="Nhấn vào ngày để xem sự kiện"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +137,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/tvEventsHeader"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAddEvent"

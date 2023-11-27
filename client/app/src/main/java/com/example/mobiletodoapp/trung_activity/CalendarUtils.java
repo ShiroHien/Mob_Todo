@@ -5,6 +5,7 @@ import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToa
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -121,8 +122,6 @@ public class CalendarUtils
                 try {
                     if (response.body() != null) {
                         existingTimetableList = response.body();
-                        Log.d("Calendar","timetable response: "+response.body());
-                        showToast(context,"update timetable thanh cong");
                     } else {
                         // Xử lý khi response body là null
                         showToast(context,"TaskDay List bị null");
@@ -175,4 +174,19 @@ public class CalendarUtils
 
         return future;
     }
+
+    public static void handleTimetableForDate(LocalDate selectedDate, EventsAdapter eventsAdapter) {
+        for(int i = 0; i< existingTimetableList.size(); i++){
+            Timetable timetableItem = existingTimetableList.get(i);
+
+            if(timetableItem.getDayTime().equals(CalendarUtils.monthDayYearDate(selectedDate))){
+                selectedTimetableId = timetableItem.getId();
+                eventsAdapter.updateEventsList(timetableItem.getEvents());
+                return;
+            }
+        }
+        selectedTimetableId = null;
+        eventsAdapter.updateEventsList(new ArrayList<>());
+    }
+
 }

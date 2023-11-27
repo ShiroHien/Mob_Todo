@@ -3,6 +3,7 @@ package com.example.mobiletodoapp.trung_activity;
 
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.daysInWeekArray;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.handleTimetableForDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.monthYearFromDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedTimetableId;
@@ -19,13 +20,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.phuc_activity.dto.Events;
 import com.example.mobiletodoapp.phuc_activity.dto.Timetable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener
+public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener, EventsAdapter.OnItemClickListener
 {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
@@ -50,6 +52,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         monthYearText = findViewById(R.id.monthYearTV);
         eventsRecyclerView = findViewById(R.id.rvEvents);
         eventsAdapter = new EventsAdapter(new ArrayList<>());
+        eventsAdapter.setOnItemClickListener(this);
         eventsRecyclerView.setAdapter(eventsAdapter);
         eventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -101,32 +104,29 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         if(date != null){
             CalendarUtils.selectedDate = date;
             setWeekView();
-            handleTimetableForDate(date);
+            handleTimetableForDate(date,eventsAdapter);
         }
 
     }
 
-    private void handleTimetableForDate(LocalDate selectedDate) {
-        for(int i = 0; i< CalendarUtils.existingTimetableList.size(); i++){
-            Timetable timetableItem = CalendarUtils.existingTimetableList.get(i);
-
-            if(timetableItem.getDayTime().equals(CalendarUtils.monthDayYearDate(selectedDate))){
-                selectedTimetableId = timetableItem.getId();
-                Toast.makeText(this,selectedTimetableId,Toast.LENGTH_SHORT).show();
-                eventsAdapter.updateEventsList(timetableItem.getEvents());
-                return;
-            }
-        }
-        Toast.makeText(this,"Không có sự kiện nào trong ngày này",Toast.LENGTH_SHORT).show();
-        selectedTimetableId = null;
-        eventsAdapter.updateEventsList(new ArrayList<>());
-    }
 
     @Override
     protected void onResume()
     {
         super.onResume();
+        eventsAdapter.updateEventsList(new ArrayList<>());
     }
 
 
+    @Override
+    public void onEventItemClick(Events event) {
+        Intent intent = new Intent(this, EditEventActivity.class);
+        intent.putExtra("title",event.getTitle());
+        intent.putExtra("description",event.getDescription());
+        intent.putExtra("timetableId",event.getTimetableId());
+        intent.putExtra("id",event.getId());
+        intent.putExtra("startTime",event.getStartTime());
+        intent.putExtra("endTime",event.getEndTime());
+        startActivity(intent);
+    }
 }
