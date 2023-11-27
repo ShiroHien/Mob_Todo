@@ -14,6 +14,6 @@ public interface TimetableApi {
     @POST("timetable/createTimetable")
     Call<Timetable> createTimetable(@Body Timetable data);
 
-    @GET("timetable/getTimetableById/{userId}")
+    @GET("timetable/getListTimetable/{userId}")
     Call<List<Timetable>> getTimetableById(@Path("userId") String userId);
 }

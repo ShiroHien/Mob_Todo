@@ -1,15 +1,16 @@
 package com.example.mobiletodoapp.trung_activity;
 
 
-import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
-import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.saveSharedPref;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
 
 import android.content.Context;
+import android.util.Log;
 
-import com.example.mobiletodoapp.phuc_activity.api.RetrofitService;
-import com.example.mobiletodoapp.phuc_activity.api.TaskDayApi;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.example.mobiletodoapp.phuc_activity.api.EventsApi;
 import com.example.mobiletodoapp.phuc_activity.api.TimetableApi;
+import com.example.mobiletodoapp.phuc_activity.dto.Events;
 import com.example.mobiletodoapp.phuc_activity.dto.Timetable;
 
 import java.time.DayOfWeek;
@@ -30,10 +31,14 @@ import retrofit2.Response;
 public class CalendarUtils
 {
     public static LocalDate selectedDate;
-    public static TimetableApi timetableApi;
-    public static TaskDayApi taskDayApi;
 
-    public static List<Timetable> existingTimetableList;
+    public static String selectedTimetableId;
+    public static TimetableApi timetableApi;
+
+    public static EventsApi eventsApi;
+
+    public static List<Timetable> existingTimetableList = new ArrayList<>();
+    public static Boolean creatingTimetable = false;
 
     public static String monthDayYearDate(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -108,4 +113,66 @@ public class CalendarUtils
     }
 
 
+    public static CompletableFuture<Void> loadTimetableForUser(Context context, String userId) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        timetableApi.getTimetableById(userId).enqueue(new Callback<List<Timetable>>() {
+            @Override
+            public void onResponse(Call<List<Timetable>> call, Response<List<Timetable>> response) {
+                try {
+                    if (response.body() != null) {
+                        existingTimetableList = response.body();
+                        Log.d("Calendar","timetable response: "+response.body());
+                        showToast(context,"update timetable thanh cong");
+                    } else {
+                        // Xử lý khi response body là null
+                        showToast(context,"TaskDay List bị null");
+                    }
+                    future.complete(null);
+                } catch (Exception e){
+                    future.completeExceptionally(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Timetable>> call, Throwable t) {
+                showToast(context,"Không lấy đc timetable list");
+                Logger.getLogger(MonthViewActivity.class.getName()).log(Level.SEVERE, "Error: ",t);
+                future.completeExceptionally(t);
+            }
+        });
+
+        return future;
+    }
+
+    public static CompletableFuture<Timetable> createTimetableForDate(Context context, Timetable timetable) {
+        CompletableFuture<Timetable> future = new CompletableFuture<>();
+        timetableApi.createTimetable(timetable).enqueue(new Callback<Timetable>() {
+            @Override
+            public void onResponse(Call<Timetable> call, Response<Timetable> response) {
+                try {
+                    if (response.body() != null) {
+                        Log.d("Calendar","timetable response: "+response.body());
+                        showToast(context,"tao timetable thanh cong");
+                        CalendarUtils.selectedTimetableId = response.body().getId();
+                        existingTimetableList.add(response.body());
+                    } else {
+                        // Xử lý khi response body là null
+                        showToast(context,"timetable trả về bị null");
+                    }
+                    future.complete(null);
+                } catch (Exception e){
+                    future.completeExceptionally(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Timetable> call, Throwable t) {
+                showToast(context,"Không lấy đc timetable list");
+                Logger.getLogger(MonthViewActivity.class.getName()).log(Level.SEVERE, "Error: ",t);
+                future.completeExceptionally(t);
+            }
+        });
+
+        return future;
+    }
 }

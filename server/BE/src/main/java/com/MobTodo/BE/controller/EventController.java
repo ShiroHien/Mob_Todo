@@ -16,27 +16,27 @@ public class EventController {
     private IEventService eventService;
 
     @PostMapping("/createEvent")
-    public Boolean createTaskDay(@RequestBody Events data) throws ExecutionException, InterruptedException {
-        return eventService.createTaskDay(data);
+    public Boolean createEvent(@RequestBody Events data) throws ExecutionException, InterruptedException {
+        return eventService.createEvent(data);
     }
 
     @GetMapping("/getDetailEvent/{timetableId}/{id}")
-    public Events getDetailTaskDay(@PathVariable String timetableId,@PathVariable String id) {
-        return eventService.getDetailTaskDay(timetableId, id);
+    public Events getDetailEvent(@PathVariable String timetableId, @PathVariable String id) {
+        return eventService.getDetailEvent(timetableId, id);
     }
 
     @GetMapping("/getListEvent/{timetableId}")
-    public List<Events> getListTaskDay(@PathVariable String timetableId) {
-        return eventService.getListTaskDay(timetableId);
+    public List<Events> getListEvent(@PathVariable String timetableId) {
+        return eventService.getListEvent(timetableId);
     }
 
     @PutMapping("/updateEvent")
-    public Boolean updateTaskDay(@RequestBody Events data) {
-        return eventService.updateTaskDay(data);
+    public Boolean updateEvent(@RequestBody Events data) {
+        return eventService.updateEvent(data);
     }
 
     @DeleteMapping("/deleteEvent/{timetableId}/{eventId}")
-    public Boolean deleteTaskday(@PathVariable String timetableId, @PathVariable String eventId) {
-        return eventService.deleteTaskDay(timetableId, eventId);
+    public Boolean deleteEvent(@PathVariable String timetableId, @PathVariable String eventId) {
+        return eventService.deleteEvent(timetableId, eventId);
     }
 }
