@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".thuyen_services.TasksGroupView">
+    tools:context=".thuyen_services.taskgroup_view.TasksGroupView">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -101,6 +101,10 @@
     <include
         android:id="@+id/inc_add_task_layout"
         layout="@layout/add_task_layout"
+        android:visibility="gone" />
+    <include
+        android:id="@+id/inc_update_taskgroup_layout"
+        layout="@layout/update_taskgroup_layout"
         android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,6 @@
-package com.example.mobiletodoapp.thuyen_services;
+package com.example.mobiletodoapp.thuyen_services.taskgroup_view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +23,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.mobiletodoapp.R;
@@ -33,8 +31,8 @@ import com.example.mobiletodoapp.phuc_activity.api.TaskApi;
 import com.example.mobiletodoapp.phuc_activity.api.TaskGroupApi;
 import com.example.mobiletodoapp.phuc_activity.dto.Task;
 import com.example.mobiletodoapp.phuc_activity.dto.TaskGroup;
-
-import org.checkerframework.checker.units.qual.C;
+import com.example.mobiletodoapp.phuc_activity.view.TaskDetail.TaskDetailActivity;
+import com.example.mobiletodoapp.thuyen_services.TaskAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,7 +45,6 @@ import java.util.concurrent.CompletableFuture;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class TasksGroupView extends AppCompatActivity {
 
@@ -84,11 +81,17 @@ public class TasksGroupView extends AppCompatActivity {
     ImageView btnShowPopupMenu;
     TaskGroup mTaskGroup;
 
+    ConstraintLayout clUpdateTaskGroup;
+    EditText edtNewGroupTitle;
+    TextView btnCancelUpdateTaskGroup;
+    TextView btnUpdateTaskGroup;
+
 
     private final TaskAdapter taskAdapter = new TaskAdapter(new TaskAdapter.IClickTaskItem() {
         @Override
         public void moveToTaskView(Task task) {
-
+            Intent taskDetailIntent = new Intent(TasksGroupView.this, TaskDetailActivity.class);
+            startActivity(taskDetailIntent);
         }
 
         @Override
@@ -179,15 +182,35 @@ public class TasksGroupView extends AppCompatActivity {
             }
         });
 
+        btnCancelUpdateTaskGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clUpdateTaskGroup.setVisibility(View.GONE);
+                edtNewGroupTitle.setText("");
+            }
+        });
+
+        btnUpdateTaskGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateTaskGroup();
+            }
+        });
+
     }
 
     private void init() {
+
+        // layout taskgroup view
         rcvTaskList = findViewById(R.id.rcv_task_list);
         btnShowAddTaskLayout = findViewById(R.id.btn_show_add_task_layout);
         btnBackToPrevious = findViewById(R.id.btn_back_to_previous);
         tvHeaderTitlte = findViewById(R.id.tv_header_title);
-        clAddTask = findViewById(R.id.inc_add_task_layout);
 
+
+
+        // layout add task
+        clAddTask = findViewById(R.id.inc_add_task_layout);
         edtTaskTitle = findViewById(R.id.edt_task_title);
         spTasksGroupList = findViewById(R.id.sp_tasksgroup_list);
         tvStartTime = findViewById(R.id.tv_start_time);
@@ -197,13 +220,34 @@ public class TasksGroupView extends AppCompatActivity {
         edtDescription = findViewById(R.id.edt_description);
         btnCancelAddTask = findViewById(R.id.btn_cancel_add_task);
         btnAddTask = findViewById(R.id.btn_add_task);
+
+        // show popup menu
         btnShowPopupMenu = findViewById(R.id.btn_show_popup_menu);
+
+        // layout update taskgroup
+        clUpdateTaskGroup = findViewById(R.id.inc_update_taskgroup_layout);
+        edtNewGroupTitle = findViewById(R.id.edt_new_group_title);
+        btnUpdateTaskGroup = findViewById(R.id.tv_update_tasksgroup);
+        btnCancelUpdateTaskGroup = findViewById(R.id.tv_cancel_update_tasksgroup);
+
 
         intent = this.getIntent();
 
         tvHeaderTitlte.setText(intent.getStringExtra("tasksgroupTitle"));
 
     }
+
+    private void updateTaskGroup() {
+        String newTitle = edtNewGroupTitle.getText().toString().trim();
+        if(newTitle == null || newTitle.isEmpty()) {
+            Toast.makeText(TasksGroupView.this, "Tên nhóm không được để trống", Toast.LENGTH_SHORT).show();
+        } else {
+            showLoading();
+            getTaskGroupById(taskGroupApi, intent.getStringExtra("tasksgroupId"));
+            clUpdateTaskGroup.setVisibility(View.GONE);
+        }
+    }
+
 
     private void showPopupMenu() {
         PopupMenu popupMenu = new PopupMenu(this, btnShowPopupMenu);
@@ -215,9 +259,7 @@ public class TasksGroupView extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.update_title) {
-//                    showLoading();
-                    getTaskGroupById(taskGroupApi, intent.getStringExtra("taskGroupId"));
-//                    Toast.makeText(TasksGroupView.this, "update", Toast.LENGTH_SHORT).show();
+                    clUpdateTaskGroup.setVisibility(View.VISIBLE);
                     return true;
                 } else if (itemId == R.id.delete_tasksgroup) {
                     Toast.makeText(TasksGroupView.this, "delete", Toast.LENGTH_SHORT).show();
@@ -235,13 +277,16 @@ public class TasksGroupView extends AppCompatActivity {
 
     private CompletableFuture<Void> getTaskGroupById(TaskGroupApi taskGroupApi, String taskgroupId) {
         CompletableFuture<Void> future = new CompletableFuture<>();
+
         taskGroupApi.getTaskGroupById(taskgroupId).enqueue(new Callback<TaskGroup>() {
             @Override
             public void onResponse(Call<TaskGroup> call, Response<TaskGroup> response) {
                 if(response.body() != null) {
                     mTaskGroup = response.body();
-                    Log.d("get taskgroup", mTaskGroup.getId());
-                    hideLoading();
+                    mTaskGroup.setTitle(edtNewGroupTitle.getText().toString().trim());
+                    updateTaskGroup(taskGroupApi);
+//                    Log.d("get taskgroup", mTaskGroup.getId());
+//                    hideLoading();
                 } else {
                     Log.d("get taskgroup", "failed");
                 }
@@ -250,19 +295,21 @@ public class TasksGroupView extends AppCompatActivity {
             @Override
             public void onFailure(Call<TaskGroup> call, Throwable t) {
                 Log.d("get taskgroup", "err connection");
+                Log.d("get taskgroup", t.toString());
             }
         });
         return future;
     }
 
-    private CompletableFuture<Void> updateTaskGroup(TaskGroupApi taskGroupApi, TaskGroup taskGroup) {
+    private CompletableFuture<Void> updateTaskGroup(TaskGroupApi taskGroupApi) {
         CompletableFuture<Void> future = new CompletableFuture<>();
 
-        taskGroupApi.updateTaskGroup(taskGroup).enqueue(new Callback<Boolean>() {
+        Log.d("update taskgroup", mTaskGroup.getId());
+        taskGroupApi.updateTaskGroup(mTaskGroup).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if(response.body()) {
-                    tvHeaderTitlte.setText(taskGroup.getTitle());
+                if(response.body() != null && response.body() == true) {
+                    tvHeaderTitlte.setText(mTaskGroup.getTitle());
                     hideLoading();
                 } else {
                     Log.d("update taskgroup", "failed");
@@ -272,6 +319,7 @@ public class TasksGroupView extends AppCompatActivity {
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Log.d("update taskgroup", "err connection");
+                Log.d("update taskgroup", t.toString());
             }
         });
 
