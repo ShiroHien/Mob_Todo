@@ -2,6 +2,7 @@ package com.MobTodo.BE.models;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -14,5 +15,5 @@ public class Timetable {
     private String id;
     private String userId;
     private String dayTime;
-    private List<Events> events;
+    private List<Events> events = new ArrayList<>();;
 }

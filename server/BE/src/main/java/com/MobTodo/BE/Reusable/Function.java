@@ -50,15 +50,15 @@ public class Function {
     }
 
     public static Long distanceDateTime(String start, String end) {
-        LocalDateTime startTime = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
-        LocalDateTime endTime = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
+        LocalDateTime startTime = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
+        LocalDateTime endTime = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
         long durationInSeconds = Duration.between(startTime, endTime).getSeconds();
         return durationInSeconds;
     }
 
     public static Long distanceTime(String start, String end) {
-        LocalTime startTime = LocalTime.parse(start, DateTimeFormatter.ofPattern("HH:mm:ss"));
-        LocalTime endTime = LocalTime.parse(end, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        LocalTime startTime = LocalTime.parse(start, DateTimeFormatter.ofPattern("HH:mm"));
+        LocalTime endTime = LocalTime.parse(end, DateTimeFormatter.ofPattern("HH:mm"));
         long durationInSeconds = Duration.between(startTime, endTime).getSeconds();
         return durationInSeconds;
     }
@@ -75,7 +75,7 @@ public class Function {
     }
 
     public static boolean checkTimeFormat(String input) {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         try {
             LocalTime parsedTime = LocalTime.parse(input.trim(), timeFormatter);
             return true; // If parsing is successful, the time is valid
@@ -86,7 +86,7 @@ public class Function {
     }
 
     public static boolean checkDateTimeFormat(String input) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
         try {
             LocalDateTime parsedDate = LocalDateTime.parse(input, dateFormatter);
             return true; // If parsing is successful, the date is valid
