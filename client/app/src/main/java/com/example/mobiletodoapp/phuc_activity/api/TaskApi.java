@@ -31,4 +31,10 @@ public interface TaskApi {
 
     @PUT("task/updateTask")
     Call<Boolean> updateTask(@Body Task data);
+
+    @PUT("task/setMyDay/{taskId}")
+    Call<Boolean> setMyDay(@Path("taskId") String taskId);
+
+    @PUT("task/setImportant/{taskId}")
+    Call<Boolean> setImportant(@Path("taskId") String taskId);
 }

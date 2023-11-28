@@ -29,21 +29,35 @@ public class TaskController {
     public Task getDetailTask(@PathVariable String taskId) {
         return taskService.getDetailTask(taskId);
     }
+
     @GetMapping("/getImportant/{userId}")
     public List<Task> getImportant(@PathVariable String userId) {
         return taskService.getImportant(userId);
     }
+
     @GetMapping("/getMyDay/{userId}")
     public List<Task> getMyDay(@PathVariable String userId) {
         return taskService.getMyDay(userId);
     }
+
     @PutMapping("/updateTask")
     public Boolean updateTask(@RequestBody Task data) {
         return taskService.updateTask(data);
+    }
+
+    @PutMapping("/setMyDay/{taskId}")
+    public Boolean setMyDay(@PathVariable String taskId) {
+        return taskService.setMyDay(taskId);
+    }
+
+    @PutMapping("/setImportant/{taskId}")
+    public Boolean setImportant(@PathVariable String taskId) {
+        return taskService.setImportant(taskId);
     }
 
     @DeleteMapping("/deleteTask/{taskId}")
     public Boolean deleteTask(@PathVariable String taskId) {
         return taskService.deleteTask(taskId);
     }
+
 }

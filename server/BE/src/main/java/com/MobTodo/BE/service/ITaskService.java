@@ -15,4 +15,6 @@ public interface ITaskService {
     Boolean deleteTask(String taskId);
     List<Task> getImportant(String taskgroupId);
     List<Task> getMyDay(String taskgroupId);
+    Boolean setImportant(String taskId);
+    Boolean setMyDay(String taskId);
 }

@@ -186,6 +186,22 @@ public class Function {
         return resultList;
     }
 
+    public static <T, A, B, C> List<T> getListDataByFieldName(String collectionName, String fieldName1, A value1, String fieldName2, B value2, String fieldName3, C value3, Class<T> classType) {
+        List<T> resultList = new ArrayList<>();
+        try {
+            ApiFuture<QuerySnapshot> future = dbFirestore.collection(collectionName).whereEqualTo(fieldName1, value1).whereEqualTo(fieldName2, value2)
+                    .whereEqualTo(fieldName3, value3).get();
+            QuerySnapshot querySnapshot = future.get();
+            for (QueryDocumentSnapshot document : querySnapshot) {
+                T data = document.toObject(classType);
+                resultList.add(data);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
     public static <T> Boolean updateData(String collectionName, String document, T data) {
         try {
             DocumentReference documentReference = dbFirestore.collection(collectionName).document(document);
@@ -236,6 +252,7 @@ public class Function {
         DocumentReference documentReference = FirestoreClient.getFirestore().collection(COLLECTION_NAME).document();
         return documentReference.getId();
     }
+
     public static String randomPic() {
         List<String> listAva = Arrays.asList("ava1.jpg", "ava2.jpg", "ava3.jpg", "ava4.jpg", "ava5.jpg", "ava6.jpg");
         Collections.shuffle(listAva);

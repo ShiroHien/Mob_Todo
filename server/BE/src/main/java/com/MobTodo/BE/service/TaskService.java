@@ -64,6 +64,8 @@ public class TaskService implements ITaskService {
                     taskGroup.getId(),
                     "important",
                     true,
+                    "completed",
+                    false,
                     Task.class
             ));
         }
@@ -91,5 +93,24 @@ public class TaskService implements ITaskService {
         }
 
         return myDayTasks;
+    }
+
+    @Override
+    public Boolean setImportant(String taskId) {
+        Task task = getDetailTask(taskId);
+        if (task != null) {
+            task.setImportant(!task.isImportant());
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean setMyDay(String taskId) {
+        Task task = getDetailTask(taskId);
+        if (task != null) {
+            task.setMyDay(!task.isMyDay());
+            return updateTask(task);
+        }
+        return false;
     }
 }
