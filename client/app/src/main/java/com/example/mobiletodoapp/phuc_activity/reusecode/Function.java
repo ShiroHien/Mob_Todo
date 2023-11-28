@@ -1,5 +1,6 @@
 package com.example.mobiletodoapp.phuc_activity.reusecode;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -73,6 +74,18 @@ public class Function {
             imageView.setImageBitmap(bitmapImage);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public static void showLoading(ProgressDialog progressDialog, Context context) {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Đang xử lý...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    public static void hideLoading(ProgressDialog progressDialog) {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
     }
 }

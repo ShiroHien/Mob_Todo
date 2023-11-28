@@ -54,7 +54,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
-                android:paddingLeft="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/task_bg"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
 
                 <ImageView
@@ -62,7 +66,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:src="@drawable/radio_button_checked_icon_20"
                     app:layout_constraintStart_toStartOf="parent"
@@ -70,12 +73,13 @@
 
                 <EditText
                     android:id="@+id/tv_task_title"
-                    android:layout_width="131dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/roboto_bold"
                     android:paddingTop="5dp"
                     android:text="Task title"
-                    android:textSize="25dp" />
+                    android:textSize="25dp"
+                    android:background="@android:color/transparent"/>
 
             </LinearLayout>
 
@@ -101,16 +105,17 @@
             tools:layout_editor_absoluteX="16dp">
 
             <LinearLayout
+                android:id="@+id/add_myday"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/task_bg">
 
                 <ImageView
+                    android:id="@+id/icon_myday"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    
                     android:src="@drawable/white_sun_icon" />
 
                 <TextView
@@ -124,12 +129,14 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/add_important"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/task_bg">
 
                 <ImageView
+                    android:id="@+id/important_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -160,14 +167,23 @@
                     android:layout_marginRight="10dp"
                     android:src="@drawable/clock" />
 
-                <EditText
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/startTime"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center_vertical"
                     android:text="Thời gian bắt đầu"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
+                <ImageView
+                    android:id="@+id/btn_pick_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/time_picker_icon"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp"
+                    tools:layout_editor_absoluteY="0dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -183,14 +199,23 @@
                     android:layout_marginRight="10dp"
                     android:src="@drawable/clock_time" />
 
-                <EditText
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/endTime"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center_vertical"
                     android:text="Thời gian kết thúc"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
+                <ImageView
+                    android:id="@+id/btn_pick_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/time_picker_icon"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp"
+                    tools:layout_editor_absoluteY="0dp" />
             </LinearLayout>
 
             <LinearLayout

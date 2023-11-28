@@ -52,7 +52,7 @@ public class MainScreenActivity extends AppCompatActivity  {
     LinearLayout important;
     LinearLayout calendar;
     LinearLayout pomodoro;
-    ImageButton btnAddTasksgroup;
+    LinearLayout btnAddTasksgroup;
 
     ConstraintLayout layoutAddTasksgroup;
 
