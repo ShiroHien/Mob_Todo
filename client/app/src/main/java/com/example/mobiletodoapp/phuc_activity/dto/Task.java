@@ -19,8 +19,16 @@ public class Task {
         this.endTime = endTime;
     }
 
+    public Task() {
+
+    }
+
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTaskGroupId() {

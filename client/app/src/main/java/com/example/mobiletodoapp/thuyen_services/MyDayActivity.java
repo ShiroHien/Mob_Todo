@@ -22,7 +22,7 @@ public class MyDayActivity extends AppCompatActivity {
     RecyclerView rcvUncompletedList;
     RecyclerView rcvCompletedList;
     ConstraintLayout line;
-    ImageButton btnAddTask;
+    ImageButton btnShowAddTaskLayout;
 
     List<Task> tasks;
     List<Task> completedTasks = new ArrayList<>();
@@ -91,8 +91,9 @@ public class MyDayActivity extends AppCompatActivity {
         btnBackToPrevious = findViewById(R.id.btn_back_to_previous);
         rcvUncompletedList = findViewById(R.id.rcv_uncompleted_list);
         rcvCompletedList = findViewById(R.id.rcv_completed_list);
-        btnAddTask = findViewById(R.id.btn_add_task);
+        btnShowAddTaskLayout = findViewById(R.id.btn_add_task);
         line = findViewById(R.id.line);
+        line.setVisibility(View.GONE);
 
         tasks = new ArrayList<>();
 
@@ -114,17 +115,20 @@ public class MyDayActivity extends AppCompatActivity {
             task.setCompleted(false);
             showLine();
 
-            uncompletedAdapter.setData(uncompletedTasks);
-            completedAdapter.setData(completedTasks);
+
         } else {
             completedTasks.add(task);
             uncompletedTasks.remove(task);
             task.setCompleted(true);
             showLine();
 
-            uncompletedAdapter.setData(uncompletedTasks);
-            completedAdapter.setData(completedTasks);
+
         }
+    }
+
+    private void setData() {
+        uncompletedAdapter.setData(uncompletedTasks);
+        completedAdapter.setData(completedTasks);
     }
 
     private void showLine() {
@@ -137,8 +141,7 @@ public class MyDayActivity extends AppCompatActivity {
 
     private void handleImportantButton(Task task) {
         task.setImportant(!task.isImportant());
-        uncompletedAdapter.setData(uncompletedTasks);
-        completedAdapter.setData(completedTasks);
+        setData();
     }
 
 }

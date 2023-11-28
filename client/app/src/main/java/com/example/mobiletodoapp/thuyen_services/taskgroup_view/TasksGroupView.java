@@ -109,7 +109,8 @@ public class TasksGroupView extends AppCompatActivity {
                 } else {
                     task.setCompleted(true);
                 }
-                taskAdapter.setData(tasks);
+                showLoading();
+                updateTask(task);
             }
         }
 
@@ -121,7 +122,8 @@ public class TasksGroupView extends AppCompatActivity {
                 } else {
                     task.setImportant(true);
                 }
-                taskAdapter.setData(tasks);
+                showLoading();
+                updateTask(task);
             }
         }
     });
@@ -297,6 +299,30 @@ public class TasksGroupView extends AppCompatActivity {
         popupMenu.show();
     }
 
+    private CompletableFuture<Void> updateTask(Task task) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        taskApi.updateTask(task).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if(response.body()) {
+                    taskAdapter.setData(tasks);
+                    Log.d("update task", task.getTitle() + " true");
+                    hideLoading();
+                } else {
+                    Log.d("update task", "true");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.d("update task", t.toString());
+            }
+        });
+
+        return future;
+    }
+
     private CompletableFuture<Void> deleteTaskGroupById() {
         CompletableFuture<Void> future = new CompletableFuture<>();
         String taskGroupId = intent.getStringExtra("tasksgroupId");
@@ -380,6 +406,8 @@ public class TasksGroupView extends AppCompatActivity {
         } else {
             Task task = new Task(tasksGroupIdSelected, title, des, startTime, endTime);
             createTask(taskApi, task);
+            edtDescription.setText("");
+            edtTaskTitle.setText("");
             clAddTask.setVisibility(View.GONE);
             isShowedDialogFragment = false;
         }
@@ -399,8 +427,7 @@ public class TasksGroupView extends AppCompatActivity {
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 try {
                     if (response.body()) {
-                        tasks.add(task);
-                        taskAdapter.setData(tasks);
+                        getTaskListFromServer(taskApi);
                         hideLoading();
                         Log.d("create task", "them nv thanh cong");
                     } else {

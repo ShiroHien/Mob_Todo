@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.mobiletodoapp.R;
@@ -32,8 +34,11 @@ import com.example.mobiletodoapp.phuc_activity.dto.Task;
 import com.example.mobiletodoapp.phuc_activity.dto.TaskGroup;
 import com.example.mobiletodoapp.thuyen_services.taskgroup_view.TasksGroupView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -45,7 +50,7 @@ public class ImportantActivity extends AppCompatActivity {
 
     List<Task> tasks = new ArrayList<>();
     List<TaskGroup> taskGroups = new ArrayList<>();
-    Task backupTask;
+    Task backupTask = new Task();
     RecyclerView rcvTaskList;
     ImageButton btnShowAddTaskLayout;
     ImageView btnBackToPrevious;
@@ -87,8 +92,10 @@ public class ImportantActivity extends AppCompatActivity {
         @Override
         public void handleCompleteBtn(Task task) {
             if(isShowedDialogFragment == false) {
-                tasks.remove(task);
-                adapter.setData(tasks);
+                copyTask(backupTask, task);
+                task.setCompleted(true);
+                showLoading();
+                updateTask(task);
                 btnUndo.setVisibility(View.VISIBLE);
             }
         }
@@ -96,9 +103,10 @@ public class ImportantActivity extends AppCompatActivity {
         @Override
         public void handleImportantBtn(Task task) {
             if(isShowedDialogFragment == false) {
-                tasks.remove(task);
-                adapter.setData(tasks);
-                Toast.makeText(ImportantActivity.this, "Đã xóa nhiệm vụ quan trọng!", Toast.LENGTH_SHORT).show();
+                copyTask(backupTask, task);
+                task.setImportant(false);
+                showLoading();
+                updateTask(task);
                 btnUndo.setVisibility(View.VISIBLE);
             }
         }
@@ -113,7 +121,7 @@ public class ImportantActivity extends AppCompatActivity {
         init();
 
         showLoading();
-        getDataFromServer();
+        getTaskFromServer();
 
         rcvTaskList.setLayoutManager(new LinearLayoutManager(this));
         rcvTaskList.setHasFixedSize(true);
@@ -136,6 +144,7 @@ public class ImportantActivity extends AppCompatActivity {
 
                     showLoading();
                     getTaskGroupsFromServer();
+                    btnUndo.setVisibility(View.GONE);
 
                 }
             }
@@ -160,15 +169,35 @@ public class ImportantActivity extends AppCompatActivity {
             }
         });
 
+        btnPickStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(tvStartTime);
+            }
+        });
 
+        btnPickEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(tvEndTime);
+            }
+        });
 
-      
+        btnAddTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleClickedBtnAddTask();
+            }
+        });
 
         btnUndo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isShowedDialogFragment == false) {
-
+                    Log.d("update task", "indo" + backupTask.getId());
+                    showLoading();
+                    updateTask(backupTask);
+                    btnUndo.setVisibility(View.GONE);
                 }
             }
         });
@@ -179,6 +208,7 @@ public class ImportantActivity extends AppCompatActivity {
         rcvTaskList = findViewById(R.id.rcv_ipmortant_list);
         btnBackToPrevious = findViewById(R.id.btn_back_to_previous);
         btnUndo = findViewById(R.id.btn_undo);
+        btnUndo.setVisibility(View.GONE);
 
         // add task layotut
 
@@ -197,6 +227,170 @@ public class ImportantActivity extends AppCompatActivity {
         taskApi = retrofitService.getRetrofit().create(TaskApi.class);
         taskGroupApi = retrofitService.getRetrofit().create(TaskGroupApi.class);
 
+    }
+
+    private CompletableFuture<Void> updateTask(Task task) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        Log.d("update task", tasksGroupIdSelected + '\n' +
+                task.getTitle() + '\n' +
+                task.getDescription() + '\n' +
+                task.getStartTime() + '\n' +
+                task.getEndTime());
+
+        taskApi.updateTask(task).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if(response.body()) {
+                    getTaskFromServer();
+                    adapter.setData(tasks);
+                    hideLoading();
+                    Log.d("update task", "true");
+                } else {
+                    Log.d("update task", "false");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.d("update task", t.toString());
+            }
+        });
+
+        return future;
+    }
+
+    private void copyTask(Task backupTask, Task task) {
+        backupTask.setTaskGroupId(task.getTaskGroupId());
+        backupTask.setTitle(task.getTitle());
+        backupTask.setDescription(task.getDescription());
+        backupTask.setStartTime(task.getStartTime());
+        backupTask.setEndTime(task.getEndTime());
+        backupTask.setImportant(task.isImportant());
+        backupTask.setCompleted(task.isCompleted());
+        backupTask.setMyDay(task.isMyDay());
+        backupTask.setId(task.getId());
+        Log.d("copy task", task.getId());
+    }
+
+    private void showDatePickerDialog(TextView dateTime) {
+        // Lấy ngày hiện tại
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+
+        // Tạo DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Xử lý khi người dùng chọn ngày
+                        String stringDate = (month + 1) + "/" + dayOfMonth + "/" + year;
+
+                        showTimePickerDialog(dateTime, stringDate);
+                    }
+                },
+                year, month, day
+        );
+
+        // Hiển thị DatePickerDialog
+        datePickerDialog.show();
+    }
+
+    private void showTimePickerDialog(TextView dateTime, String stringDate) {
+        // Lấy thời gian hiện tại
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        // Tạo TimePickerDialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        // Xử lý khi người dùng chọn thời gian
+                        String selectedTime = hourOfDay + ":" + minute + ":00";
+
+                        SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
+                        Date date;
+                        try {
+                            date = inputFormat.parse(selectedTime);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+
+                        // Format the Date object to the desired output format
+                        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss");
+                        String formattedTime = outputFormat.format(date);
+
+                        dateTime.setText(stringDate + " " + formattedTime);
+                    }
+                },
+                hour, minute, true // true để sử dụng 24-giờ, false để sử dụng AM/PM
+        );
+
+        // Hiển thị TimePickerDialog
+        timePickerDialog.show();
+    }
+
+    private void handleClickedBtnAddTask() {
+        String title = edtTaskTitle.getText().toString().trim();
+        String des = edtDescription.getText().toString().trim();
+        String startTime = tvStartTime.getText().toString().trim();
+        String endTime = tvEndTime.getText().toString().trim();
+        if (title == null || title.isEmpty()) {
+            Toast.makeText(ImportantActivity.this, "Tên nhiệm vụ không được để trống", Toast.LENGTH_SHORT).show();
+        } else {
+            Task task = new Task(tasksGroupIdSelected, title, des, startTime, endTime);
+            task.setImportant(true);
+            createTask(taskApi, task);
+            edtDescription.setText("");
+            edtTaskTitle.setText("");
+            clAddTask.setVisibility(View.GONE);
+            isShowedDialogFragment = false;
+        }
+    }
+
+    private CompletableFuture<Void> createTask(TaskApi taskApi, Task task) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        Log.d("create task", tasksGroupIdSelected + '\n' +
+                task.getTitle() + '\n' +
+                task.getDescription() + '\n' +
+                task.getStartTime() + '\n' +
+                task.getEndTime());
+
+        taskApi.createTask(task).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                try {
+                    if (response.body()) {
+                        tasks.add(task);
+                        adapter.setData(tasks);
+                        hideLoading();
+                        Log.d("create task", "them nv thanh cong");
+                    } else {
+                        Log.d("create task", "them nv that bai");
+                    }
+                } catch (Exception e) {
+
+                    future.completeExceptionally(e);
+                    Log.d("create task", "loi ket noi");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                future.completeExceptionally(t);
+            }
+        });
+
+        return future;
     }
     private void handleShowAddTaskLayout() {
         clAddTask.setVisibility(View.VISIBLE);
@@ -254,7 +448,7 @@ public class ImportantActivity extends AppCompatActivity {
         return future;
     }
 
-    CompletableFuture<Void> getDataFromServer() {
+    CompletableFuture<Void> getTaskFromServer() {
         CompletableFuture<Void> future = new CompletableFuture<>();
         String userId = getSharedPref(this, "userId", "default id");
 
@@ -263,6 +457,17 @@ public class ImportantActivity extends AppCompatActivity {
             public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
                 if(response.body() != null) {
                     tasks = response.body();
+
+                    List<Task> filterTask = new ArrayList<>();
+                    for(Task t : tasks) {
+                        if(!t.isCompleted()) {
+                            filterTask.add(t);
+                        }
+                    }
+
+                    tasks = filterTask;
+
+
                     adapter.setData(tasks);
                     hideLoading();
                 } else {
