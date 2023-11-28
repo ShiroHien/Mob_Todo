@@ -25,4 +25,6 @@ public interface TaskApi {
     @GET("task/getMyDay/{userId}")
     Call<List<Task>> getMyDayTask(@Path("userId") String userId);
 
+    @GET("task/getTaskById/{taskId}")
+    Call<Task> getDetailTask(@Path("taskId") String taskId);
 }

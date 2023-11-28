@@ -13,13 +13,16 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/list_check_icon"
-            android:layout_marginRight="8dp"/>
+            android:layout_marginRight="10dp"/>
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/black"
+            android:textSize="20dp"
             android:text="Chế độ tập trung" />
 
     </LinearLayout>

@@ -19,9 +19,11 @@ public class TaskService implements ITaskService {
     public Boolean createTask(Task data) throws ExecutionException, InterruptedException {
         if (checkDateTimeFormat(data.getStartTime()) && checkDateTimeFormat(data.getEndTime())) {
             if (distanceDateTime(data.getStartTime(), data.getEndTime()) >= 0) {
+                System.out.println("Passed 1");
                 return postData(data, COLLECTION_NAME);
             }
         }
+        System.out.println("Passed 2");
         return false;
     }
 

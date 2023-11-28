@@ -16,6 +16,7 @@ public class TaskController {
 
     @PostMapping("/createTask")
     public Boolean createTask(@RequestBody Task data) throws ExecutionException, InterruptedException {
+        System.out.println(data);
         return taskService.createTask(data);
     }
 

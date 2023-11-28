@@ -180,6 +180,7 @@ public class LoginActivity extends AppCompatActivity {
                 saveSharedPref(LoginActivity.this, "email", loginResult.getEmail());
                 saveSharedPref(LoginActivity.this, "name", loginResult.getName());
                 saveSharedPref(LoginActivity.this, "username", loginResult.getUsername());
+                saveSharedPref(LoginActivity.this, "ava", loginResult.getAva());
                 showToast(LoginActivity.this, "Đăng nhập thành công");
                 hideLoading();
                 Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
@@ -268,6 +269,7 @@ public class LoginActivity extends AppCompatActivity {
                 saveSharedPref(LoginActivity.this, "email", logupResult.getEmail());
                 saveSharedPref(LoginActivity.this, "name", logupResult.getName());
                 saveSharedPref(LoginActivity.this, "username", logupResult.getUsername());
+                saveSharedPref(LoginActivity.this, "ava", logupResult.getAva());
                 showToast(LoginActivity.this, "Đăng nhập thành công với Google");
                 Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
                 startActivity(intent);
