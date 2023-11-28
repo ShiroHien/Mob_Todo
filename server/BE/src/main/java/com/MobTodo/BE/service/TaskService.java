@@ -56,11 +56,7 @@ public class TaskService implements ITaskService {
     @Override
     public List<Task> getImportant(String userId) {
         List<Task> importantTasks = new ArrayList<>();
-
-        // Get all TaskGroups for the given userId
         List<TaskGroup> taskGroups = getListData(COLLECTION_NAME_TASK_GROUP, "userId", userId, TaskGroup.class);
-
-        // For each TaskGroup, get tasks with important set to true
         for (TaskGroup taskGroup : taskGroups) {
             importantTasks.addAll(getListDataByFieldName(
                     COLLECTION_NAME,
@@ -68,6 +64,8 @@ public class TaskService implements ITaskService {
                     taskGroup.getId(),
                     "important",
                     true,
+                    "completed",
+                    false,
                     Task.class
             ));
         }
@@ -90,6 +88,8 @@ public class TaskService implements ITaskService {
                     taskGroup.getId(),
                     "myDay",
                     true,
+                    "completed",
+                    false,
                     Task.class
             ));
         }
