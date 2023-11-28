@@ -64,8 +64,6 @@ public class TaskService implements ITaskService {
                     taskGroup.getId(),
                     "important",
                     true,
-                    "completed",
-                    false,
                     Task.class
             ));
         }
@@ -88,8 +86,6 @@ public class TaskService implements ITaskService {
                     taskGroup.getId(),
                     "myDay",
                     true,
-                    "completed",
-                    false,
                     Task.class
             ));
         }

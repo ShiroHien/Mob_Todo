@@ -32,6 +32,7 @@ import com.example.mobiletodoapp.phuc_activity.api.TaskApi;
 import com.example.mobiletodoapp.phuc_activity.api.TaskGroupApi;
 import com.example.mobiletodoapp.phuc_activity.dto.Task;
 import com.example.mobiletodoapp.phuc_activity.dto.TaskGroup;
+import com.example.mobiletodoapp.phuc_activity.view.TaskDetail.TaskDetailActivity;
 import com.example.mobiletodoapp.thuyen_services.taskgroup_view.TasksGroupView;
 
 import java.text.ParseException;
@@ -79,13 +80,21 @@ public class ImportantActivity extends AppCompatActivity {
 
     String tasksGroupIdSelected;
 
+    String taskGroupTitle;
+
 
 
     private final TaskAdapter adapter = new TaskAdapter(new TaskAdapter.IClickTaskItem() {
         @Override
         public void moveToTaskView(Task task) {
             if(isShowedDialogFragment == false) {
-
+                Intent taskDetailIntent = new Intent(ImportantActivity.this, TaskDetailActivity.class);
+                taskDetailIntent.putExtra("taskId", task.getId());
+                taskDetailIntent.putExtra("taskTitle", task.getTitle());
+                showLoading();
+                getTaskGroupById(task.getTaskGroupId());
+                taskDetailIntent.putExtra("taskgroupTitle", taskGroupTitle);
+                startActivity(taskDetailIntent);
             }
         }
 
@@ -153,18 +162,14 @@ public class ImportantActivity extends AppCompatActivity {
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                isShowedDialogFragment = true;
-                edtTaskTitle.setText("");
-                edtDescription.setText("");
-                clAddTask.setVisibility(View.GONE);
+                handleClickedBtnAddTask();
             }
         });
 
         btnCancelAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isShowedDialogFragment = true;
+                isShowedDialogFragment = false;
                 clAddTask.setVisibility(View.GONE);
             }
         });
@@ -183,12 +188,6 @@ public class ImportantActivity extends AppCompatActivity {
             }
         });
 
-        btnAddTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleClickedBtnAddTask();
-            }
-        });
 
         btnUndo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,6 +226,30 @@ public class ImportantActivity extends AppCompatActivity {
         taskApi = retrofitService.getRetrofit().create(TaskApi.class);
         taskGroupApi = retrofitService.getRetrofit().create(TaskGroupApi.class);
 
+    }
+
+    private CompletableFuture<Void> getTaskGroupById(String taskGroupId) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        taskGroupApi.getTaskGroupById(taskGroupId).enqueue(new Callback<TaskGroup>() {
+            @Override
+            public void onResponse(Call<TaskGroup> call, Response<TaskGroup> response) {
+                if(response.body() != null) {
+                    taskGroupTitle = response.body().getTitle();
+                    Log.d("getTaskGroupById", "true");
+                    hideLoading();
+                } else {
+                    Log.d("getTaskGroupById", "false");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TaskGroup> call, Throwable t) {
+                Log.d("getTaskGroupById", t.toString());
+            }
+        });
+
+        return future;
     }
 
     private CompletableFuture<Void> updateTask(Task task) {

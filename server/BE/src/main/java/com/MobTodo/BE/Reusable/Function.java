@@ -171,11 +171,10 @@ public class Function {
         return resultList;
     }
 
-    public static <T, A, B> List<T> getListDataByFieldName(String collectionName, String fieldName1, A value1, String fieldName2, B value2, String fieldName3, B value3, Class<T> classType) {
+    public static <T, A, B> List<T> getListDataByFieldName(String collectionName, String fieldName1, A value1, String fieldName2, B value2, Class<T> classType) {
         List<T> resultList = new ArrayList<>();
         try {
-            ApiFuture<QuerySnapshot> future = dbFirestore.collection(collectionName).whereEqualTo(fieldName1, value1).whereEqualTo(fieldName2, value2)
-                    .whereEqualTo(fieldName3, value3).get();
+            ApiFuture<QuerySnapshot> future = dbFirestore.collection(collectionName).whereEqualTo(fieldName1, value1).whereEqualTo(fieldName2, value2).get();
             QuerySnapshot querySnapshot = future.get();
             for (QueryDocumentSnapshot document : querySnapshot) {
                 T data = document.toObject(classType);
