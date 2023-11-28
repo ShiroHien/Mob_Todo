@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".trung_activity.EditEventActivity">
     <Button
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSave" />
 
     <LinearLayout
         android:id="@+id/allDayContainer"
@@ -48,7 +48,7 @@
             android:id="@+id/ivClock"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/clock"/>
+            android:src="@drawable/clock_icon"/>
 
         <TextView
             android:id="@+id/tvAllDay"
@@ -91,9 +91,10 @@
         <TextView
             android:id="@+id/etStartTime"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:inputType="time"
             android:text="00:00"
+            android:textColor="@color/main_color"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -121,9 +122,10 @@
         <TextView
             android:id="@+id/etEndTime"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:inputType="time"
             android:text="23:59"
+            android:textColor="@color/main_color"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -153,8 +155,8 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/btnAdd"
-        app:layout_constraintTop_toTopOf="@+id/btnAdd" />
+        app:layout_constraintEnd_toStartOf="@+id/btnSave"
+        app:layout_constraintTop_toTopOf="@+id/btnSave" />
     <Button
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"

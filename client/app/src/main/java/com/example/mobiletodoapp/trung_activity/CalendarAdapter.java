@@ -1,6 +1,7 @@
 package com.example.mobiletodoapp.trung_activity;
 
 
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.fadeInAnimation;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedTimetableId;
 
 import android.graphics.Color;

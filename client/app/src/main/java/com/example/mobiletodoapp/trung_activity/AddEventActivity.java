@@ -3,13 +3,16 @@ package com.example.mobiletodoapp.trung_activity;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.eventsApi;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.scaleAnimation;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedTimetableId;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,6 +74,7 @@ public class AddEventActivity extends AppCompatActivity {
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                scaleAnimation(view);
                 TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int h, int m) {
@@ -87,6 +91,7 @@ public class AddEventActivity extends AppCompatActivity {
         endTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                scaleAnimation(view);
                 TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int h, int m) {
@@ -116,6 +121,25 @@ public class AddEventActivity extends AppCompatActivity {
                     hideLoading();
                     onBackPressed();
                 });
+            }
+        });
+
+        switchFullDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(switchFullDay.isChecked()){
+                    startTime.setText("00:00");
+                    endTime.setText("23:59");
+                    startTime.setVisibility(View.GONE);
+                    startTime.setTextColor(Color.DKGRAY);
+                    endTime.setTextColor(Color.DKGRAY);
+                    endTime.setVisibility(View.GONE);
+                }else{
+                    startTime.setVisibility(View.VISIBLE);
+                    endTime.setVisibility(View.VISIBLE);
+                    startTime.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.main_color));
+                    endTime.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.main_color));
+                }
             }
         });
     }

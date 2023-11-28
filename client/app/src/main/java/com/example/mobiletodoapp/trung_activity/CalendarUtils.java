@@ -3,8 +3,13 @@ package com.example.mobiletodoapp.trung_activity;
 
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -121,8 +126,6 @@ public class CalendarUtils
                 try {
                     if (response.body() != null) {
                         existingTimetableList = response.body();
-                        Log.d("Calendar","timetable response: "+response.body());
-                        showToast(context,"update timetable thanh cong");
                     } else {
                         // Xử lý khi response body là null
                         showToast(context,"TaskDay List bị null");
@@ -174,5 +177,39 @@ public class CalendarUtils
         });
 
         return future;
+    }
+
+    public static void handleTimetableForDate(LocalDate selectedDate, EventsAdapter eventsAdapter) {
+        for(int i = 0; i< existingTimetableList.size(); i++){
+            Timetable timetableItem = existingTimetableList.get(i);
+
+            if(timetableItem.getDayTime().equals(CalendarUtils.monthDayYearDate(selectedDate))){
+                selectedTimetableId = timetableItem.getId();
+                eventsAdapter.updateEventsList(timetableItem.getEvents());
+                return;
+            }
+        }
+        selectedTimetableId = null;
+        eventsAdapter.updateEventsList(new ArrayList<>());
+    }
+
+    // Static method to apply a fade-in animation to a View
+    public static void fadeInAnimation(View view, int duration) {
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f);
+        alphaAnimator.setDuration(duration);
+        alphaAnimator.start();
+    }
+
+    public static void scaleAnimation(View view) {
+        Animation scaleAnimation = new ScaleAnimation(
+                1.2f, 1.0f, // Start and end scale X
+                1.2f, 1.0f, // Start and end scale Y
+                Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point X relative to the view width
+                Animation.RELATIVE_TO_SELF, 0.5f  // Pivot point Y relative to the view height
+        );
+        scaleAnimation.setDuration(300); // 300 milliseconds duration
+        scaleAnimation.setFillAfter(true);
+
+        view.startAnimation(scaleAnimation);
     }
 }

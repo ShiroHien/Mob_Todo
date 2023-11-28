@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:text="title"
@@ -54,10 +54,9 @@
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="180dp"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:text="description"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        android:textColor="@color/lightGray"
+        app:layout_constraintBottom_toBottomOf="@id/tvEndTime"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
