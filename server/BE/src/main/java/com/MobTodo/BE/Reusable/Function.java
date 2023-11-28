@@ -49,8 +49,8 @@ public class Function {
     }
 
     public static Long distanceDateTime(String start, String end) {
-        LocalDateTime startTime = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
-        LocalDateTime endTime = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
+        LocalDateTime startTime = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
+        LocalDateTime endTime = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
         long durationInSeconds = Duration.between(startTime, endTime).getSeconds();
         return durationInSeconds;
     }
@@ -85,12 +85,13 @@ public class Function {
     }
 
     public static boolean checkDateTimeFormat(String input) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+        System.out.println(dateFormatter);
         try {
             LocalDateTime parsedDate = LocalDateTime.parse(input, dateFormatter);
-            return true; // If parsing is successful, the date is valid
+            return true;
         } catch (DateTimeParseException e) {
-            return false; // If parsing fails, the date is not valid
+            return false;
         }
     }
 
@@ -234,5 +235,10 @@ public class Function {
     public static String generateRandomId(String COLLECTION_NAME) {
         DocumentReference documentReference = FirestoreClient.getFirestore().collection(COLLECTION_NAME).document();
         return documentReference.getId();
+    }
+    public static String randomPic() {
+        List<String> listAva = Arrays.asList("ava1.jpg", "ava2.jpg", "ava3.jpg", "ava4.jpg", "ava5.jpg", "ava6.jpg");
+        Collections.shuffle(listAva);
+        return listAva.get(0);
     }
 }

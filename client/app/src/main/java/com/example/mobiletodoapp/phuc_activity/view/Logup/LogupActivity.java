@@ -204,6 +204,7 @@ public class LogupActivity extends AppCompatActivity {
                 saveSharedPref(LogupActivity.this, "email", logupResult.getEmail());
                 saveSharedPref(LogupActivity.this, "name", logupResult.getName());
                 saveSharedPref(LogupActivity.this, "username", logupResult.getUsername());
+                saveSharedPref(LogupActivity.this, "ava", logupResult.getAva());
                 showToast(LogupActivity.this, "Đăng ký thành công");
                 hideLoading();
                 Intent intent = new Intent(LogupActivity.this, MainScreenActivity.class);

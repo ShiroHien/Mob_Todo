@@ -20,6 +20,7 @@ public class UserService implements IUserService {
         if (checkExist(COLLECTION_NAME, "email", user.getEmail())) {
             return null;
         } else {
+            user.setAva(randomPic());
             if (postData(user, COLLECTION_NAME)) {
                 User result = getDetailByFieldName(COLLECTION_NAME, "email", user.getEmail(), User.class);
                 return result;

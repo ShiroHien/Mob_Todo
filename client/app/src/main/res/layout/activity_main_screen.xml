@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@color/white"
     tools:context=".thuyen_services.main_screen.MainScreenActivity">
 
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:background="#BA482B82"
+        android:background="#f3f3f3"
         tools:ignore="MissingConstraints">
 
         <ImageView
@@ -34,7 +34,8 @@
             android:layout_marginTop="20dp"
             android:layout_toEndOf="@+id/ava_user"
             android:text="User name"
-            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/black"
             android:textSize="24dp" />
 
         <TextView
@@ -44,7 +45,7 @@
             android:layout_below="@+id/user_name"
             android:layout_alignStart="@+id/user_name"
             android:text="Gmail"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="14dp" />
 
     </RelativeLayout>
@@ -53,7 +54,7 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white"
+        android:background="#f3f3f3"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
@@ -66,6 +67,7 @@
             android:id="@+id/my_day"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -85,7 +87,7 @@
                     android:gravity="center_vertical"
                     android:text="Ngày của tôi"
                     android:textColor="@color/black"
-                    android:textSize="15dp" />
+                    android:textSize="20dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -93,6 +95,7 @@
             android:id="@+id/important"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -112,7 +115,7 @@
                     android:gravity="center_vertical"
                     android:text="Quan trọng"
                     android:textColor="@color/black"
-                    android:textSize="15dp" />
+                    android:textSize="20dp" />
 
             </LinearLayout>
 
@@ -122,6 +125,7 @@
             android:id="@+id/calendar"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -141,7 +145,7 @@
                     android:gravity="center_vertical"
                     android:text="Lịch"
                     android:textColor="@color/black"
-                    android:textSize="15dp" />
+                    android:textSize="20dp" />
 
             </LinearLayout>
         </LinearLayout>
@@ -150,7 +154,8 @@
             android:id="@+id/pomodoro"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,7 +174,7 @@
                     android:gravity="center_vertical"
                     android:text="Chế độ tập trung"
                     android:textColor="@color/black"
-                    android:textSize="15dp" />
+                    android:textSize="20dp" />
 
             </LinearLayout>
 

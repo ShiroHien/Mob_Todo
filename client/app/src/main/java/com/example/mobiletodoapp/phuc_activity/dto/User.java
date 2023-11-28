@@ -40,6 +40,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.ava = "";
     }
 
     public String getId() {
@@ -55,4 +56,14 @@ public class User {
     private String username;
     private String email;
     private String password;
+
+    public String getAva() {
+        return ava;
+    }
+
+    public void setAva(String ava) {
+        this.ava = ava;
+    }
+
+    private String ava = "";
 }

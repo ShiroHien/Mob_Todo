@@ -25,6 +25,7 @@ import com.example.mobiletodoapp.phuc_activity.api.EventsApi;
 import com.example.mobiletodoapp.phuc_activity.api.TimetableApi;
 import com.example.mobiletodoapp.phuc_activity.dto.Timetable;
 import com.example.mobiletodoapp.phuc_activity.view.Login.LoginActivity;
+import com.example.mobiletodoapp.phuc_activity.view.Setting.SettingActivity;
 import com.example.mobiletodoapp.thuyen_services.ImportantActivity;
 import com.example.mobiletodoapp.thuyen_services.MyDayActivity;
 import com.example.mobiletodoapp.thuyen_services.PomodoroActivity;
@@ -115,7 +116,13 @@ public class MainScreenActivity extends AppCompatActivity  {
             }
         });
 
-
+        ava.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainScreenActivity.this, SettingActivity.class);
+                startActivity(intent);
+            }
+        });
         important.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,7 +199,7 @@ public class MainScreenActivity extends AppCompatActivity  {
         username.setText(getSharedPref(MainScreenActivity.this, "username", ""));
         email.setText(getSharedPref(MainScreenActivity.this, "email", ""));
         ava = findViewById(R.id.ava_user);
-        setImage(MainScreenActivity.this, "ava2.jpg", ava);
+        setImage(MainScreenActivity.this, getSharedPref(MainScreenActivity.this, "ava", ""), ava);
     }
 
     private void addTasksGroup(String title) {
