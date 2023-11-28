@@ -1,6 +1,7 @@
 package com.example.mobiletodoapp.trung_activity;
 
 
+import android.animation.ObjectAnimator;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.
         this.onItemListener = onItemListener;
         itemView.setOnClickListener(this);
         this.days = days;
+
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.mobiletodoapp.trung_activity;
 
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.daysInWeekArray;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.fadeInAnimation;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.handleTimetableForDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.monthYearFromDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedDate;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -106,7 +108,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
             setWeekView();
             handleTimetableForDate(date,eventsAdapter);
         }
-
+        fadeInAnimation(eventsRecyclerView,500);
     }
 
 

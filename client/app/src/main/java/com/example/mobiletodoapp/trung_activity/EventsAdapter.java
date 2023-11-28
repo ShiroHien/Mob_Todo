@@ -1,5 +1,6 @@
 package com.example.mobiletodoapp.trung_activity;
 
+import android.animation.ObjectAnimator;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -45,6 +46,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.TaskDayVie
                 onItemClickListener.onEventItemClick(item);
             }
         });
+        CalendarUtils.fadeInAnimation(holder.itemView,500);
     }
 
     @Override

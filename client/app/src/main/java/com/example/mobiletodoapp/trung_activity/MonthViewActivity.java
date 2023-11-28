@@ -3,20 +3,18 @@ package com.example.mobiletodoapp.trung_activity;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.daysInMonthArray;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.handleTimetableForDate;
-import static com.example.mobiletodoapp.trung_activity.CalendarUtils.monthDayYearDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.monthYearFromDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedDate;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedTimetableId;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -30,7 +28,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MonthViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener, EventsAdapter.OnItemClickListener
@@ -45,6 +42,7 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
 
     private ProgressBar progressBar;
     private Button btnAddEvent;
+    ImageButton btnNextMonth,btnPreviousMonth;
 
 
     @Override
@@ -62,9 +60,12 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
     private void initWidgets()
     {
         progressBar = findViewById(R.id.progressBar);
+        btnNextMonth = findViewById(R.id.btnNextMonth);
+        btnPreviousMonth = findViewById(R.id.btnPreviousMonth);
         hideLoading();
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         eventsRecyclerView = findViewById(R.id.eventsRecyclerView);
+        // ban đầu chưa chọn ngày nên chưa có event nào, nên adapter arraylist trống
         eventsAdapter = new EventsAdapter(new ArrayList<>());
         eventsAdapter.setOnItemClickListener(this);
         eventsRecyclerView.setAdapter(eventsAdapter);
@@ -94,9 +95,10 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
                 }
                 Intent intent = new Intent(getApplicationContext(), AddEventActivity.class);
                 startActivity(intent);
-
             }
         });
+
+
     }
 
     private void setMonthView()
@@ -174,6 +176,7 @@ public class MonthViewActivity extends AppCompatActivity implements CalendarAdap
         intent.putExtra("endTime",event.getEndTime());
         startActivity(intent);
     }
+
 }
 
 

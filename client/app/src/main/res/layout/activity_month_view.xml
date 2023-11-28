@@ -32,6 +32,7 @@
             android:layout_marginTop="20dp">
 
             <ImageButton
+                android:id="@+id/btnPreviousMonth"
                 android:layout_width="20dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -48,6 +49,7 @@
                 android:textAlignment="center"/>
 
             <ImageButton
+                android:id="@+id/btnNextMonth"
                 android:layout_width="20dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"

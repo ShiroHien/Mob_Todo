@@ -3,11 +3,14 @@ package com.example.mobiletodoapp.trung_activity;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.eventsApi;
+import static com.example.mobiletodoapp.trung_activity.CalendarUtils.scaleAnimation;
 import static com.example.mobiletodoapp.trung_activity.CalendarUtils.selectedDate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,9 +47,10 @@ public class EditEventActivity extends AppCompatActivity {
 
     private void initWidgets() {
         hideLoading();
-        binding.tvStartTime.setOnClickListener(new View.OnClickListener() {
+        binding.etStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                scaleAnimation(view);
                 TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int h, int m) {
@@ -60,9 +64,10 @@ public class EditEventActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
-        binding.tvEndTime.setOnClickListener(new View.OnClickListener() {
+        binding.etEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                scaleAnimation(view);
                 TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int h, int m) {
@@ -99,6 +104,24 @@ public class EditEventActivity extends AppCompatActivity {
                 });
 
                 onBackPressed();
+            }
+        });
+        binding.switchFullDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(binding.switchFullDay.isChecked()){
+                    binding.etStartTime.setText("00:00");
+                    binding.etEndTime.setText("23:59");
+                    binding.etStartTime.setVisibility(View.GONE);
+                    binding.etStartTime.setTextColor(Color.DKGRAY);
+                    binding.etEndTime.setTextColor(Color.DKGRAY);
+                    binding.etEndTime.setVisibility(View.GONE);
+                }else{
+                    binding.etStartTime.setVisibility(View.VISIBLE);
+                    binding.etEndTime.setVisibility(View.VISIBLE);
+                    binding.etStartTime.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.main_color));
+                    binding.etEndTime.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.main_color));
+                }
             }
         });
     }
