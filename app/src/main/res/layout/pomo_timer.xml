@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/timerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".PomoTimerActivity">
+    tools:context="com.example.timerappclone.PomoTimerActivity">
 
     <ProgressBar
         android:id="@+id/countdownProgressBar"
@@ -61,7 +62,7 @@
         android:layout_height="142dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/rectangle"
+        android:background="@drawable/task_list_rectangle"
         android:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@+id/play_pause"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +71,7 @@
         app:layout_constraintVertical_bias="0.706" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/refreshButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="84dp"
@@ -85,6 +86,7 @@
 
     <me.zhanghai.android.materialplaypausedrawable.MaterialPlayPauseButton
         android:id="@+id/play_pause"
+        android:text="@string/start_status_label"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginBottom="68dp"
@@ -99,7 +101,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/skipButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="84dp"
