@@ -3,7 +3,7 @@ package com.example.mobiletodoapp.phuc_activity.dto;
 public class Timer {
     private String id;
     private String userId;
-    private int duringTime;
+    private double duringTime;
     private String day;
 
     public Timer(String userId, int duringTime, String day) {
@@ -28,7 +28,7 @@ public class Timer {
         this.userId = userId;
     }
 
-    public int getDuringTime() {
+    public double getDuringTime() {
         return duringTime;
     }
 

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -50,6 +51,20 @@ public class PomodoroActivity extends AppCompatActivity {
         showLoading();
         getTimersFromServer();
 
+        btnBackToPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        btnMoveToPomodoro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
 
     }
@@ -64,19 +79,12 @@ public class PomodoroActivity extends AppCompatActivity {
 
     private void setDataForCharBAr() {
         int count = 0;
+
+        // Thay đổi dữ liệu mẫu để phản ánh thời gian làm việc trong 7 ngày gần đây
         List<BarEntry> entries = new ArrayList<>();
         for(int i = 1; i <= timers.size(); i++) {
-            entries.add(new BarEntry(i, timers.get(i-1).getDuringTime()));
+            entries.add(new BarEntry((float) i,(float) timers.get(i-1).getDuringTime()));
         }
-        // Thay đổi dữ liệu mẫu để phản ánh thời gian làm việc trong 7 ngày gần đây
-
-//        entries.add(new BarEntry(1f, 0.5f)); // Ngày 1
-//        entries.add(new BarEntry(2f, 1f)); // Ngày 2
-//        entries.add(new BarEntry(3f, 3f)); // Ngày 3
-//        entries.add(new BarEntry(4f, 3f)); // Ngày 4
-//        entries.add(new BarEntry(5f, 3.5f)); // Ngày 5
-//        entries.add(new BarEntry(6f, 0)); // Ngày 6
-//        entries.add(new BarEntry(7f, 4f)); // Ngày 7
 
         BarDataSet dataSet = new BarDataSet(entries, "Thời gian làm việc (giờ)");
 
@@ -84,8 +92,18 @@ public class PomodoroActivity extends AppCompatActivity {
         barChart.setData(barData);
 
         // Cấu hình Axis X để hiển thị nhãn ngày
+        List<String> labels = new ArrayList<>();
+        labels.add("ngay 0");
+        for(int i = 0; i < timers.size()-1; i++) {
+            String date[] = timers.get(i).getDay().split("/");
+            String month = date[0];
+            String day = date[1];
+            labels.add(day + "/" + month);
+        }
+        labels.add("Hôm nay");
+
         XAxis xAxis = barChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(getXAxisLabels()));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
 
@@ -108,8 +126,10 @@ public class PomodoroActivity extends AppCompatActivity {
             public void onResponse(Call<List<Timer>> call, Response<List<Timer>> response) {
                 if(response.body() != null) {
                     timers = response.body();
+
                     setDataForCharBAr();
                     hideLoading();
+
                     Log.d("get timers", "true");
                 } else {
                     Log.d("get timers", "false");
@@ -127,18 +147,7 @@ public class PomodoroActivity extends AppCompatActivity {
 
 
 
-    private List<String> getXAxisLabels() {
-        List<String> labels = new ArrayList<>();
-        labels.add("Ngày 0");
-        labels.add("Ngày 1");
-        labels.add("Ngày 2");
-        labels.add("Ngày 3");
-        labels.add("Ngày 4");
-        labels.add("Ngày 5");
-        labels.add("Ngày 6");
-        labels.add("Ngày 7");
-        return labels;
-    }
+
 
     private void showLoading() {
         progressDialog = new ProgressDialog(this);
