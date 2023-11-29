@@ -64,9 +64,6 @@ public class PomodoroActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 
     private void init() {

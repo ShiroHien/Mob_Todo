@@ -48,4 +48,8 @@ dependencies {
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    implementation ("me.zhanghai.android.materialplaypausedrawable:library:1.0.0")
+
+
 }

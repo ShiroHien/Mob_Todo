@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/configLayout"
     android:padding="16dp"
-    tools:context="com.example.timerappclone.PomoSettingsActivity">
+    tools:context="com.example.mobiletodoapp.hien_activity.PomoSettingsActivity">
 
     <TextView
         android:id="@+id/configText"
@@ -40,8 +40,6 @@
         android:layout_marginTop="10dp"
         android:max="120"
         android:progress="25"
-        android:progressTint="@color/lightPrimary"
-        android:thumbTint="@color/lightPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,8 +75,6 @@
         android:layout_marginTop="10dp"
         android:max="59"
         android:progress="5"
-        android:progressTint="@color/lightPrimary"
-        android:thumbTint="@color/lightPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,8 +110,6 @@
         android:layout_marginTop="10dp"
         android:max="59"
         android:progress="15"
-        android:progressTint="@color/lightPrimary"
-        android:thumbTint="@color/lightPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,8 +145,6 @@
         android:layout_marginTop="10dp"
         android:max="20"
         android:progress="4"
-        android:progressTint="@color/lightPrimary"
-        android:thumbTint="@color/lightPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
