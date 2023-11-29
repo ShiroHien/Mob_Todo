@@ -9,7 +9,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c0eb42a0-b28e-4ae4-a950-bc836dcf8b63" name="Changes" comment="" />
+    <list default="true" id="c0eb42a0-b28e-4ae4-a950-bc836dcf8b63" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/drawable/ic_resume.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/drawable/ic_pause.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/app/src/main/res/layout/activity_pomo_timer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/app/src/main/res/layout/activity_pomo_timer.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,6 +70,14 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="valueResourceFile" />
+        <option value="resourceFile" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -90,12 +101,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "branch-cua-phuc",
-    "last_opened_file_path": "K:/UET/Mobile/some_random_pomo_app/Orgmodoro-master",
+    "last_opened_file_path": "K:/UET/Mobile/myPomoTest",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
