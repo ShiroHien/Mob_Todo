@@ -53,7 +53,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TaskDetailActivity extends AppCompatActivity {
-    ImageView btnBackToPrevious, btn_pick_time_start, btn_pick_time_end, btnDelete;
+    ImageView btnBackToPrevious, btn_pick_time_start, btn_pick_time_end, btnDelete, btnComplete;
     TextView taskgroupName, startTime, endTime, text_myday, text_important, text_save;
     EditText task_title, description;
     private RetrofitService retrofitService;
@@ -196,6 +196,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         delete = findViewById(R.id.delete);
         cancel = findViewById(R.id.cancel);
         text_save = findViewById(R.id.text_save);
+        btnComplete = findViewById(R.id.btn_check_completed);
 
         retrofitService = new RetrofitService();
         taskApi = retrofitService.getRetrofit().create(TaskApi.class);

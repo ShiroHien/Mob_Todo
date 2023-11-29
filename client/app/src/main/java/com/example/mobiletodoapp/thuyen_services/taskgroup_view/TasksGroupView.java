@@ -22,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,7 +55,7 @@ import retrofit2.Response;
 public class TasksGroupView extends AppCompatActivity {
 
     RecyclerView rcvTaskList;
-    ImageButton btnShowAddTaskLayout;
+    LinearLayout btnShowAddTaskLayout;
     ImageView btnBackToPrevious;
 
     TextView tvHeaderTitlte;

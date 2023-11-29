@@ -67,7 +67,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:paddingRight="10dp"
-                    android:src="@drawable/radio_button_checked_icon_20"
+                    android:src="@drawable/icon_title"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteY="0dp"></ImageView>
 

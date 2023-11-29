@@ -9,14 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -49,7 +45,6 @@ import java.util.concurrent.CompletableFuture;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.HEAD;
 
 public class MainScreenActivity extends AppCompatActivity {
 
@@ -78,31 +73,17 @@ public class MainScreenActivity extends AppCompatActivity {
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
         @Override
         public void moveToTaskGroupView(TaskGroup tasksGroup) {
-
             if(isShowedDialogFragment == false) {
                 Intent intent = new Intent(MainScreenActivity.this, TasksGroupView.class);
                 intent.putExtra("tasksgroupId", tasksGroup.getId());
                 intent.putExtra("tasksgroupTitle", tasksGroup.getTitle());
                 startActivity(intent);
             }
-            
-    });
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (v instanceof EditText) {
-                Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
+
+//            Toast.makeText(MainScreenActivity.this, tasksGroup.getId(), Toast.LENGTH_SHORT).show();
         }
-        return super.dispatchTouchEvent(event);
-    }
+    });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

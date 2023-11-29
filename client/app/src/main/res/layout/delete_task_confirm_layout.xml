@@ -58,7 +58,7 @@
                 android:layout_width="0dp"
                 android:layout_height="37dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_delete_bg"
+                android:backgroundTint="@color/redColor"
                 android:layout_marginRight="10dp"
                 android:text="Xoá" />
 
@@ -67,9 +67,10 @@
                 android:layout_width="0dp"
                 android:layout_height="37dp"
                 android:layout_weight="1"
-                android:background="#f6f6f6"
+                android:backgroundTint="#f6f6f6"
                 android:layout_marginLeft="10dp"
-                android:text="Huỷ" />
+                android:text="Huỷ"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
