@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ public class PomoTimerActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private TextView countdownTimeLabel;
     private ProgressBar countdownProgressBar;
+    private long timerStartTime;
+    public long duringTime; 
     private ImageButton playPauseButton, pauseButton;
     private ImageButton refreshButton, skipButton;
     private ImageView settingsButton;
@@ -76,6 +79,8 @@ public class PomoTimerActivity extends AppCompatActivity {
         isCountdownRunning = false;
         isFocusMode = true;
         createNotificationChannel();
+
+        duringTime = loadDuringTime();
 
         startStatusLabel = getResources().getText(R.string.start_status_label);
         pauseStatusLabel = getResources().getText(R.string.pause_status_label);
@@ -240,6 +245,7 @@ public class PomoTimerActivity extends AppCompatActivity {
     }
 
     private void startResumeTimer() {
+        timerStartTime = System.currentTimeMillis();
         countDownTimer = new PomodoroTimer(timeLeftInMillis, COUNTDOWN_INTERVAL);
         countDownTimer.start();
         timerStartup();
@@ -248,6 +254,9 @@ public class PomoTimerActivity extends AppCompatActivity {
     }
 
     private void pauseTimer() {
+        long duration = System.currentTimeMillis() - timerStartTime;
+        duringTime += duration;
+        saveDuringTime(duringTime);
         countDownTimer.cancel();
         timerStandby();
         playPauseButton.setVisibility(View.VISIBLE);
@@ -295,6 +304,22 @@ public class PomoTimerActivity extends AppCompatActivity {
         }
     }
 
+    private void resetDuringTime() {
+        duringTime = 0;
+        saveDuringTime(duringTime);
+    }
+
+    private long loadDuringTime() {
+        SharedPreferences prefs = getSharedPreferences("TimerPrefs", MODE_PRIVATE);
+        return prefs.getLong("duringTime", 0);
+    }
+
+    private void saveDuringTime(long duration) {
+        SharedPreferences prefs = getSharedPreferences("TimerPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("duringTime", duration);
+        editor.apply();
+    }
     private void setProgressBarColour(int colour) {
 
         // User filtering to change the colour of the progress bar drawable.
@@ -380,7 +405,7 @@ public class PomoTimerActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             super.onBackPressed();
-            this.finish();
+            android.os.Process.killProcess(android.os.Process.myPid());
 
         }
         else {
