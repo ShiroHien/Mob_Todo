@@ -1,4 +1,4 @@
-package com.example.timerappclone;
+package com.example.mobiletodoapp.hien_activity;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -27,11 +27,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.mobiletodoapp.R;
+
 import java.util.Locale;
 
 public class PomoTimerActivity extends AppCompatActivity {
-    private final static long DEFAULT_WORK_DURATION = 1500000;
-    private final static long DEFAULT_BREAK_DURATION = 300000;
+    private final static long DEFAULT_FOCUS_DURATION = 1500000;
+    private final static long DEFAULT_SHORT_BREAK_DURATION = 300000;
+    private final static long DEFAULT_LONG_BREAK_DURATION = 900000;
+    private final static int DEFAULT_SESSION = 4;
     private final static int REQUEST_CODE_SETTINGS = 0;
     private final static int COUNTDOWN_INTERVAL = 150;
     private final static int NOTIFICATION_ID = 0;
@@ -39,39 +43,38 @@ public class PomoTimerActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private TextView countdownTimeLabel;
     private ProgressBar countdownProgressBar;
-    private Button playPauseButton;
-    private ImageButton refreshButton;
-    private ImageButton skipButton;
+    private ImageButton playPauseButton;
+    private ImageButton refreshButton, skipButton;
     private ImageView settingsButton;
     private ConstraintLayout timerLayout;
     private Animation blinking;
-    private CharSequence startStatusLabel;
-    private CharSequence pauseStatusLabel;
-    private CharSequence resumeStatusLabel;
-    private long setWorkDurationInMillis = DEFAULT_WORK_DURATION;
-    private long setBreakDurationInMillis = DEFAULT_BREAK_DURATION;
+    private CharSequence startStatusLabel, pauseStatusLabel, resumeStatusLabel;
+    private long setFocusDurationInMillis = DEFAULT_FOCUS_DURATION;
+    private long setShortBreakDurationInMillis = DEFAULT_SHORT_BREAK_DURATION;
+    private long setLongBreakDurationInMillis = DEFAULT_LONG_BREAK_DURATION;
+    private int sessionCount = 0;
+    private int sessionsBeforeLongBreak = DEFAULT_SESSION;
+
     private boolean isCountdownRunning;
     private long currentTotalDurationInMillis;
     private long timeLeftInMillis;
-    private boolean isWorkMode;
+    private boolean isFocusMode;
+    private int completedFocusSessions = 0;
+
     private long backPressedTime;
-    private int colourPrimary;
-    private int colourSecondary;
-    private int colourText;
-    private int colourBackground;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pomo_timer);
+        setContentView(R.layout.activity_pomo_timer);
 
-        currentTotalDurationInMillis = setWorkDurationInMillis;
+        currentTotalDurationInMillis = setFocusDurationInMillis;
         timeLeftInMillis = currentTotalDurationInMillis;
 
-        countDownTimer = new PomodoroTimer(setWorkDurationInMillis, COUNTDOWN_INTERVAL);
+        countDownTimer = new PomodoroTimer(setFocusDurationInMillis, COUNTDOWN_INTERVAL);
 
         isCountdownRunning = false;
-        isWorkMode = true;
+        isFocusMode = true;
         createNotificationChannel();
 
         startStatusLabel = getResources().getText(R.string.start_status_label);
@@ -98,9 +101,7 @@ public class PomoTimerActivity extends AppCompatActivity {
         blinking.setRepeatMode(Animation.REVERSE);
         blinking.setRepeatCount(Animation.INFINITE);
 
-        setProgressBarColour(colourPrimary);
         countdownTimeLabel.startAnimation(blinking);
-        updateWidgetColourScheme();
         updateTimerWidgets();
     }
 
@@ -118,13 +119,11 @@ public class PomoTimerActivity extends AppCompatActivity {
 
         @Override
         public void onFinish() {
-            toggleWorkMode();
-            if (isWorkMode) {
-                countdownTimeLabel.setText(R.string.countdown_work_label);
-                countdownTimeLabel.setTextColor(colourPrimary);
+            toggleFocusMode();
+            if (isFocusMode) {
+                countdownTimeLabel.setText(R.string.countdown_focus_label);
             } else {
                 countdownTimeLabel.setText(R.string.countdown_break_label);
-                countdownTimeLabel.setTextColor(colourSecondary);
             }
             // Set countdown progressbar to 0
             countdownProgressBar.setProgress(0);
@@ -163,7 +162,7 @@ public class PomoTimerActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),
                 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (isWorkMode) {
+        if (isFocusMode) {
             text = "Break is over, time to get to work!";
         } else {
             text = "Session done, time for a break!";
@@ -235,46 +234,36 @@ public class PomoTimerActivity extends AppCompatActivity {
 
     private void startResumeTimer() {
         countDownTimer = new PomodoroTimer(timeLeftInMillis, COUNTDOWN_INTERVAL);
-        countdownTimeLabel.setTextColor(colourText);
         countDownTimer.start();
         timerStartup();
     }
 
     private void pauseTimer() {
         countDownTimer.cancel();
-        if (isWorkMode) {
-            countdownTimeLabel.setTextColor(colourPrimary);
-        }
-        else {
-            countdownTimeLabel.setTextColor(colourSecondary);
-        }
         timerStandby();
     }
 
     private void cancelTimer() {
         countDownTimer.cancel();
-        toggleWorkMode();
+        toggleFocusMode();
         updateTimerWidgets();
-        countdownTimeLabel.setTextColor(colourText);
         timerStandby();
     }
 
     private void skipTimer() {
         countDownTimer.cancel();
-        toggleWorkMode();
+        toggleFocusMode();
         updateTimerWidgets();
-
-        countdownTimeLabel.setTextColor(colourText);
 
         timerStandby();
     }
 
     private void timerStandby() {
         if (timeLeftInMillis != currentTotalDurationInMillis) {
-            playPauseButton.setText(resumeStatusLabel);
+//            playPauseButton.setText(resumeStatusLabel);
         }
         else {
-            playPauseButton.setText(startStatusLabel);
+//            playPauseButton.setText(startStatusLabel);
         }
 
         isCountdownRunning = false;
@@ -284,47 +273,16 @@ public class PomoTimerActivity extends AppCompatActivity {
     private void timerStartup() {
         isCountdownRunning = true;
         countdownTimeLabel.clearAnimation();
-        playPauseButton.setText(pauseStatusLabel);
-    }
-
-    private void updateColourSchemeColour() {
-        colourPrimary = getColor(R.color.lightPrimary);
-        colourSecondary = getColor(R.color.lightSecondary);
-        colourText = getColor(R.color.lightText);
-        colourBackground = getColor(R.color.lightBackground);
-    }
-
-    private void updateWidgetColourScheme() {
-        timerLayout.setBackgroundColor(colourBackground);
-        countdownTimeLabel.setTextColor(colourText);
-
-        if (isWorkMode) {
-            if (!isCountdownRunning && timeLeftInMillis != currentTotalDurationInMillis) {
-                countdownTimeLabel.setTextColor(colourPrimary);
-            }
-            setProgressBarColour(colourPrimary);
-        }
-        else {
-            if (!isCountdownRunning && timeLeftInMillis != currentTotalDurationInMillis) {
-                countdownTimeLabel.setTextColor(colourSecondary);
-            }
-            setProgressBarColour(colourSecondary);
-        }
-    }
-
-    private void updateActivityColourScheme() {
-        updateColourSchemeColour();
-        updateWidgetColourScheme();
-
+//        playPauseButton.setText(pauseStatusLabel);
     }
 
     private void updateCurrentTotalTime() {
         if (timeLeftInMillis == currentTotalDurationInMillis) {
-            if (isWorkMode) {
-                currentTotalDurationInMillis = setWorkDurationInMillis;
+            if (isFocusMode) {
+                currentTotalDurationInMillis = setFocusDurationInMillis;
             }
             else {
-                currentTotalDurationInMillis = setBreakDurationInMillis;
+                currentTotalDurationInMillis = setShortBreakDurationInMillis;
             }
             timeLeftInMillis = currentTotalDurationInMillis;
             updateTimerWidgets();
@@ -338,27 +296,32 @@ public class PomoTimerActivity extends AppCompatActivity {
                 colour, android.graphics.PorterDuff.Mode.SRC_IN);
     }
 
-    private void toggleWorkMode(){
-        if (isWorkMode) {
-
-            isWorkMode = false;
-            currentTotalDurationInMillis = setBreakDurationInMillis;
-            setProgressBarColour(colourSecondary);
+    private void toggleFocusMode(){
+        if (isFocusMode) {
+            completedFocusSessions++;
+            // Check if it's time for a long break
+            if (completedFocusSessions >= sessionsBeforeLongBreak) {
+                isFocusMode = false;
+                currentTotalDurationInMillis = setLongBreakDurationInMillis;
+                completedFocusSessions = 0; // Reset the counter after a long break
+            } else {
+                isFocusMode = false;
+                currentTotalDurationInMillis = setShortBreakDurationInMillis;
+            }
         }
         else {
-
-            isWorkMode = true;
-            currentTotalDurationInMillis = setWorkDurationInMillis;
-            setProgressBarColour(colourPrimary);
+            isFocusMode = true;
+            currentTotalDurationInMillis = setFocusDurationInMillis;
         }
         countDownTimer = new PomodoroTimer(currentTotalDurationInMillis, COUNTDOWN_INTERVAL);
     }
 
     public void openSettingsActivity() {
         Intent intent = new Intent(getApplicationContext(), PomoSettingsActivity.class);
-        intent.putExtra("setWorkDurationInMillis", setWorkDurationInMillis);
-        intent.putExtra("setBreakDurationInMillis", setBreakDurationInMillis);
-
+        intent.putExtra("setFocusDurationInMillis", setFocusDurationInMillis);
+        intent.putExtra("setBreakDurationInMillis", setShortBreakDurationInMillis);
+        intent.putExtra("setLongBreakDurationInMillis", setLongBreakDurationInMillis);
+        intent.putExtra("sessionsBeforeLongBreak", sessionsBeforeLongBreak);
         // Start activity with request for to reference it again when the settings activity is done.
         startActivityForResult(intent, REQUEST_CODE_SETTINGS);
 
@@ -371,14 +334,16 @@ public class PomoTimerActivity extends AppCompatActivity {
         switch (requestCode)
         {
             case REQUEST_CODE_SETTINGS:
-
                 if(resultCode == RESULT_OK)
                 {
-                    setBreakDurationInMillis = dataIntent.getLongExtra("newBreakDurationInMillis",
-                            DEFAULT_BREAK_DURATION);
-                    setWorkDurationInMillis = dataIntent.getLongExtra("newWorkDurationInMillis",
-                            DEFAULT_WORK_DURATION);
-                    updateActivityColourScheme();
+                    setShortBreakDurationInMillis = dataIntent.getLongExtra("newShortBreakDurationInMillis",
+                            DEFAULT_SHORT_BREAK_DURATION);
+                    setFocusDurationInMillis = dataIntent.getLongExtra("newFocusDurationInMillis",
+                            DEFAULT_FOCUS_DURATION);
+                    setLongBreakDurationInMillis = dataIntent.getLongExtra("newLongBreakDurationInMillis",
+                            DEFAULT_LONG_BREAK_DURATION);
+                    sessionsBeforeLongBreak = dataIntent.getIntExtra("newSessionsBeforeLongBreak",
+                            DEFAULT_SESSION);
                     updateCurrentTotalTime();
                 }
         }

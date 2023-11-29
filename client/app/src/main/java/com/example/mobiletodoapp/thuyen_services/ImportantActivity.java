@@ -507,6 +507,12 @@ public class ImportantActivity extends AppCompatActivity {
         return future;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getTaskFromServer();
+    }
+
     private void showLoading() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Đang xử lý...");

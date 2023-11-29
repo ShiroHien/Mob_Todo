@@ -541,6 +541,12 @@ public class MyDayActivity extends AppCompatActivity {
         updateTask(task);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getTaskFromServer();
+    }
+
     private void showLoading() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Đang xử lý...");

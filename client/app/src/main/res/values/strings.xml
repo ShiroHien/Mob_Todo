@@ -3,4 +3,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="client_id">564128772795-omujpn7td64g4hk39vkgep8s87h6clks.apps.googleusercontent.com</string>
+    <string name="timerTextView">25:00</string>
+    <string name="sessions">1/4 Sessions</string>
+    <string name="time_in_minutes">%1$s Mins</string>
+    <string name="rounds_format">%1$s Rounds</string>
+    <string name="auto_start_break">Auto Start Break\n</string>
+    <string name="auto_start_pomo">Auto Start Pomodoro</string>
+    <string name="restore_default">Restore default</string>
+    <string name="save_config">Save</string>
+    <string name="start_status_label">Start</string>
+    <string name="pause_status_label">Pause</string>
+    <string name="resume_status_label">Resume</string>
+    <string name="channel_name">Timer Toggle</string>
+    <string name="countdown_focus_label">Focus</string>
+    <string name="countdown_break_label">Break\n</string>
 </resources>

@@ -579,6 +579,12 @@ public class TasksGroupView extends AppCompatActivity {
         tvEndTime.setText((month + 1) + "/" + day + "/" + year + " 23:59:59");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getTaskListFromServer(taskApi);
+    }
+
     private void showLoading() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Đang xử lý...");
