@@ -481,16 +481,6 @@ public class ImportantActivity extends AppCompatActivity {
                 if(response.body() != null) {
                     tasks = response.body();
 
-                    List<Task> filterTask = new ArrayList<>();
-                    for(Task t : tasks) {
-                        if(!t.isCompleted()) {
-                            filterTask.add(t);
-                        }
-                    }
-
-                    tasks = filterTask;
-
-
                     adapter.setData(tasks);
                     hideLoading();
                 } else {
