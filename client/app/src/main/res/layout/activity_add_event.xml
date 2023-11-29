@@ -39,11 +39,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="5dp"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etTitle"
-        android:padding="20sp"
-        android:background="@drawable/customborder">
+        android:padding="20sp">
 
         <ImageView
             android:id="@+id/ivClock"
@@ -71,12 +71,12 @@
         android:id="@+id/startTimeContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/allDayContainer"
-        android:padding="20sp"
-        android:background="@drawable/customborder">
+        android:padding="20sp">
         <ImageView
             android:id="@+id/iv1"
             android:layout_width="30dp"
@@ -106,7 +106,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/startTimeContainer"
         android:padding="20sp"
-        android:background="@drawable/customborder">
+        android:layout_margin="5dp">
         <ImageView
             android:id="@+id/iv2"
             android:layout_width="30dp"
@@ -127,26 +127,26 @@
             android:text="23:59"
             android:layout_weight="1"/>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/descriptionContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:padding="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/endTimeContainer"
-        android:padding="20sp">
-        <ImageView
-            android:id="@+id/iv3"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@null"/>
+        app:layout_constraintTop_toBottomOf="@id/endTimeContainer">
+
+
         <EditText
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lines="6"
-            android:hint="Ghi chú"/>
+            android:layout_height="match_parent"
+            android:lines="10"
+            android:padding="10dp"
+            android:hint="Ghi chú" />
     </LinearLayout>
 
     <ProgressBar
