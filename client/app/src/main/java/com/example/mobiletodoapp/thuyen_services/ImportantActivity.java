@@ -34,6 +34,7 @@ import com.example.mobiletodoapp.phuc_activity.dto.Task;
 import com.example.mobiletodoapp.phuc_activity.dto.TaskGroup;
 import com.example.mobiletodoapp.phuc_activity.view.TaskDetail.TaskDetailActivity;
 import com.example.mobiletodoapp.thuyen_services.taskgroup_view.TasksGroupView;
+import com.example.mobiletodoapp.trung_activity.CalendarUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -417,6 +418,7 @@ public class ImportantActivity extends AppCompatActivity {
     }
     private void handleShowAddTaskLayout() {
         clAddTask.setVisibility(View.VISIBLE);
+        CalendarUtils.scaleAnimation(clAddTask);
         isShowedDialogFragment = true;
 
         ArrayAdapter<TaskGroup> spinnerAdapter = new ArrayAdapter<TaskGroup>(ImportantActivity.this,
@@ -480,16 +482,6 @@ public class ImportantActivity extends AppCompatActivity {
             public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
                 if(response.body() != null) {
                     tasks = response.body();
-
-                    List<Task> filterTask = new ArrayList<>();
-                    for(Task t : tasks) {
-                        if(!t.isCompleted()) {
-                            filterTask.add(t);
-                        }
-                    }
-
-                    tasks = filterTask;
-
 
                     adapter.setData(tasks);
                     hideLoading();

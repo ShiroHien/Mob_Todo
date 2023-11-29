@@ -208,7 +208,6 @@ public class CalendarUtils
                 Animation.RELATIVE_TO_SELF, 0.5f  // Pivot point Y relative to the view height
         );
         scaleAnimation.setDuration(300); // 300 milliseconds duration
-        scaleAnimation.setFillAfter(true);
 
         view.startAnimation(scaleAnimation);
     }

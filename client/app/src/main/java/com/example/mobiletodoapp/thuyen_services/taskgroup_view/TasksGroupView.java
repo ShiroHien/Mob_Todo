@@ -37,6 +37,7 @@ import com.example.mobiletodoapp.phuc_activity.dto.Task;
 import com.example.mobiletodoapp.phuc_activity.dto.TaskGroup;
 import com.example.mobiletodoapp.phuc_activity.view.TaskDetail.TaskDetailActivity;
 import com.example.mobiletodoapp.thuyen_services.TaskAdapter;
+import com.example.mobiletodoapp.trung_activity.CalendarUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -228,6 +229,7 @@ public class TasksGroupView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 clUpdateTaskGroup.setVisibility(View.GONE);
+                isShowedDialogFragment = false;
                 edtNewGroupTitle.setText("");
             }
         });
@@ -302,6 +304,7 @@ public class TasksGroupView extends AppCompatActivity {
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.update_title) {
                     clUpdateTaskGroup.setVisibility(View.VISIBLE);
+                    CalendarUtils.scaleAnimation(clUpdateTaskGroup);
                     isShowedDialogFragment = true;
                     return true;
                 } else if (itemId == R.id.delete_tasksgroup) {
@@ -562,6 +565,7 @@ public class TasksGroupView extends AppCompatActivity {
 
     private void handleShowAddTaskLayout() {
         clAddTask.setVisibility(View.VISIBLE);
+        CalendarUtils.scaleAnimation(clAddTask);
         isShowedDialogFragment = true;
 
 

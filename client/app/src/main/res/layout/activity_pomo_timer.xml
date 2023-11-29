@@ -5,69 +5,44 @@
     android:id="@+id/timerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="0dp"
+    android:background="@drawable/bg"
     tools:context="com.example.mobiletodoapp.hien_activity.PomoTimerActivity">
 
-    <ProgressBar
-        android:id="@+id/countdownProgressBar"
-        style="?android:progressBarStyleHorizontal"
-        android:layout_width="275dp"
-        android:layout_height="295dp"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="100"
-        android:progressDrawable="@drawable/progress_circle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.522"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.135" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/my_primary"
+        android:alpha="0.7">
 
-    <TextView
-        android:id="@+id/sessionsTextView"
-        android:layout_width="96dp"
-        android:layout_height="41dp"
-        android:textSize="15sp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="@string/sessions"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/countdownProgressBar" />
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/countdownProgressBar"
+            android:layout_width="500dp"
+            android:layout_height="500dp"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="180dp"
+            android:max="100"
+            android:progress="100"
+            app:indicatorColor="@color/white"
+            app:indicatorSize="300dp"
+            app:trackColor="@color/purple_200"
+            app:trackCornerRadius="5dp"
+            app:trackThickness="8dp" />
 
-    <TextView
-        android:id="@+id/timerTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/timerTextView"
-        android:textSize="45sp"
-        app:layout_constraintBottom_toBottomOf="@+id/countdownProgressBar"
-        app:layout_constraintEnd_toEndOf="@+id/countdownProgressBar"
-        app:layout_constraintStart_toStartOf="@+id/countdownProgressBar"
-        app:layout_constraintTop_toTopOf="@+id/countdownProgressBar"
-        app:layout_constraintVertical_bias="0.227" />
-
-    <View
-        android:id="@+id/rectangle_6"
-        android:layout_width="270dp"
-        android:layout_height="142dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/task_list_rectangle"
-        android:elevation="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/play_pause"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/countdownProgressBar"
-        app:layout_constraintVertical_bias="0.706" />
+        <TextView
+            android:id="@+id/timerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/countdownProgressBar"
+            android:layout_alignBottom="@+id/countdownProgressBar"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="94dp"
+            android:layout_marginBottom="118dp"
+            android:text="@string/timerTextView"
+            android:textColor="@color/lightGray"
+            android:textSize="50sp" />
+    </RelativeLayout>
 
     <ImageButton
         android:id="@+id/refreshButton"
@@ -90,10 +65,25 @@
         android:layout_height="65dp"
         android:layout_marginBottom="68dp"
         android:background="@drawable/play_pause_bg"
+        android:src="@drawable/ic_start"
         android:elevation="4dp"
         android:padding="5dp"
         android:theme="?actionBarTheme"
-        app:tint="#9e9e9e"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/pauseButton"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="68dp"
+        android:background="@drawable/play_pause_bg"
+        android:src="@drawable/ic_pause"
+        android:elevation="4dp"
+        android:padding="5dp"
+        android:theme="?actionBarTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,24 +92,25 @@
     <ImageButton
         android:id="@+id/skipButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginBottom="84dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_skip"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toEndOf="@+id/play_pause" />
 
+
     <ImageView
         android:id="@+id/configButton"
-        android:layout_width="41dp"
-        android:layout_height="36dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
         android:src="@drawable/ic_config"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

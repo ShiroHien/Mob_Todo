@@ -49,6 +49,7 @@ import java.util.concurrent.CompletableFuture;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.HEAD;
 
 public class MainScreenActivity extends AppCompatActivity {
 
@@ -77,11 +78,14 @@ public class MainScreenActivity extends AppCompatActivity {
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
         @Override
         public void moveToTaskGroupView(TaskGroup tasksGroup) {
-            Intent intent = new Intent(MainScreenActivity.this, TasksGroupView.class);
-            intent.putExtra("tasksgroupId", tasksGroup.getId());
-            intent.putExtra("tasksgroupTitle", tasksGroup.getTitle());
-            startActivity(intent);
-        }
+
+            if(isShowedDialogFragment == false) {
+                Intent intent = new Intent(MainScreenActivity.this, TasksGroupView.class);
+                intent.putExtra("tasksgroupId", tasksGroup.getId());
+                intent.putExtra("tasksgroupTitle", tasksGroup.getTitle());
+                startActivity(intent);
+            }
+            
     });
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -129,6 +133,8 @@ public class MainScreenActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 layoutAddTasksgroup.setVisibility(View.VISIBLE);
+//                CalendarUtils.fadeInAnimation(layoutAddTasksgroup,300);
+                CalendarUtils.scaleAnimation(layoutAddTasksgroup);
                 isShowedDialogFragment = true;
 
             }
