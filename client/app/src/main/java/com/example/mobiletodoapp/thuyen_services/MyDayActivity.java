@@ -32,6 +32,7 @@ import com.example.mobiletodoapp.phuc_activity.api.TaskGroupApi;
 import com.example.mobiletodoapp.phuc_activity.dto.Task;
 import com.example.mobiletodoapp.phuc_activity.dto.TaskGroup;
 import com.example.mobiletodoapp.phuc_activity.view.TaskDetail.TaskDetailActivity;
+import com.example.mobiletodoapp.trung_activity.CalendarUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -351,6 +352,7 @@ public class MyDayActivity extends AppCompatActivity {
 
     private void handleShowAddTaskLayout() {
         clAddTask.setVisibility(View.VISIBLE);
+        CalendarUtils.scaleAnimation(clAddTask);
         isShowedDialogFragment = true;
 
         ArrayAdapter<TaskGroup> spinnerAdapter = new ArrayAdapter<TaskGroup>(MyDayActivity.this,

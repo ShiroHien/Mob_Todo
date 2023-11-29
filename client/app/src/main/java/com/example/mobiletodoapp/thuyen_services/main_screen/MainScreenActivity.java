@@ -46,7 +46,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainScreenActivity extends AppCompatActivity  {
+public class MainScreenActivity extends AppCompatActivity {
 
     LinearLayout myDay;
     LinearLayout important;
@@ -73,10 +73,13 @@ public class MainScreenActivity extends AppCompatActivity  {
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
         @Override
         public void moveToTaskGroupView(TaskGroup tasksGroup) {
-            Intent intent = new Intent(MainScreenActivity.this, TasksGroupView.class);
-            intent.putExtra("tasksgroupId", tasksGroup.getId());
-            intent.putExtra("tasksgroupTitle", tasksGroup.getTitle());
-            startActivity(intent);
+            if(isShowedDialogFragment == false) {
+                Intent intent = new Intent(MainScreenActivity.this, TasksGroupView.class);
+                intent.putExtra("tasksgroupId", tasksGroup.getId());
+                intent.putExtra("tasksgroupTitle", tasksGroup.getTitle());
+                startActivity(intent);
+            }
+
 //            Toast.makeText(MainScreenActivity.this, tasksGroup.getId(), Toast.LENGTH_SHORT).show();
         }
     });
@@ -93,8 +96,8 @@ public class MainScreenActivity extends AppCompatActivity  {
         CalendarUtils.timetableApi = retrofitService.getRetrofit().create(TimetableApi.class);
         CalendarUtils.eventsApi = retrofitService.getRetrofit().create(EventsApi.class);
         String userId = getSharedPref(this, "userId", "");
-        Log.d("Calendar","userId: "+userId);
-        CalendarUtils.loadTimetableForUser(this,userId);
+        Log.d("Calendar", "userId: " + userId);
+        CalendarUtils.loadTimetableForUser(this, userId);
 
         showLoading();
         getTasksGroupsFromServer(taskGroupApi);
@@ -111,6 +114,8 @@ public class MainScreenActivity extends AppCompatActivity  {
             public void onClick(View v) {
 
                 layoutAddTasksgroup.setVisibility(View.VISIBLE);
+//                CalendarUtils.fadeInAnimation(layoutAddTasksgroup,300);
+                CalendarUtils.scaleAnimation(layoutAddTasksgroup);
                 isShowedDialogFragment = true;
 
             }
@@ -126,7 +131,7 @@ public class MainScreenActivity extends AppCompatActivity  {
         important.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isShowedDialogFragment == false) {
+                if (isShowedDialogFragment == false) {
                     Intent intent = new Intent(MainScreenActivity.this, ImportantActivity.class);
                     startActivity(intent);
                 }
@@ -136,7 +141,7 @@ public class MainScreenActivity extends AppCompatActivity  {
         myDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isShowedDialogFragment == false) {
+                if (isShowedDialogFragment == false) {
                     Intent intent = new Intent(MainScreenActivity.this, MyDayActivity.class);
                     startActivity(intent);
                 }
@@ -146,7 +151,7 @@ public class MainScreenActivity extends AppCompatActivity  {
         pomodoro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isShowedDialogFragment == false) {
+                if (isShowedDialogFragment == false) {
                     Intent intent = new Intent(MainScreenActivity.this, PomodoroActivity.class);
                     startActivity(intent);
                 }
@@ -155,7 +160,7 @@ public class MainScreenActivity extends AppCompatActivity  {
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isShowedDialogFragment == false) {
+                if (isShowedDialogFragment == false) {
                     Intent intent = new Intent(getApplicationContext(), MonthViewActivity.class);
                     startActivity(intent);
                 }
