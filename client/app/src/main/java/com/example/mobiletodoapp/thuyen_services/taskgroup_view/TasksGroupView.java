@@ -207,6 +207,7 @@ public class TasksGroupView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 clUpdateTaskGroup.setVisibility(View.GONE);
+                isShowedDialogFragment = false;
                 edtNewGroupTitle.setText("");
             }
         });
