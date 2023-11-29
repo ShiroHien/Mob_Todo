@@ -76,11 +76,7 @@ public class TaskService implements ITaskService {
     @Override
     public List<Task> getMyDay(String userId) {
         List<Task> myDayTasks = new ArrayList<>();
-
-        // Get all TaskGroups for the given userId
         List<TaskGroup> taskGroups = getListData(COLLECTION_NAME_TASK_GROUP, "userId", userId, TaskGroup.class);
-
-        // For each TaskGroup, get tasks with myDay set to true
         for (TaskGroup taskGroup : taskGroups) {
             myDayTasks.addAll(getListDataByFieldName(
                     COLLECTION_NAME,
@@ -100,6 +96,7 @@ public class TaskService implements ITaskService {
         Task task = getDetailTask(taskId);
         if (task != null) {
             task.setImportant(!task.isImportant());
+            return updateTask(task);
         }
         return false;
     }

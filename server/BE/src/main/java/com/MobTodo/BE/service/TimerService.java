@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -37,11 +39,33 @@ public class TimerService implements ITimerService {
     @Override
     public List<Timer> getTimerById(String userId) {
         LocalDate currentDate = LocalDate.now();
-        LocalDate sevenDaysAgo = currentDate.minusDays(7);
+        LocalDate sevenDaysAgo = currentDate.minusDays(6);
+
         List<Timer> timersInRange = getListDataInRange(COLLECTION_NAME, "userId", userId, Timer.class, sevenDaysAgo, currentDate);
-        return timersInRange.stream()
-                .filter(timer -> isDateInRange(timer.getDay(), sevenDaysAgo, currentDate))
-                .collect(Collectors.toList());
+
+        List<Timer> result = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            LocalDate date = currentDate.minusDays(i);
+            Timer timerOfDay = findTimerByDay(timersInRange, date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+            if (timerOfDay != null) {
+                result.add(timerOfDay);
+            } else {
+                Timer emptyTimer = new Timer();
+                emptyTimer.setDuringTime(0);
+                emptyTimer.setDay(date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+                result.add(emptyTimer);
+            }
+        }
+        Collections.reverse(result);
+
+        return result;
+    }
+
+    private Timer findTimerByDay(List<Timer> timers, String day) {
+        return timers.stream()
+                .filter(timer -> timer.getDay().equals(day))
+                .findFirst()
+                .orElse(null);
     }
 
     private boolean isDateInRange(String date, LocalDate startDate, LocalDate endDate) {
@@ -49,10 +73,7 @@ public class TimerService implements ITimerService {
         return !timerDate.isBefore(startDate) && !timerDate.isAfter(endDate);
     }
 
-    // Thêm phương thức getListDataInRange để lấy danh sách dữ liệu trong khoảng thời gian
     private List<Timer> getListDataInRange(String collectionName, String fieldName, String fieldValue, Class<Timer> type, LocalDate startDate, LocalDate endDate) {
-        // Thực hiện truy vấn dữ liệu trong khoảng thời gian từ startDate đến endDate
-        // Sử dụng hàm getListDataInRange có sẵn
         return getListData(collectionName, fieldName, fieldValue, type)
                 .stream()
                 .filter(timer -> isDateInRange(timer.getDay(), startDate, endDate))

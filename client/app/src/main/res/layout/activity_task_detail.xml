@@ -145,6 +145,7 @@
                     android:src="@drawable/white_star_important" />
 
                 <TextView
+                    android:id="@+id/text_important"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/roboto_bold"

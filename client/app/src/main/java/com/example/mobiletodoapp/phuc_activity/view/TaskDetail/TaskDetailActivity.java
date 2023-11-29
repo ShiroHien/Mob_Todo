@@ -36,13 +36,13 @@ import retrofit2.Response;
 
 public class TaskDetailActivity extends AppCompatActivity {
     ImageView btnBackToPrevious;
-    TextView taskgroupName, startTime, endTime, text_myday;
+    TextView taskgroupName, startTime, endTime, text_myday, text_important;
     EditText task_title, description;
     private RetrofitService retrofitService;
     private TaskApi taskApi;
     private Boolean isMyday = false, isImportant = false;
     LinearLayout add_myday, add_important;
-
+    Boolean isShowedDialogFragment = false;
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -80,6 +80,12 @@ public class TaskDetailActivity extends AppCompatActivity {
                 setMyDay(taskApi, taskId);
             }
         });
+        add_important.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setImportant(taskApi, taskId);
+            }
+        });
     }
 
     private void init() {
@@ -95,6 +101,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         add_important = findViewById(R.id.add_important);
         add_myday = findViewById(R.id.add_myday);
         text_myday = findViewById(R.id.text_myday);
+        text_important = findViewById(R.id.text_important);
 
         retrofitService = new RetrofitService();
         taskApi = retrofitService.getRetrofit().create(TaskApi.class);
@@ -117,6 +124,10 @@ public class TaskDetailActivity extends AppCompatActivity {
                                 isMyday = true;
                                 text_myday.setTextColor(Color.parseColor("#3700b3"));
                             }
+                            if (result.isImportant()) {
+                                isMyday = true;
+                                text_important.setTextColor(Color.parseColor("#3700b3"));
+                            }
                         } else {
                             showToast(TaskDetailActivity.this, "Lấy dữ liệu không thành công");
                         }
@@ -131,6 +142,46 @@ public class TaskDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Task> call, Throwable t) {
+                Log.d("error", "loi gi do", t);
+                showToast(TaskDetailActivity.this, "Có lỗi xảy ra");
+                future.completeExceptionally(t);
+            }
+        });
+        return future;
+    }
+
+    private CompletableFuture<Void> setImportant(TaskApi taskApi, String taskId) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        taskApi.setImportant(taskId).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Boolean result = response.body();
+                        System.out.println(result);
+                        if (result == true) {
+                            if (isImportant) {
+                                text_important.setTextColor(Color.parseColor("#000000"));
+                                showToast(TaskDetailActivity.this, "Bỏ thành công");
+                            } else {
+                                text_important.setTextColor(Color.parseColor("#3700b3"));
+                                showToast(TaskDetailActivity.this, "Thêm vào ngày của tôi thành công");
+                            }
+                            isImportant = !isImportant;
+                        } else {
+                            showToast(TaskDetailActivity.this, "Xử lý không thành công");
+                        }
+                    } else {
+                        showToast(TaskDetailActivity.this, "Thêm vào quan trọng không thành công");
+                    }
+                    future.complete(null);
+                } catch (Exception e) {
+                    future.completeExceptionally(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
                 Log.d("error", "loi gi do", t);
                 showToast(TaskDetailActivity.this, "Có lỗi xảy ra");
                 future.completeExceptionally(t);
