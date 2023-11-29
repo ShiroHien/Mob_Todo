@@ -39,6 +39,7 @@ public class TaskService implements ITaskService {
 
     @Override
     public Boolean updateTask(Task data) {
+        System.out.println(data);
         if (checkDateTimeFormat(data.getStartTime()) && checkDateTimeFormat(data.getEndTime())) {
             return updateData(COLLECTION_NAME, data.getId(), data);
         }

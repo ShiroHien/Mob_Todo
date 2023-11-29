@@ -8,10 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -92,7 +96,7 @@ public class TasksGroupView extends AppCompatActivity {
     private final TaskAdapter taskAdapter = new TaskAdapter(new TaskAdapter.IClickTaskItem() {
         @Override
         public void moveToTaskView(Task task) {
-            if(isShowedDialogFragment == false) {
+            if (isShowedDialogFragment == false) {
                 Intent taskDetailIntent = new Intent(TasksGroupView.this, TaskDetailActivity.class);
                 taskDetailIntent.putExtra("taskId", task.getId());
                 taskDetailIntent.putExtra("taskTitle", task.getTitle());
@@ -103,7 +107,7 @@ public class TasksGroupView extends AppCompatActivity {
 
         @Override
         public void handleCompleteBtn(Task task) {
-            if(isShowedDialogFragment == false) {
+            if (isShowedDialogFragment == false) {
                 if (task.isCompleted()) {
                     task.setCompleted(false);
                 } else {
@@ -116,8 +120,8 @@ public class TasksGroupView extends AppCompatActivity {
 
         @Override
         public void handleImportantBtn(Task task) {
-            if(isShowedDialogFragment == false) {
-                if(task.isImportant()) {
+            if (isShowedDialogFragment == false) {
+                if (task.isImportant()) {
                     task.setImportant(false);
                 } else {
                     task.setImportant(true);
@@ -127,6 +131,23 @@ public class TasksGroupView extends AppCompatActivity {
             }
         }
     });
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +168,7 @@ public class TasksGroupView extends AppCompatActivity {
         btnBackToPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isShowedDialogFragment == false) {
+                if (isShowedDialogFragment == false) {
                     finish();
                 }
             }
@@ -156,7 +177,7 @@ public class TasksGroupView extends AppCompatActivity {
         btnShowAddTaskLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isShowedDialogFragment == false) {
+                if (isShowedDialogFragment == false) {
                     isShowedDialogFragment = true;
                     handleShowAddTaskLayout();
                 }
@@ -197,7 +218,7 @@ public class TasksGroupView extends AppCompatActivity {
         btnShowPopupMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isShowedDialogFragment == false) {
+                if (isShowedDialogFragment == false) {
                     showPopupMenu();
                 }
             }
@@ -227,7 +248,6 @@ public class TasksGroupView extends AppCompatActivity {
         btnShowAddTaskLayout = findViewById(R.id.btn_show_add_task_layout);
         btnBackToPrevious = findViewById(R.id.btn_back_to_previous);
         tvHeaderTitlte = findViewById(R.id.tv_header_title);
-
 
 
         // layout add task
@@ -260,7 +280,7 @@ public class TasksGroupView extends AppCompatActivity {
 
     private void updateTaskGroup() {
         String newTitle = edtNewGroupTitle.getText().toString().trim();
-        if(newTitle == null || newTitle.isEmpty()) {
+        if (newTitle == null || newTitle.isEmpty()) {
             Toast.makeText(TasksGroupView.this, "Tên nhóm không được để trống", Toast.LENGTH_SHORT).show();
         } else {
             showLoading();
@@ -305,7 +325,7 @@ public class TasksGroupView extends AppCompatActivity {
         taskApi.updateTask(task).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if(response.body()) {
+                if (response.body()) {
                     taskAdapter.setData(tasks);
                     Log.d("update task", task.getTitle() + " true");
                     hideLoading();
@@ -329,7 +349,7 @@ public class TasksGroupView extends AppCompatActivity {
         taskGroupApi.delateTaskGroup(taskGroupId).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if(response.body()) {
+                if (response.body()) {
                     hideLoading();
                     finish();
                 } else {
@@ -351,7 +371,7 @@ public class TasksGroupView extends AppCompatActivity {
         taskGroupApi.getTaskGroupById(taskgroupId).enqueue(new Callback<TaskGroup>() {
             @Override
             public void onResponse(Call<TaskGroup> call, Response<TaskGroup> response) {
-                if(response.body() != null) {
+                if (response.body() != null) {
                     mTaskGroup = response.body();
                     mTaskGroup.setTitle(edtNewGroupTitle.getText().toString().trim());
                     updateTaskGroup(taskGroupApi);
@@ -378,7 +398,7 @@ public class TasksGroupView extends AppCompatActivity {
         taskGroupApi.updateTaskGroup(mTaskGroup).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if(response.body() != null && response.body() == true) {
+                if (response.body() != null && response.body() == true) {
                     tvHeaderTitlte.setText(mTaskGroup.getTitle());
                     hideLoading();
                 } else {
@@ -434,7 +454,6 @@ public class TasksGroupView extends AppCompatActivity {
                         Log.d("create task", "them nv that bai");
                     }
                 } catch (Exception e) {
-
                     future.completeExceptionally(e);
                     Log.d("create task", "loi ket noi");
                 }
@@ -587,7 +606,7 @@ public class TasksGroupView extends AppCompatActivity {
 
     private void showLoading() {
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Đang xử lý...");
+        progressDialog.setMessage("Đang đồng bộ dữ liệu ...");
         progressDialog.setCancelable(false);
         progressDialog.show();
     }

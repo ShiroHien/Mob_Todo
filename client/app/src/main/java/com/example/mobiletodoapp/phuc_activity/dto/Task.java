@@ -1,6 +1,18 @@
 package com.example.mobiletodoapp.phuc_activity.dto;
 
 public class Task {
+    public Task(String id, String taskGroupId, String title, String description, String startTime, String endTime, boolean completed, boolean myDay, boolean important) {
+        this.id = id;
+        this.taskGroupId = taskGroupId;
+        this.title = title;
+        this.description = description;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.completed = completed;
+        this.myDay = myDay;
+        this.important = important;
+    }
+
     private String id;
     private String taskGroupId;
     private String title;

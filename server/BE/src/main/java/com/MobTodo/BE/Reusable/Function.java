@@ -86,7 +86,6 @@ public class Function {
 
     public static boolean checkDateTimeFormat(String input) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
-        System.out.println(dateFormatter);
         try {
             LocalDateTime parsedDate = LocalDateTime.parse(input, dateFormatter);
             return true;
