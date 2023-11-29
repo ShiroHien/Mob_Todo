@@ -15,15 +15,17 @@
         android:background="@color/my_primary"
         android:alpha="0.7"/>
 
-    <ProgressBar
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/countdownProgressBar"
-        style="?android:progressBarStyleHorizontal"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
-        android:indeterminate="false"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
         android:max="100"
         android:progress="100"
-        android:progressDrawable="@drawable/progress_circle"
+        app:trackColor="@color/purple_200"
+        app:indicatorColor="@color/white"
+        app:trackCornerRadius="5dp"
+        app:trackThickness="8dp"
+        app:indicatorSize="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.522"
@@ -106,6 +108,21 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
+        android:id="@+id/resumeButton"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="68dp"
+        android:background="@drawable/play_pause_bg"
+        android:src="@drawable/ic_resume"
+        android:elevation="4dp"
+        android:padding="5dp"
+        android:theme="?actionBarTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
         android:id="@+id/skipButton"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
@@ -118,6 +135,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toEndOf="@+id/play_pause" />
+
 
     <ImageView
         android:id="@+id/configButton"

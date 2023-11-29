@@ -43,7 +43,7 @@ public class PomoTimerActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private TextView countdownTimeLabel;
     private ProgressBar countdownProgressBar;
-    private ImageButton playPauseButton;
+    private ImageButton playPauseButton, pauseButton;
     private ImageButton refreshButton, skipButton;
     private ImageView settingsButton;
     private ConstraintLayout timerLayout;
@@ -86,6 +86,8 @@ public class PomoTimerActivity extends AppCompatActivity {
         countdownTimeLabel = findViewById(R.id.timerTextView);
         countdownProgressBar = findViewById(R.id.countdownProgressBar);
         playPauseButton = findViewById(R.id.play_pause);
+        pauseButton = findViewById(R.id.pauseButton);
+        pauseButton.setVisibility(View.INVISIBLE);
         refreshButton = findViewById(R.id.refreshButton);
         skipButton = findViewById(R.id.skipButton);
         settingsButton = findViewById(R.id.configButton);
@@ -94,6 +96,7 @@ public class PomoTimerActivity extends AppCompatActivity {
         refreshButton.setOnClickListener(new ButtonListener());
         skipButton.setOnClickListener(new ButtonListener());
         settingsButton.setOnClickListener(new ButtonListener());
+        pauseButton.setOnClickListener(new ButtonListener());
 
         blinking = new AlphaAnimation(0.0f, 1.0f);
         blinking.setDuration(500);
@@ -229,6 +232,10 @@ public class PomoTimerActivity extends AppCompatActivity {
             } else if (v.getId() == R.id.skipButton) {
                 skipTimer();
             }
+            else if (v.getId() == R.id.pauseButton) {
+                pauseTimer();
+            }
+
         }
     }
 
@@ -236,11 +243,15 @@ public class PomoTimerActivity extends AppCompatActivity {
         countDownTimer = new PomodoroTimer(timeLeftInMillis, COUNTDOWN_INTERVAL);
         countDownTimer.start();
         timerStartup();
+        playPauseButton.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.VISIBLE);
     }
 
     private void pauseTimer() {
         countDownTimer.cancel();
         timerStandby();
+        playPauseButton.setVisibility(View.VISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
     }
 
     private void cancelTimer() {
@@ -260,12 +271,8 @@ public class PomoTimerActivity extends AppCompatActivity {
 
     private void timerStandby() {
         if (timeLeftInMillis != currentTotalDurationInMillis) {
-//            playPauseButton.setText(resumeStatusLabel);
+        } else {
         }
-        else {
-//            playPauseButton.setText(startStatusLabel);
-        }
-
         isCountdownRunning = false;
         countdownTimeLabel.startAnimation(blinking);
     }
@@ -273,7 +280,6 @@ public class PomoTimerActivity extends AppCompatActivity {
     private void timerStartup() {
         isCountdownRunning = true;
         countdownTimeLabel.clearAnimation();
-//        playPauseButton.setText(pauseStatusLabel);
     }
 
     private void updateCurrentTotalTime() {
@@ -327,7 +333,7 @@ public class PomoTimerActivity extends AppCompatActivity {
 
     }
 
-//    save setting
+    //    save setting
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent dataIntent) {
         super.onActivityResult(requestCode, resultCode, dataIntent);
