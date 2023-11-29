@@ -374,7 +374,7 @@ public class PomoTimerActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             super.onBackPressed();
-            android.os.Process.killProcess(android.os.Process.myPid());
+            this.finish();
 
         }
         else {
