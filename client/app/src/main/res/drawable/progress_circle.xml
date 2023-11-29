@@ -5,8 +5,8 @@
 
     <shape xmlns:android="http://schemas.android.com/apk/res/android"
         android:shape="ring"
-        android:innerRadiusRatio="2.5"
-        android:thickness="15dp"
+        android:innerRadiusRatio="2.6"
+        android:thickness="5dp"
         android:useLevel="true">
 
         <gradient
@@ -14,7 +14,7 @@
             android:type="sweep"
             android:useLevel="false" />
 
-        <solid android:color="#D87BED" />
+        <solid android:color="@color/white" />
     </shape>
 
 </rotate>

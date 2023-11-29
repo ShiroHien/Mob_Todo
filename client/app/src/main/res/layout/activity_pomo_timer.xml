@@ -5,14 +5,21 @@
     android:id="@+id/timerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="0dp"
+    android:background="@drawable/bg"
     tools:context="com.example.mobiletodoapp.hien_activity.PomoTimerActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/my_primary"
+        android:alpha="0.7"/>
 
     <ProgressBar
         android:id="@+id/countdownProgressBar"
         style="?android:progressBarStyleHorizontal"
-        android:layout_width="275dp"
-        android:layout_height="295dp"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
         android:indeterminate="false"
         android:max="100"
         android:progress="100"
@@ -35,6 +42,7 @@
         android:layout_alignParentTop="true"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/sessions"
+        android:textColor="#F3EBEB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/countdownProgressBar" />
@@ -43,15 +51,13 @@
         android:id="@+id/timerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="84dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="@string/timerTextView"
-        android:textSize="45sp"
+        android:textColor="@color/lightGray"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/countdownProgressBar"
-        app:layout_constraintEnd_toEndOf="@+id/countdownProgressBar"
-        app:layout_constraintStart_toStartOf="@+id/countdownProgressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/countdownProgressBar"
         app:layout_constraintVertical_bias="0.227" />
 
@@ -90,10 +96,10 @@
         android:layout_height="65dp"
         android:layout_marginBottom="68dp"
         android:background="@drawable/play_pause_bg"
+        android:src="@drawable/ic_start"
         android:elevation="4dp"
         android:padding="5dp"
         android:theme="?actionBarTheme"
-        app:tint="#9e9e9e"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,12 +108,12 @@
     <ImageButton
         android:id="@+id/skipButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginBottom="84dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_skip"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
@@ -115,11 +121,11 @@
 
     <ImageView
         android:id="@+id/configButton"
-        android:layout_width="41dp"
-        android:layout_height="36dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
         android:src="@drawable/ic_config"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
