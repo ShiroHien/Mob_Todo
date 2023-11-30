@@ -115,7 +115,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
                 layoutAddTasksgroup.setVisibility(View.VISIBLE);
 //                CalendarUtils.fadeInAnimation(layoutAddTasksgroup,300);
-                CalendarUtils.scaleAnimation(layoutAddTasksgroup);
+                CalendarUtils.fadeInAnimation(layoutAddTasksgroup,300);
                 isShowedDialogFragment = true;
 
             }

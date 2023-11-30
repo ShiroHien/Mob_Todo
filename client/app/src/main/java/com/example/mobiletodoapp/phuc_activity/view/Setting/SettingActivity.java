@@ -25,7 +25,7 @@ import com.example.mobiletodoapp.thuyen_services.main_screen.MainScreenActivity;
 
 public class SettingActivity extends AppCompatActivity {
     ImageView btnBackToPrevio, ava_user;
-    EditText username, name;
+    TextView username, name;
     Button logout;
     TextView user_name, gmail;
     @Override

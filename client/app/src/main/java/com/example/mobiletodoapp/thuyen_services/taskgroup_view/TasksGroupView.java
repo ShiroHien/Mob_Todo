@@ -305,7 +305,7 @@ public class TasksGroupView extends AppCompatActivity {
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.update_title) {
                     clUpdateTaskGroup.setVisibility(View.VISIBLE);
-                    CalendarUtils.scaleAnimation(clUpdateTaskGroup);
+                    CalendarUtils.fadeInAnimation(clUpdateTaskGroup,300);
                     isShowedDialogFragment = true;
                     return true;
                 } else if (itemId == R.id.delete_tasksgroup) {
@@ -566,7 +566,7 @@ public class TasksGroupView extends AppCompatActivity {
 
     private void handleShowAddTaskLayout() {
         clAddTask.setVisibility(View.VISIBLE);
-        CalendarUtils.scaleAnimation(clAddTask);
+        CalendarUtils.fadeInAnimation(clAddTask,300);
         isShowedDialogFragment = true;
 
 

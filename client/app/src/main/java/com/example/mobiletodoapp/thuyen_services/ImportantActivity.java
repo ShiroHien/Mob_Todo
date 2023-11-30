@@ -418,7 +418,7 @@ public class ImportantActivity extends AppCompatActivity {
     }
     private void handleShowAddTaskLayout() {
         clAddTask.setVisibility(View.VISIBLE);
-        CalendarUtils.scaleAnimation(clAddTask);
+        CalendarUtils.fadeInAnimation(clAddTask,300);
         isShowedDialogFragment = true;
 
         ArrayAdapter<TaskGroup> spinnerAdapter = new ArrayAdapter<TaskGroup>(ImportantActivity.this,
