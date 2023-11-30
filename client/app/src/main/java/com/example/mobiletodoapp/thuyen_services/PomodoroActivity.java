@@ -66,6 +66,7 @@ public class PomodoroActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(PomodoroActivity.this, PomoTimerActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -145,10 +146,6 @@ public class PomodoroActivity extends AppCompatActivity {
 
         return future;
     }
-
-
-
-
 
     private void showLoading() {
         progressDialog = new ProgressDialog(this);

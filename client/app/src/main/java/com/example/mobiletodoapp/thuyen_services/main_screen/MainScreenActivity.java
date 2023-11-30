@@ -3,6 +3,7 @@ package com.example.mobiletodoapp.thuyen_services.main_screen;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.getSharedPref;
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.setImage;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -69,7 +70,25 @@ public class MainScreenActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     Boolean isShowedDialogFragment = false;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == 1) { // Make sure it's the request code you used
+            if (resultCode == RESULT_OK) { // Check if the result indicates success
+                // Reload or refresh your mainScreen here
+
+                // Get the updated username from the result
+                String updatedUsername = data.getStringExtra("updatedUsername");
+                if (updatedUsername != null && !updatedUsername.isEmpty()) {
+                    // Update the username in your UI or perform any other necessary actions
+                    username.setText(updatedUsername);
+                }
+
+                getTasksGroupsFromServer(taskGroupApi);
+            }
+        }
+    }
     private final TasksGroupAdapter adapter = new TasksGroupAdapter(new TasksGroupAdapter.IClickTasksGroupItem() {
         @Override
         public void moveToTaskGroupView(TaskGroup tasksGroup) {
@@ -115,7 +134,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
                 layoutAddTasksgroup.setVisibility(View.VISIBLE);
 //                CalendarUtils.fadeInAnimation(layoutAddTasksgroup,300);
-                CalendarUtils.scaleAnimation(layoutAddTasksgroup);
+                CalendarUtils.fadeInAnimation(layoutAddTasksgroup,300);
                 isShowedDialogFragment = true;
 
             }
@@ -125,7 +144,7 @@ public class MainScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainScreenActivity.this, SettingActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
         important.setOnClickListener(new View.OnClickListener() {

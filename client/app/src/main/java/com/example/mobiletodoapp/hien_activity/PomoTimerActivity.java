@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.thuyen_services.PomodoroActivity;
 
 import java.util.Locale;
 
@@ -43,12 +45,14 @@ public class PomoTimerActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private TextView countdownTimeLabel;
     private ProgressBar countdownProgressBar;
+    private long timerStartTime;
+    public long duringTime; 
     private ImageButton playPauseButton, pauseButton;
     private ImageButton refreshButton, skipButton;
-    private ImageView settingsButton;
+    private ImageView settingsButton, btnBackToPomodoro;
+    ;
     private ConstraintLayout timerLayout;
     private Animation blinking;
-    private CharSequence startStatusLabel, pauseStatusLabel, resumeStatusLabel;
     private long setFocusDurationInMillis = DEFAULT_FOCUS_DURATION;
     private long setShortBreakDurationInMillis = DEFAULT_SHORT_BREAK_DURATION;
     private long setLongBreakDurationInMillis = DEFAULT_LONG_BREAK_DURATION;
@@ -77,10 +81,7 @@ public class PomoTimerActivity extends AppCompatActivity {
         isFocusMode = true;
         createNotificationChannel();
 
-        startStatusLabel = getResources().getText(R.string.start_status_label);
-        pauseStatusLabel = getResources().getText(R.string.pause_status_label);
-        resumeStatusLabel = getResources().getText(R.string.resume_status_label);
-
+        duringTime = loadDuringTime();
         timerLayout = findViewById(R.id.timerLayout);
 
         countdownTimeLabel = findViewById(R.id.timerTextView);
@@ -106,6 +107,20 @@ public class PomoTimerActivity extends AppCompatActivity {
 
         countdownTimeLabel.startAnimation(blinking);
         updateTimerWidgets();
+
+        btnBackToPomodoro = findViewById(R.id.btn_back_to_previous);
+        btnBackToPomodoro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                returnToPomodoroActivity();
+            }
+        });
+    }
+
+    private void returnToPomodoroActivity() {
+        Intent intent = new Intent(this, PomodoroActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     class PomodoroTimer extends CountDownTimer {
@@ -240,6 +255,7 @@ public class PomoTimerActivity extends AppCompatActivity {
     }
 
     private void startResumeTimer() {
+        timerStartTime = System.currentTimeMillis();
         countDownTimer = new PomodoroTimer(timeLeftInMillis, COUNTDOWN_INTERVAL);
         countDownTimer.start();
         timerStartup();
@@ -248,6 +264,9 @@ public class PomoTimerActivity extends AppCompatActivity {
     }
 
     private void pauseTimer() {
+        long duration = System.currentTimeMillis() - timerStartTime;
+        duringTime += duration;
+        saveDuringTime(duringTime);
         countDownTimer.cancel();
         timerStandby();
         playPauseButton.setVisibility(View.VISIBLE);
@@ -295,6 +314,22 @@ public class PomoTimerActivity extends AppCompatActivity {
         }
     }
 
+    private void resetDuringTime() {
+        duringTime = 0;
+        saveDuringTime(duringTime);
+    }
+
+    private long loadDuringTime() {
+        SharedPreferences prefs = getSharedPreferences("TimerPrefs", MODE_PRIVATE);
+        return prefs.getLong("duringTime", 0);
+    }
+
+    private void saveDuringTime(long duration) {
+        SharedPreferences prefs = getSharedPreferences("TimerPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("duringTime", duration);
+        editor.apply();
+    }
     private void setProgressBarColour(int colour) {
 
         // User filtering to change the colour of the progress bar drawable.
@@ -380,7 +415,7 @@ public class PomoTimerActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             super.onBackPressed();
-            this.finish();
+            android.os.Process.killProcess(android.os.Process.myPid());
 
         }
         else {

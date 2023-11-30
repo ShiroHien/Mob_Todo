@@ -1,6 +1,7 @@
 package com.MobTodo.BE.controller;
 
 import com.MobTodo.BE.dto.Login;
+import com.MobTodo.BE.dto.UpdateUser;
 import com.MobTodo.BE.models.User;
 import com.MobTodo.BE.service.IUserService;
 import com.MobTodo.BE.service.UserService;
@@ -26,5 +27,9 @@ public class UserController {
     @GetMapping("/getUserDetail/{id}")
     public User getUserDetail(@PathVariable String id) throws ExecutionException, InterruptedException {
         return userService.getUserDetail(id);
+    }
+    @PutMapping("/updateUser/{userId}")
+    public Boolean updateUser(@RequestBody UpdateUser data, @PathVariable String userId) {
+        return userService.updateUser(data, userId);
     }
 }

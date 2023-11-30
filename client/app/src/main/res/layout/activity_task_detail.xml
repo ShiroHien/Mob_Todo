@@ -67,7 +67,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:paddingRight="10dp"
-                    android:src="@drawable/radio_button_checked_icon_20"
+                    android:src="@drawable/icon_title"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteY="0dp"></ImageView>
 
@@ -244,7 +244,14 @@
                     android:text="Ghi chú"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
+
             </LinearLayout>
+            <TextView
+                android:id="@+id/text_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="Đang sao lưu..." />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -274,10 +281,10 @@
             android:id="@+id/production"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:layout_weight="1"
             android:text="\@VNOTE"
             android:textAlignment="center"
-            android:layout_marginTop="30dp"
             android:textSize="15dp" />
 
         <ImageView
@@ -288,5 +295,11 @@
             android:src="@drawable/bin" />
     </LinearLayout>
 
+    <include
+        android:id="@+id/layout_delete_confirm"
+        layout="@layout/delete_task_confirm_layout"
+        android:visibility="gone">
+
+    </include>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

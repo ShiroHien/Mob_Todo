@@ -1,6 +1,7 @@
 package com.MobTodo.BE.service;
 
 import com.MobTodo.BE.dto.Login;
+import com.MobTodo.BE.dto.UpdateUser;
 import com.MobTodo.BE.models.User;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -47,6 +48,30 @@ public class UserService implements IUserService {
             return null;
         }
         return user;
+    }
+
+    private Boolean updateUserFields(User existingUser, UpdateUser data) {
+        if (data.getName() != null) {
+            existingUser.setName(data.getName());
+        }
+        if (data.getUsername() != null) {
+            existingUser.setUsername(data.getUsername());
+        }
+
+        // Update the user in Firestore using the existing updateData method
+        updateData(COLLECTION_NAME, existingUser.getId(), existingUser);
+        return true;
+    }
+
+    @Override
+    public Boolean updateUser(UpdateUser data, String userId) {
+        User existingUser = getDetail(COLLECTION_NAME, userId, User.class);
+
+        if (existingUser != null) {
+            return updateUserFields(existingUser, data);
+        } else {
+            return false;
+        }
     }
 
 }
