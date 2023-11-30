@@ -42,6 +42,25 @@
             android:text="@string/timerTextView"
             android:textColor="@color/lightGray"
             android:textSize="50sp" />
+
+        <ImageView
+            android:id="@+id/btn_back_to_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="30dp"
+            android:padding="5dp"
+            android:src="@drawable/arrow_left"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/configButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="31dp"
+            android:src="@drawable/ic_config" />
     </RelativeLayout>
 
     <ImageButton
@@ -103,16 +122,5 @@
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toEndOf="@+id/play_pause" />
 
-
-    <ImageView
-        android:id="@+id/configButton"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:src="@drawable/ic_config"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
