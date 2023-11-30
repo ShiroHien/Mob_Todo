@@ -120,6 +120,7 @@ public class PomoTimerActivity extends AppCompatActivity {
     private void returnToPomodoroActivity() {
         Intent intent = new Intent(this, PomodoroActivity.class);
         startActivity(intent);
+        finish();
     }
 
     class PomodoroTimer extends CountDownTimer {
