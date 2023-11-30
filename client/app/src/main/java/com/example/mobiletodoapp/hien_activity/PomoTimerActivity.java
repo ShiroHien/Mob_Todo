@@ -29,6 +29,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.thuyen_services.PomodoroActivity;
 
 import java.util.Locale;
 
@@ -48,10 +49,10 @@ public class PomoTimerActivity extends AppCompatActivity {
     public long duringTime; 
     private ImageButton playPauseButton, pauseButton;
     private ImageButton refreshButton, skipButton;
-    private ImageView settingsButton;
+    private ImageView settingsButton, btnBackToPomodoro;
+    ;
     private ConstraintLayout timerLayout;
     private Animation blinking;
-    private CharSequence startStatusLabel, pauseStatusLabel, resumeStatusLabel;
     private long setFocusDurationInMillis = DEFAULT_FOCUS_DURATION;
     private long setShortBreakDurationInMillis = DEFAULT_SHORT_BREAK_DURATION;
     private long setLongBreakDurationInMillis = DEFAULT_LONG_BREAK_DURATION;
@@ -81,11 +82,6 @@ public class PomoTimerActivity extends AppCompatActivity {
         createNotificationChannel();
 
         duringTime = loadDuringTime();
-
-        startStatusLabel = getResources().getText(R.string.start_status_label);
-        pauseStatusLabel = getResources().getText(R.string.pause_status_label);
-        resumeStatusLabel = getResources().getText(R.string.resume_status_label);
-
         timerLayout = findViewById(R.id.timerLayout);
 
         countdownTimeLabel = findViewById(R.id.timerTextView);
@@ -111,6 +107,19 @@ public class PomoTimerActivity extends AppCompatActivity {
 
         countdownTimeLabel.startAnimation(blinking);
         updateTimerWidgets();
+
+        btnBackToPomodoro = findViewById(R.id.btn_back_to_previous);
+        btnBackToPomodoro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                returnToPomodoroActivity();
+            }
+        });
+    }
+
+    private void returnToPomodoroActivity() {
+        Intent intent = new Intent(this, PomodoroActivity.class);
+        startActivity(intent);
     }
 
     class PomodoroTimer extends CountDownTimer {

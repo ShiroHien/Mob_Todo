@@ -3,6 +3,8 @@ package com.example.mobiletodoapp.hien_activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -59,6 +61,14 @@ public class PomoSettingsActivity extends AppCompatActivity {
 
         savedPrefs = getSharedPreferences( "SettingsPrefs", MODE_PRIVATE );
         updateCurrentWidgetWithSettings();
+
+        ImageView backButton = findViewById(R.id.btn_back_to_previous);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exitToTimerActivity();
+            }
+        });
     }
 
     class SeekBarListener implements SeekBar.OnSeekBarChangeListener {
@@ -97,16 +107,6 @@ public class PomoSettingsActivity extends AppCompatActivity {
         }
 
     }
-
-    // not have back button yet
-//    class ButtonListener implements View.OnClickListener {
-//        @Override
-//        public void onClick(View v) {
-//            if (v.getId() == R.id.timerButton) {
-//                exitToTimerActivity();
-//            }
-//        }
-//    }
 
     public void exitToTimerActivity() {
         Intent intent = new Intent();

@@ -46,7 +46,7 @@ import retrofit2.Response;
 
 public class SettingActivity extends AppCompatActivity {
     ImageView btnBackToPrevio, ava_user;
-    EditText username, name;
+    TextView username, name;
     Button logout;
     TextView user_name, gmail, text_save;
     private UserApi userApi;
