@@ -5,6 +5,7 @@ import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showLoa
 import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -13,11 +14,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,20 +42,28 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TaskDetailActivity extends AppCompatActivity {
-    ImageView btnBackToPrevious, btn_pick_time_start, btn_pick_time_end;
-    TextView taskgroupName, startTime, endTime, text_myday, text_important;
+    ImageView btnBackToPrevious, btn_pick_time_start, btn_pick_time_end, btnDelete, btnComplete;
+    TextView taskgroupName, startTime, endTime, text_myday, text_important, text_save;
     EditText task_title, description;
     private RetrofitService retrofitService;
     private TaskApi taskApi;
-    private Boolean isMyday = false, isImportant = false;
+    private Boolean isMyday = false, isImportant = false, isCompleted = false;
+    private String taskGroupId = "";
     LinearLayout add_myday, add_important;
-    Boolean isShowedDialogFragment = false;
+    Boolean isShowedDialogFragment = false, isShowTextSaved = false;
+    ConstraintLayout layoutDeleteConfirm;
+    Button delete, cancel;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -77,6 +90,26 @@ public class TaskDetailActivity extends AppCompatActivity {
         Intent intent = this.getIntent();
         init();
         String taskId = intent.getStringExtra("taskId");
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not used in this case
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not used in this case
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isShowTextSaved == false) {
+                    isShowTextSaved = true;
+                    text_save.setVisibility(View.VISIBLE);
+                }
+                callUpdateTaskApi(taskId, taskGroupId);
+            }
+        };
         btnBackToPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +140,39 @@ public class TaskDetailActivity extends AppCompatActivity {
                 showDatePickerDialog(endTime);
             }
         });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isShowedDialogFragment == false) {
+                    isShowedDialogFragment = true;
+                    layoutDeleteConfirm.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layoutDeleteConfirm.setVisibility(View.GONE);
+                isShowedDialogFragment = false;
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteTask(taskApi, taskId);
+            }
+        });
+
+        task_title.addTextChangedListener(textWatcher);
+        description.addTextChangedListener(textWatcher);
+        startTime.addTextChangedListener(textWatcher);
+        endTime.addTextChangedListener(textWatcher);
+        CompletableFuture<Void> getDetailFuture = getDetail(taskApi, taskId);
+        getDetailFuture.thenRun(() -> {
+            getDetailFuture.thenRun(() -> {
+                callUpdateTaskApi(taskId, taskGroupId);
+            });
+        });
     }
 
     private void init() {
@@ -125,6 +191,12 @@ public class TaskDetailActivity extends AppCompatActivity {
         text_important = findViewById(R.id.text_important);
         btn_pick_time_start = findViewById(R.id.btn_pick_start_time);
         btn_pick_time_end = findViewById(R.id.btn_pick_end_time);
+        btnDelete = findViewById(R.id.btnDelete);
+        layoutDeleteConfirm = findViewById(R.id.layout_delete_confirm);
+        delete = findViewById(R.id.delete);
+        cancel = findViewById(R.id.cancel);
+        text_save = findViewById(R.id.text_save);
+        btnComplete = findViewById(R.id.btn_check_completed);
 
         retrofitService = new RetrofitService();
         taskApi = retrofitService.getRetrofit().create(TaskApi.class);
@@ -143,13 +215,17 @@ public class TaskDetailActivity extends AppCompatActivity {
                             description.setText(result.getDescription());
                             startTime.setText(result.getStartTime());
                             endTime.setText(result.getEndTime());
+                            taskGroupId = result.getTaskGroupId();
                             if (result.isMyDay()) {
                                 isMyday = true;
                                 text_myday.setTextColor(Color.parseColor("#3700b3"));
                             }
                             if (result.isImportant()) {
-                                isMyday = true;
+                                isImportant = true;
                                 text_important.setTextColor(Color.parseColor("#3700b3"));
+                            }
+                            if (result.isCompleted()) {
+                                isCompleted = true;
                             }
                         } else {
                             showToast(TaskDetailActivity.this, "Lấy dữ liệu không thành công");
@@ -315,4 +391,97 @@ public class TaskDetailActivity extends AppCompatActivity {
         // Hiển thị TimePickerDialog
         timePickerDialog.show();
     }
+
+    private CompletableFuture<Void> deleteTask(TaskApi taskApi, String taskId) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        taskApi.deleteTask(taskId).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                try {
+                    if (response.body()) {
+                        showToast(TaskDetailActivity.this, "Xoá thành công");
+                        finish();
+                    } else {
+                        showToast(TaskDetailActivity.this, "Xoá thất bại");
+                    }
+                    future.complete(null);
+                } catch (Exception e) {
+                    showToast(TaskDetailActivity.this, "Lỗi xảy ra");
+                    future.completeExceptionally(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                showToast(TaskDetailActivity.this, "Có lỗi xảy ra");
+                future.completeExceptionally(t);
+            }
+        });
+        return future;
+    }
+
+    private CompletableFuture<Void> updateTask(TaskApi taskApi, String taskId, String taskGroupId, String title, String description, String start_Time, String end_Time, Boolean completed, Boolean myDay, Boolean important) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        Task data = new Task(taskId, taskGroupId, title, description, start_Time, end_Time, completed, myDay, important);
+        taskApi.updateTask(data).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Boolean result = response.body();
+                        if (result == true) {
+                            if (isShowTextSaved == true) {
+                                isShowTextSaved = false;
+                                text_save.setVisibility(View.GONE);
+                            }
+                        } else {
+
+                        }
+                    } else {
+                        showToast(TaskDetailActivity.this, "Cập nhập không thành công");
+                    }
+                    future.complete(null);
+                } catch (Exception e) {
+                    future.completeExceptionally(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.d("error", "loi gi do", t);
+                showToast(TaskDetailActivity.this, "Có lỗi xảy ra");
+                future.completeExceptionally(t);
+            }
+        });
+        return future;
+    }
+
+    private void callUpdateTaskApi(String taskId, String taskGroupId) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                ExecutorService executorService = Executors.newSingleThreadExecutor();
+                CompletableFuture<Void> completableFuture = new CompletableFuture<>();
+
+                Future<?> future = executorService.submit(() -> {
+                    try {
+                        updateTask(taskApi, taskId, taskGroupId, task_title.getText().toString(), description.getText().toString(), startTime.getText().toString(), endTime.getText().toString(), isCompleted, isMyday, isImportant);
+                        completableFuture.complete(null);
+                    } catch (Exception e) {
+                        completableFuture.completeExceptionally(e);
+                    }
+                });
+
+                try {
+                    future.get(2000, TimeUnit.MILLISECONDS);
+                } catch (TimeoutException e) {
+                    showToast(TaskDetailActivity.this, "Timeout khi gọi API");
+                }
+
+                executorService.shutdown();
+            }
+        } catch (Exception e) {
+            showToast(TaskDetailActivity.this, "Có lỗi xảy ra");
+        }
+    }
+
 }
