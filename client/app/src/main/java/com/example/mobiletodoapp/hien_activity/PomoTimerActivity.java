@@ -1,5 +1,7 @@
 package com.example.mobiletodoapp.hien_activity;
 
+import static com.example.mobiletodoapp.phuc_activity.reusecode.Function.showToast;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -29,9 +31,22 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.mobiletodoapp.R;
+import com.example.mobiletodoapp.phuc_activity.api.TimerApi;
+import com.example.mobiletodoapp.phuc_activity.api.UserApi;
+import com.example.mobiletodoapp.phuc_activity.dto.Login;
+import com.example.mobiletodoapp.phuc_activity.dto.User;
+import com.example.mobiletodoapp.phuc_activity.view.Login.LoginActivity;
 import com.example.mobiletodoapp.thuyen_services.PomodoroActivity;
 
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PomoTimerActivity extends AppCompatActivity {
     private final static long DEFAULT_FOCUS_DURATION = 1500000;
@@ -278,6 +293,32 @@ public class PomoTimerActivity extends AppCompatActivity {
         toggleFocusMode();
         updateTimerWidgets();
         timerStandby();
+        sendTime();
+    }
+    private CompletableFuture<Void> sendTime() {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        Login login = new Login(loginEmail.getText().toString(), loginPassword.getText().toString());
+        userApi.loginUser(login).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                try {
+                    processLoginResponse(response);
+                    future.complete(null);
+                } catch (Exception e) {
+                    future.completeExceptionally(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                hideLoading();
+                showToast(LoginActivity.this, "Đăng nhập thất bại. Kiểm tra lại đường truyền của bạn.");
+                Logger.getLogger(LoginActivity.class.getName()).log(Level.SEVERE, "Error: ", t);
+                future.completeExceptionally(t);
+            }
+        });
+
+        return future;
     }
 
     private void skipTimer() {
