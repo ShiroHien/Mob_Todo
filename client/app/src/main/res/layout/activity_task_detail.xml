@@ -246,12 +246,13 @@
                     android:textSize="15dp" />
 
             </LinearLayout>
+
             <TextView
                 android:id="@+id/text_save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="Đang sao lưu..." />
+                android:text="Đang sao lưu..."
+                android:visibility="gone" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

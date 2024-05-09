@@ -63,35 +63,38 @@ public class Function {
     }
 
     public static boolean checkDateFormat(String input) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-
-        try {
-            LocalDate parsedDate = LocalDate.parse(input, dateFormatter);
-            return true;
-        } catch (DateTimeParseException e) {
-            return false;
-        }
+//        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+//
+//        try {
+//            LocalDate parsedDate = LocalDate.parse(input, dateFormatter);
+//            return true;
+//        } catch (DateTimeParseException e) {
+//            return false;
+//        }
+        return true;
     }
 
     public static boolean checkTimeFormat(String input) {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-        try {
-            LocalTime parsedTime = LocalTime.parse(input.trim(), timeFormatter);
-            return true; // If parsing is successful, the time is valid
-        } catch (DateTimeParseException e) {
-            System.out.println(e);
-            return false; // If parsing fails, the time is not valid
-        }
+//        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+//        try {
+//            LocalTime parsedTime = LocalTime.parse(input.trim(), timeFormatter);
+//            return true; // If parsing is successful, the time is valid
+//        } catch (DateTimeParseException e) {
+//            System.out.println(e);
+//            return false; // If parsing fails, the time is not valid
+//        }
+        return true;
     }
 
     public static boolean checkDateTimeFormat(String input) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
-        try {
-            LocalDateTime parsedDate = LocalDateTime.parse(input, dateFormatter);
-            return true;
-        } catch (DateTimeParseException e) {
-            return false;
-        }
+//        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+//        try {
+//            LocalDateTime parsedDate = LocalDateTime.parse(input, dateFormatter);
+//            return true;
+//        } catch (DateTimeParseException e) {
+//            return false;
+//        }
+        return true;
     }
 
     public static <T> T getDetail(String collectionName, String document, Class<T> valueType) {

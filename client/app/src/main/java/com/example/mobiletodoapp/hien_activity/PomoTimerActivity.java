@@ -293,33 +293,33 @@ public class PomoTimerActivity extends AppCompatActivity {
         toggleFocusMode();
         updateTimerWidgets();
         timerStandby();
-        sendTime();
+//        sendTime();
     }
-    private CompletableFuture<Void> sendTime() {
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        Login login = new Login(loginEmail.getText().toString(), loginPassword.getText().toString());
-        userApi.loginUser(login).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                try {
-                    processLoginResponse(response);
-                    future.complete(null);
-                } catch (Exception e) {
-                    future.completeExceptionally(e);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                hideLoading();
-                showToast(LoginActivity.this, "Đăng nhập thất bại. Kiểm tra lại đường truyền của bạn.");
-                Logger.getLogger(LoginActivity.class.getName()).log(Level.SEVERE, "Error: ", t);
-                future.completeExceptionally(t);
-            }
-        });
-
-        return future;
-    }
+//    private CompletableFuture<Void> sendTime() {
+//        CompletableFuture<Void> future = new CompletableFuture<>();
+//        Login login = new Login(loginEmail.getText().toString(), loginPassword.getText().toString());
+//        userApi.loginUser(login).enqueue(new Callback<User>() {
+//            @Override
+//            public void onResponse(Call<User> call, Response<User> response) {
+//                try {
+//                    processLoginResponse(response);
+//                    future.complete(null);
+//                } catch (Exception e) {
+//                    future.completeExceptionally(e);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<User> call, Throwable t) {
+//                hideLoading();
+//                showToast(LoginActivity.this, "Đăng nhập thất bại. Kiểm tra lại đường truyền của bạn.");
+//                Logger.getLogger(LoginActivity.class.getName()).log(Level.SEVERE, "Error: ", t);
+//                future.completeExceptionally(t);
+//            }
+//        });
+//
+//        return future;
+//    }
 
     private void skipTimer() {
         countDownTimer.cancel();

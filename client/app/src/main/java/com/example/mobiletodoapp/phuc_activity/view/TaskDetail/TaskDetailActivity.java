@@ -42,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -63,7 +64,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     LinearLayout add_myday, add_important;
     Boolean isShowedDialogFragment = false, isShowTextSaved = false;
     ConstraintLayout layoutDeleteConfirm;
-    Button delete, cancel;
+    Button delete, cancel, btnSave;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -310,7 +311,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                             showToast(TaskDetailActivity.this, "Xử lý không thành công");
                         }
                     } else {
-                        showToast(TaskDetailActivity.this, "Xử lý không thành công");
+                        showToast(TaskDetailActivity.this, "Xử lý không thành công(response successful)");
                     }
                     future.complete(null);
                 } catch (Exception e) {
@@ -457,8 +458,8 @@ public class TaskDetailActivity extends AppCompatActivity {
     }
 
     private void callUpdateTaskApi(String taskId, String taskGroupId) {
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//        try {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 ExecutorService executorService = Executors.newSingleThreadExecutor();
                 CompletableFuture<Void> completableFuture = new CompletableFuture<>();
 
@@ -475,13 +476,17 @@ public class TaskDetailActivity extends AppCompatActivity {
                     future.get(2000, TimeUnit.MILLISECONDS);
                 } catch (TimeoutException e) {
                     showToast(TaskDetailActivity.this, "Timeout khi gọi API");
+                } catch (ExecutionException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
 
-                executorService.shutdown();
-            }
-        } catch (Exception e) {
-            showToast(TaskDetailActivity.this, "Có lỗi xảy ra");
-        }
+        executorService.shutdown();
+//            }
+//        } catch (Exception e) {
+//            showToast(TaskDetailActivity.this, "Có lỗi xảy ra");
+//        }
     }
 
 }
